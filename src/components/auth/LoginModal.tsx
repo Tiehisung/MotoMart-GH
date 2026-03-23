@@ -1,5 +1,5 @@
 import { DIALOG } from "../Dialog";
-import TextDivider from "../Divider";
+import TextDivider from "../../../../smockly/src/components/Divider";
 import { ReactNode } from "react";
 import { TButtonVariant } from "../ui/button";
 import { CredentialsLoginForm } from "./LoginCredentials";

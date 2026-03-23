@@ -1,4 +1,4 @@
-import TextDivider from "@/components/Divider";
+import TextDivider from "../../../../../smockly/src/components/Divider";
 import { Color } from "@/styles";
 import { FaFilePdf } from "react-icons/fa";
 import Loader from "@/components/loaders/Loader";
@@ -10,7 +10,6 @@ import { DocumentActions } from "./[folder]/Actions";
 import { shortText } from "@/lib";
 import { useGetDocumentsQuery } from "@/services/docs.endpoints";
 import { formatError } from "@/lib/error";
- 
 
 export function RecentDocs() {
   // Use the query hook instead of server-side fetch

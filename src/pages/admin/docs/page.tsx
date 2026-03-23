@@ -4,13 +4,14 @@ import DocumentFolders from "./Folders";
 import { DocumentUploader } from "./DocUploader";
 import { ConsentForm } from "@/components/pdf/ConsentForm";
 import { RecentDocs } from "./RecentDocs";
-import TextDivider from "@/components/Divider";
+import TextDivider from "../../../../../smockly/src/components/Divider";
 import { useGetFolderMetricsQuery } from "@/services/docs.endpoints";
 import { useGetPlayersQuery } from "@/services/player.endpoints";
 import Loader from "@/components/loaders/Loader";
 
 export default function DocsPage() {
-  const { data: playersData, isLoading: playersLoading } = useGetPlayersQuery('');
+  const { data: playersData, isLoading: playersLoading } =
+    useGetPlayersQuery("");
   const { data: metricsData, isLoading: metricsLoading } =
     useGetFolderMetricsQuery();
 
