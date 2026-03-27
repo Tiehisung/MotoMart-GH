@@ -40,10 +40,10 @@ const Desktop: React.FC<Props> = ({ squad }) => {
             {squad?.description}
           </p>
           {squad?.match && (
-            <div className="flex items-center gap-2 pt-2">
+            <div className="flex items-center gap-2 pt-2 text-white">
               <Calendar size={14} />
               {formatDate(squad?.match?.date, "MAR 28, 2025")}{" "}
-              {`${symbols.dot} ${getTimeLeftOrAgo(squad?.match?.date)}`}
+              {`${symbols.dot} ${getTimeLeftOrAgo(squad?.match?.date).formatted}`}
             </div>
           )}
         </div>
@@ -129,7 +129,7 @@ const Mobile: React.FC<Props> = ({ squad }) => {
             {squad?.description}
           </p>
           {squad?.match?.date && (
-            <div className="flex items-center gap-2 pt-2">
+            <div className="flex items-center gap-2 pt-2 text-white">
               <Calendar size={14} />
               {formatDate(squad?.match?.date, "MAR 28, 2025")}{" "}
               {`${symbols.dot} ${getTimeLeftOrAgo(squad?.match?.date)}`}
