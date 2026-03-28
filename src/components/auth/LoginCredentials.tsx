@@ -1,6 +1,6 @@
 // frontend/src/components/auth/Login.tsx
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -16,8 +16,13 @@ const loginSchema = z.object({
 
 type LoginForm = z.infer<typeof loginSchema>;
 
-export function CredentialsLoginForm() {
+export function CredentialsLoginForm({
+  redirectTo = "",
+}: {
+  redirectTo?: string;
+}) {
   const navigate = useNavigate();
+
   const { login, isLoading } = useAuth();
   const [error, setError] = useState<string | null>(null);
 
@@ -29,7 +34,7 @@ export function CredentialsLoginForm() {
     setError(null);
     const result = await login(data);
 
-    const path =
+    const dashboardPath =
       result?.user?.role == "player"
         ? "/players/dashboard"
         : result?.user?.role?.includes("admin")
@@ -37,7 +42,9 @@ export function CredentialsLoginForm() {
           : "";
 
     if (result.success) {
-      navigate(path, { replace: true });
+      navigate(redirectTo  || dashboardPath, {
+        replace: true,
+      });
     } else {
       setError(result?.error as string);
     }

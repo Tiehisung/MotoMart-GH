@@ -9,7 +9,7 @@ const LoginPage = () => {
       <HEADER
         title={
           <Link to="/" className="text-Orange hover:underline">
-            {TEAM.alias}
+            {TEAM.name}
           </Link>
         }
       />

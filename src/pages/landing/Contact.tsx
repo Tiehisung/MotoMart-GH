@@ -1,9 +1,8 @@
 // components/Contact.tsx
 import { Button } from "@/components/buttons/Button";
 import { Input, TextArea } from "@/components/input/Inputs";
-import { Facebook, Instagram, Youtube } from "lucide-react";
+import { SocialMediaHandles } from "@/components/SocialShare";
 import React, { useState } from "react";
-import { FaXTwitter } from "react-icons/fa6";
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -19,12 +18,7 @@ const Contact: React.FC = () => {
     setFormData({ name: "", email: "", message: "" });
   };
 
-  const socialLinks = [
-    { icon: <Facebook />, color: "bg-[#1877f2]" },
-    { icon: <FaXTwitter />, color: "bg-[#1da1f2]" },
-    { icon: <Instagram />, color: "bg-[#e4405f]" },
-    { icon: <Youtube />, color: "bg-[#ff0000]" },
-  ];
+ 
 
   return (
     <section id="contact" className="py-24">
@@ -73,20 +67,10 @@ const Contact: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="flex gap-4 pt-2">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.color}
-                  href="#"
-                  className={`w-10 h-10 text-white/80 rounded-full flex items-center justify-center hover:text-white transition-all ${social.color}`}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
+            <SocialMediaHandles />
           </div>
-          
-          <form  onSubmit={handleSubmit} className="space-y-4">
+
+          <form onSubmit={handleSubmit} className="space-y-4">
             <Input
               type="text"
               placeholder="Your Name"

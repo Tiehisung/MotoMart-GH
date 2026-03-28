@@ -309,12 +309,12 @@ export async function shareWithAnalytics(
 }
 
 export const share = {
-    withAnalytics: shareWithAnalytics,
     viaEmail: shareViaEmail,
     page: sharePage,
     generateQR: generateQRCodeUrl,
     generateShareableLink,
     toSocial: shareToSocial,
-    copyToClipboard
+    copyToClipboard,
+    withAnalytics: shareWithAnalytics,
 }
 
