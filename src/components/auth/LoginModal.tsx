@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { TButtonVariant } from "../ui/button";
 import { CredentialsLoginForm } from "./LoginCredentials";
 import Divider from "../Divider";
+import { useLocation } from "react-router-dom";
 
 /**
  * id - login-controller
@@ -14,19 +15,22 @@ const LoginController = ({
   description,
   trigger,
   variant = "ghost",
+  redirectTo,
 }: {
   className?: string;
+  redirectTo?: string;
   text?: string;
   trigger?: ReactNode;
   description?: ReactNode;
   variant?: TButtonVariant;
 }) => {
+  const { pathname } = useLocation();
   return (
     <DIALOG
       trigger={trigger}
       title={"Login to continue"}
       id="login-controller"
-      variant={variant}  
+      variant={variant}
     >
       {/* <LoginBtn
         text={text}
@@ -38,12 +42,14 @@ const LoginController = ({
         <FcGoogle size={24} />
       </LoginBtn> */}
 
-      <Divider content  ="🔐" />
-      <CredentialsLoginForm />
+      <Divider content="🔐" />
+      <CredentialsLoginForm
+        redirectTo={redirectTo || (pathname !== "/" ? pathname : "")}
+      />
 
       {description && (
         <div>
-          <Divider content="🔐🪪" className="px-4 my-10" />
+          <Divider content=">>" className="px-4 my-4" />
 
           <div>{description}</div>
         </div>

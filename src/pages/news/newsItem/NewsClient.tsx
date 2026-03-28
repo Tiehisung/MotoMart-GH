@@ -7,6 +7,7 @@ import MasonryGallery from "@/components/Gallery/Masonry";
 import LightboxViewer from "@/components/viewer/LightBox";
 import { getThumbnail } from "@/lib/file";
 import { AVATAR } from "@/components/ui/avatar";
+import Divider from "@/components/Divider";
 
 const NewsItemClient: FC<{ newsItem?: INewsProps }> = ({ newsItem }) => {
   const [open, setOpen] = useState(false);
@@ -79,18 +80,28 @@ const NewsItemClient: FC<{ newsItem?: INewsProps }> = ({ newsItem }) => {
             <NewsReactions newsItem={newsItem as INewsProps} />
           </section>
 
-          <section className="flex items-start gap-5 my-6">
-            <AVATAR
-              src={newsItem?.reporter?.image as string}
-              fallbackText={newsItem?.reporter?.name}
-              alt="reporter"
-              className="h-16 w-16"
-            />
+          <section className=" my-6 pt-6">
+            <Divider
+              content={
+                <div className="flex flex-col justify-center items-center gap-3">
+                  <AVATAR
+                    src={newsItem?.reporter?.image as string}
+                    fallbackText={newsItem?.reporter?.name}
+                    alt="reporter"
+                    className="h-16 w-16"
+                    border
+                    
+                  />
 
-            <div className="space-y-2.5 text-muted-foreground">
-              <h1 className="font-bold">{newsItem?.reporter?.name}</h1>
-              <h1>{newsItem?.reporter?.about ?? "KonjiehiFC Staff"}</h1>
-            </div>
+                  <div className="space-y-2.5">
+                    <h1 className="font-bold">{newsItem?.reporter?.name}</h1>
+                    <h1>{newsItem?.reporter?.about ?? "KonjiehiFC Staff"}</h1>
+                  </div>
+                </div>
+              }
+          
+            />
+       
           </section>
         </main>
       </div>

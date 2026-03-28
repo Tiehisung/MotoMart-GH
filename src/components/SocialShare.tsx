@@ -1,11 +1,11 @@
- 
-
 import { Facebook, Linkedin, Twitter } from "lucide-react";
 import { ImWhatsapp } from "react-icons/im";
 import { PiTelegramLogoLight } from "react-icons/pi";
 import { Button } from "./ui/button";
 import { share, ShareOptions } from "@/lib/share";
 import { ReactNode } from "react";
+import { FaXTwitter } from "react-icons/fa6";
+import { cn } from "@/lib/utils";
 
 interface IProps extends ShareOptions {
   isMini?: boolean;
@@ -66,4 +66,116 @@ export const socialMediaIcons = {
   telegram: { icon: <PiTelegramLogoLight />, alias: "tg" },
   twitter: { icon: <Twitter />, alias: "x" },
   // instagram: { icon: Instagram, alias: "ig" },
+};
+
+export const SharePage = ({
+  text,
+  title,
+  url,
+  files = [],
+  className,
+  onShare,
+}: IProps) => {
+  const socialLinks = [
+    {
+      platform: "whatsapp",
+      icon: <ImWhatsapp />,
+      color: "bg-Green",
+      url: "",
+    },
+    {
+      platform: "facebook",
+      icon: <Facebook />,
+      color: "bg-[#1877f2]",
+      url: "",
+    },
+    {
+      platform: "twitter",
+      icon: <FaXTwitter />,
+      color: "bg-[#000000]",
+      url: "",
+    },
+    {
+      platform: "telegram",
+      icon: <PiTelegramLogoLight />,
+      color: "bg-[#3390ec]",
+      url: "",
+    },
+  ];
+  return (
+    <div className="flex gap-4 pt-2">
+      {socialLinks.map((sl) => (
+        <Button
+          size="icon"
+          className={cn(`gap-2 text-white ${sl.color} `,className)}
+          onClick={() => {
+            share
+              .toSocial(
+                sl.platform as
+                  | "facebook"
+                  | "whatsapp"
+                  | "linkedin"
+                  | "telegram"
+                  | "twitter",
+                {
+                  title,
+                  text,
+                  url: url,
+                  files,
+                },
+              )
+              .then(({ success }) => {
+                if (success) onShare?.();
+              });
+          }}
+          key={sl.platform}
+        >
+          {sl.icon}
+          {/* {isMini ? "" : sl.platform} */}
+        </Button>
+      ))}
+    </div>
+  );
+};
+
+export const SocialMediaHandles = ({ url }: { url?: string }) => {
+  const socialLinks = [
+    {
+      platform: "whatsapp",
+      icon: <ImWhatsapp />,
+      color: "bg-Green",
+      url: "",
+    },
+    {
+      platform: "facebook",
+      icon: <Facebook />,
+      color: "bg-[#1877f2]",
+      url: "",
+    },
+    {
+      platform: "twitter",
+      icon: <FaXTwitter />,
+      color: "bg-[#000000]",
+      url: "",
+    },
+    {
+      platform: "telegram",
+      icon: <PiTelegramLogoLight />,
+      color: "bg-[#3390ec]",
+      url: "",
+    },
+  ];
+  return (
+    <div className="flex gap-4 pt-2">
+      {socialLinks.map((social) => (
+        <a
+          key={social.color}
+          href={url || "#"}
+          className={`w-10 h-10 text-white/80 rounded-full flex items-center justify-center hover:text-white transition-all ${social.color}`}
+        >
+          {social.icon}
+        </a>
+      ))}
+    </div>
+  );
 };

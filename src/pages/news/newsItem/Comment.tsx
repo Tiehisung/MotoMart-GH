@@ -5,7 +5,7 @@ import { markupToPlainText } from "@/lib/dom";
 import { useUpdateNewsCommentsMutation } from "@/services/news.endpoints";
 import { useAuth } from "@/store/hooks/useAuth";
 import { SendHorizontal } from "lucide-react";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 interface Props {
   newsId: string;
@@ -14,7 +14,7 @@ interface Props {
 const CommentForm = ({ newsId }: Props) => {
   const { user } = useAuth();
   const [comment, setComment] = useState("");
-  const [error, setError] = useState("");
+
   const [updateComments, { isLoading: isCommenting }] =
     useUpdateNewsCommentsMutation();
 
@@ -22,11 +22,7 @@ const CommentForm = ({ newsId }: Props) => {
 
   const handleComment = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (comment.length < 1) {
-      setError("Write some comments");
-      return;
-    }
-    setError("");
+
     const result = await updateComments({
       newsId: newsId as string,
       comment,
@@ -39,15 +35,11 @@ const CommentForm = ({ newsId }: Props) => {
     }
   };
 
-  useEffect(() => {
-    if (comment) setError("");
-  }, [comment]);
   return (
     <div className="border-t-2 pt-6 mt-6">
       <header className="flex justify-between items-center gap-3 mb-6">
-       <span>Comment</span>  
+        <span>Comment</span>
         <span className="text-xs text-muted-foreground">
-        
           {`${markupToPlainText(comment)?.length}/${maxLength}`}
         </span>
       </header>
@@ -59,7 +51,6 @@ const CommentForm = ({ newsId }: Props) => {
           }}
           className="w-full grow"
           placeholder="Type comment ..."
-          error={error}
         />
         <Button
           type="submit"
@@ -68,6 +59,7 @@ const CommentForm = ({ newsId }: Props) => {
           waitingText=""
           primaryText=""
           size="sm"
+          disabled={!comment}
         >
           Send <SendHorizontal size={20} />
         </Button>
