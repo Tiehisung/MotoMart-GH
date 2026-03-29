@@ -24,7 +24,7 @@ export default function AdminFixtures() {
   const { data: teams, isLoading: teamsLoading } = useGetTeamsQuery({});
 
 
-  const isLoading = fixturesLoading || teamsLoading || playersLoading;
+  const isLoading = fixturesLoading || teamsLoading 
 
   if (isLoading) {
     return (
