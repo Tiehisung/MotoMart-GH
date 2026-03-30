@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
- 
+
 import { fireEscape } from "@/hooks/Esc";
 import { customStyles } from "@/styles";
 import { ISelectOptionLV } from "@/types";
@@ -25,7 +25,8 @@ import {
   useUpdateMatchMutation,
 } from "@/services/match.endpoints";
 import { smartToast } from "@/utils/toast";
-import { teamBnfc } from "@/data/teamBnfc";
+import { TEAM } from "@/data/team";
+import { TButtonVariant } from "@/components/ui/button";
 
 const CreateFixture = ({ teams }: { teams?: ITeam[] }) => {
   const [waiting, setWaiting] = useState(false);
@@ -54,11 +55,11 @@ const CreateFixture = ({ teams }: { teams?: ITeam[] }) => {
         opponent: teams?.find((t) => t._id === opponent?.value) || null,
         title:
           matchType === "home"
-            ? `${teamBnfc.name} VS ${opponent?.label}`
-            : `${opponent?.label} VS ${teamBnfc.name}`,
+            ? `${TEAM.name} VS ${opponent?.label}`
+            : `${opponent?.label} VS ${TEAM.name}`,
         venue: {
           files: [],
-          name: matchType === "home" ? teamBnfc.name : opponent?.label,
+          name: matchType === "home" ? TEAM.name : opponent?.label,
         },
       } as Partial<IMatch>;
 
@@ -150,10 +151,11 @@ export default CreateFixture;
 
 export const UpdateFixtureMatch = ({
   fixture: fx,
-  teams,
+  teams,variant='ghost'
 }: {
   fixture?: IMatch;
   teams?: ITeam[];
+  variant?: TButtonVariant;
 }) => {
   const [waiting, setWaiting] = useState(false);
   const [updateMatch] = useUpdateMatchMutation();
@@ -186,8 +188,8 @@ export const UpdateFixtureMatch = ({
       opponent: teams?.find((t) => t._id === opponent?.value) || null,
       title:
         matchType === "home"
-          ? `${teamBnfc.name} VS ${fx?.opponent?.name}`
-          : `${fx?.opponent?.name} VS ${teamBnfc.name}`,
+          ? `${TEAM.name} VS ${fx?.opponent?.name}`
+          : `${fx?.opponent?.name} VS ${TEAM.name}`,
     };
 
     try {
@@ -213,7 +215,7 @@ export const UpdateFixtureMatch = ({
       title="UPDATE FIXTURE"
       className="bg-popover"
       description={`${home?.name} vs ${away?.name}`.toUpperCase()}
-      variant="ghost"
+      variant={variant}
     >
       <div className="">
         <form

@@ -9,13 +9,11 @@ import {
   Edit,
   Mail,
   Phone,
-  
   Award,
   Tag,
 } from "lucide-react";
 import { EPlayerAvailability, IPlayer } from "@/types/player.interface";
 import { EPlayerPosition } from "@/types/player.interface";
-import { getInitials } from "@/lib";
 import { POPOVER } from "@/components/ui/popover";
 import { SocialShare } from "@/components/SocialShare";
 
@@ -73,7 +71,7 @@ export function PlayerHeader({ player }: PlayerHeaderProps) {
           <AVATAR
             src={player?.avatar}
             alt={fullName}
-            fallbackText={getInitials(fullName)}
+          
             size={"2xl"}
           />
           <div className="absolute -top-2 -right-2">
