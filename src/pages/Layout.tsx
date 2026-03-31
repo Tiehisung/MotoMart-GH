@@ -1,6 +1,4 @@
 import { Toaster } from "sonner";
-// import FooterCP from "@/components/footer/FooterCp";
-// import HeaderCp from "@/components/HeaderCp";
 import BackToTopButton from "@/components/scroll/ToTopBtn";
 
 import { Swinger } from "@/components/Animate/Swing";
@@ -13,7 +11,7 @@ export default function HomeLayout() {
   return (
     <main className="relative">
       <ScrollToTop />
-      {/* <HeaderCp />  */}
+ 
       <MainNavbar />
       <div className={`min-h-screen overflow-x-hidden px-4`}>
         <Outlet />
