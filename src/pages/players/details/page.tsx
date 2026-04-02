@@ -61,6 +61,7 @@ export default function PlayerProfilePage() {
       <PageSEO page="players" title={title} description={description} />
 
       <main className="pl-2">
+        
         <PlayerProfile
           players={players?.data as IPlayer[]}
           galleries={galleries?.data}
