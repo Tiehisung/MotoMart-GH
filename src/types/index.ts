@@ -65,15 +65,20 @@ export interface IPagination {
   previousPage: number;
 }
 
-export interface IQueryRecords {
-  type?: string;
-  page?: number
-  limit?: number
+export interface IQueryParams extends IBaseQueryParams {
+  [k: string]: any
+  status?: string
+  role?: string,
   date?: string
   endDate?: string
-  search?: string
-
+  type?: string;
 }
+export interface IBaseQueryParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+}
+
 
 export type TSearchKey =
   'search'

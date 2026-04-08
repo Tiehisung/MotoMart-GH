@@ -1,12 +1,6 @@
- 
-
 import { useEffect, useState } from "react";
- 
- 
- 
 import { FaAngleRight } from "react-icons/fa";
 import { shortText } from "@/lib";
- 
 import { Link, useLocation } from "react-router-dom";
 import { pathnameToLinks } from "@/lib/dom";
 
@@ -17,7 +11,7 @@ const Breadcrumbs = ({
   _links?: Array<{ path: string; text: string }>;
   className?: string;
 }) => {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const genlinks = pathnameToLinks(pathname);
   const [links, setLinks] = useState(_links ?? genlinks);
 

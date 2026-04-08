@@ -3,7 +3,7 @@ import { formatDate } from "@/lib/timeAndDate";
 import { Calendar, User } from "lucide-react";
 import { CardForm } from "./CardForm";
 import { DIALOG } from "@/components/Dialog";
-import { ConfirmDialog } from "@/components/Confirm-dialog";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { ICard } from "@/types/card.interface";
 import { IPlayer } from "@/types/player.interface";
 import { POPOVER } from "@/components/ui/popover";

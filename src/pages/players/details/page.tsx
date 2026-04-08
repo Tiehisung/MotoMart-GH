@@ -9,6 +9,8 @@ import {
 } from "@/services/player.endpoints";
 import PageLoader from "@/components/loaders/Page";
 import DataErrorAlert from "@/components/error/DataError";
+import { PageSEO } from "@/utils/PageSEO";
+import { ENV } from "@/lib/env";
 
 export default function PlayerProfilePage() {
   const [searchParams] = useSearchParams();
@@ -34,29 +36,20 @@ export default function PlayerProfilePage() {
   const name = `${player?.firstName} ${player?.lastName}`;
   const title = `${player?.firstName} ${player?.lastName} • ${ENV.APP_NAME}`;
   const description = `Player profile for ${name}. ${player?.position} wearing jersey #${player?.number}. Stats, appearances, goals, and career highlights.`;
- 
-  
-  useSEO({
-    title: title,
-    description: description,
-    ogImage: playerOgImage(playerId as string),
-  });
 
   if (isLoading) {
     return <PageLoader />;
   }
 
   if (!player) {
-    return <DataErrorAlert message={"Player Not Found"} />;
+    return <DataErrorAlert message={error} />;
   }
-
 
   return (
     <>
-      <PageSEO page="players" title={title} description={description}  />
+      <PageSEO page="players" title={title} description={description} />
 
       <main className="pl-2">
-       
         <PlayerProfile
           players={players?.data as IPlayer[]}
           galleries={galleries?.data}

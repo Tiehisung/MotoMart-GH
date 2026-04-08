@@ -1,4 +1,4 @@
-import { ConfirmDialog } from "@/components/Confirm-dialog";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { DIALOG } from "@/components/Dialog";
 import { Card } from "@/components/ui/card";
 import { POPOVER } from "@/components/ui/popover";

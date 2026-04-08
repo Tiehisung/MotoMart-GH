@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { formatDate } from "@/lib/timeAndDate";
 import { Calendar, User } from "lucide-react";
 import { DIALOG } from "@/components/Dialog";
-import { ConfirmDialog } from "@/components/Confirm-dialog";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import {
   EPlayerPosition,
   IPlayer,
@@ -22,17 +22,16 @@ interface IProps {
 }
 
 const MvpCard = ({ mvp, selectedPlayer }: IProps) => {
-
   const [deleteMvp] = useDeleteMvpMutation();
   const ui = PLAYER_POSITION_UI_MAP[mvp.positionPlayed as EPlayerPosition];
 
   const handleDelete = async () => {
     try {
       const result = await deleteMvp(mvp._id).unwrap();
-     smartToast(result);
-     fireEscape()
+      smartToast(result);
+      fireEscape();
     } catch (error) {
-      smartToast({error});
+      smartToast({ error });
     }
   };
 

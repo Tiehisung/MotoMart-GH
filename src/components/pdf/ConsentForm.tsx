@@ -205,7 +205,7 @@ export function ConsentForm({ players }: { players?: IPlayer[] }) {
     return <div>No player data available.</div>;
   }
   return (
-    <section className="_card gap-4 pb-20">
+    <section className=" gap-4 pb-20">
      
       <H>Player/Guardian Consent Form</H>
       <br />

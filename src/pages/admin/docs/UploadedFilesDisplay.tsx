@@ -15,7 +15,6 @@ import { Separator } from "@/components/ui/separator";
 import { FileInfoPane } from "./InfoModal";
 import { DIALOG } from "@/components/Dialog";
 import FileRenderer from "@/components/files/FileRender";
-import DisplayType from "@/components/DisplayType";
 import { getFileIconByExtension } from "@/data/file";
 import { formatDate } from "@/lib/timeAndDate";
 import { useAppSelector } from "@/store/hooks/store";
@@ -32,7 +31,7 @@ import {
 import { smartToast } from "@/utils/toast";
 import { StackModal } from "@/components/modals/StackModal";
 import { toggleClick } from "@/lib/dom";
-import { DocMoveTo } from "./folder/MoveTo";
+import { DocMoveTo } from "./files/MoveTo";
 import { Input } from "@/components/input/Inputs";
 import { useUpdateSearchParams } from "@/hooks/params";
 
@@ -68,7 +67,6 @@ export function UploadedFilesDisplay({
   return (
     <>
       <div className={`${className}`}>
-        <DisplayType />
         <section
           className={cn(
             "py-5 grid ",
@@ -226,13 +224,18 @@ export function DocumentFileCard({
         <span className="w-8 px-1">
           {getFileIconByExtension(format || secure_url)}
         </span>
-        <span className="text-sm line-clamp-1 grow">{original_filename}</span>
-        <span className=" text-nowrap font-light w-20">
-          {formatDate(file.createdAt)}
+        <span className="text-sm line-clamp-1 grow" title={original_filename}>
+          {original_filename}
         </span>
-        <span className=" line-clamp-1 text-sm">
-          {formatBytes(file.bytes as number)}
-        </span>
+        <div className="flex items-center ml-auto">
+          <span className="text-xs sm:text-sm text-nowrap font-light w-20">
+            {formatDate(file.createdAt)}
+          </span>
+          <span className="text-nowrap text-xs hidden sm:block sm:text-sm">
+            {formatBytes(file.bytes as number)}
+          </span>
+        </div>
+
         <div onClick={(e) => e.stopPropagation()}>
           <Actions />
         </div>
@@ -280,7 +283,7 @@ export function DocumentFileCard({
         </div>
       </header>
       <main>
-        <div className="h-56 w-full md:h-72 lg:h-[40vh]">
+        <div className="h-56 w-full md:h-60 lg:h-[40vh]">
           <FileRenderer
             file={{ ...file, thumbnail_url: getThumbnail(file) }}
             className="h-full w-full object-cover"

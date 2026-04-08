@@ -4,26 +4,38 @@ import { IFolder } from "@/types/doc";
 import { EUserRole } from "@/types/user";
 import { useState } from "react";
 import { useAppSelector } from "@/store/hooks/store";
-import { useCreateFolderMutation } from "@/services/docs.endpoints";
+import {
+  useCreateFolderMutation,
+  useUpdateFolderMutation,
+} from "@/services/docs.endpoints";
 import { smartToast } from "@/utils/toast";
 import { fireEscape } from "@/hooks/Esc";
 import { getErrorMessage } from "@/lib/error";
 import { CHECKBOX } from "@/components/input/Checkbox";
+import { IQueryResponse } from "@/types";
 
 export function FolderForm({ folder }: { folder?: IFolder }) {
   const [nameError, setNameError] = useState("");
   const [createFolder, { isLoading: creatingFolder, error }] =
     useCreateFolderMutation();
+  const [updateFolder, { isLoading: updatingFolder, error: updatingError }] =
+    useUpdateFolderMutation();
 
   const [formdata, setFormdata] = useState({
     name: folder?.name || "",
     description: folder?.description || "",
-    isDefault: folder?.isDefault || false,
+    isDefault: folder?.isDefault ,
   });
 
   const handleCreate = async () => {
     try {
-      const result = await createFolder({ ...formdata }).unwrap();
+      let result: IQueryResponse;
+
+      if (folder) {
+        result = await updateFolder({ ...formdata, _id: folder?._id }).unwrap();
+      } else {
+        result = await createFolder({ ...formdata }).unwrap();
+      }
       smartToast(result);
       fireEscape();
     } catch (error) {
@@ -56,7 +68,6 @@ export function FolderForm({ folder }: { folder?: IFolder }) {
         value={formdata.description}
       />
 
-    
       <CHECKBOX
         onChange={(ev) =>
           setFormdata((p) => ({ ...p, isDefault: ev.target.checked }))
@@ -69,12 +80,16 @@ export function FolderForm({ folder }: { folder?: IFolder }) {
       <Button
         onClick={handleCreate}
         primaryText={folder ? "Update Folder" : "Create Folder"}
-        waiting={creatingFolder}
+        waiting={creatingFolder || updatingFolder}
         waitingText={folder ? "Updating..." : "Creating..."}
         className="w-full"
       />
 
-      {error && <p className="text-red-500 mt-2">{getErrorMessage(error)}</p>}
+      {error && (
+        <p className="text-red-500 mt-2">
+          {getErrorMessage(error || updatingError)}
+        </p>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { ConfirmDialog } from "@/components/Confirm-dialog";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { shortText } from "@/lib";
 import { EMatchStatus, IMatch } from "@/types/match.interface";
 

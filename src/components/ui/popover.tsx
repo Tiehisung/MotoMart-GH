@@ -68,7 +68,7 @@ export function POPOVER({
   align,
   variant = "ghost",
   size = "icon",
-  id='popover',
+  id = "popover",
 }: IProps) {
   return (
     <Popover>
@@ -76,14 +76,20 @@ export function POPOVER({
         <Button
           variant={variant}
           size={size}
-          className={cn(`cursor-pointer transition-all select-none rounded-full `,triggerClassNames)}
+          className={cn(
+            `cursor-pointer transition-all select-none rounded-full `,
+            triggerClassNames,
+          )}
         >
           {trigger}
         </Button>
       </PopoverTrigger>
       <PopoverContent
         align={align}
-        className={`w-80 max-h-[80vh] overflow-y-auto _hideScrollbar  ${className}`}
+        className={cn(
+          `w-80 max-h-[80vh] overflow-y-auto _hideScrollbar `,
+          className,
+        )}
       >
         {children}
       </PopoverContent>

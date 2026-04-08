@@ -1,6 +1,6 @@
 import { Button } from "@/components/buttons/Button";
 import { PrimaryDropdown } from "@/components/Dropdown";
-import { DocMoveTo } from "./MoveTo";
+import { DocMoveTo } from "../../files/MoveTo";
 import { ConfirmActionButton } from "@/components/buttons/ConfirmAction";
 import { icons } from "@/assets/icons/icons";
 import { downloadFile } from "@/lib/file";
@@ -18,7 +18,7 @@ export function DocumentActions({
 }) {
   const [deleteDoc, { isLoading: deleting }] = useDeleteDocumentMutation();
 
-  const docName =   document?.original_filename;
+  const docName = document?.original_filename;
 
   const handleDelete = async () => {
     if (!document?._id) return;
@@ -49,7 +49,7 @@ export function DocumentActions({
             <icons.download className="text-muted-foreground" /> Download
           </Button>
         </li>
-        
+
         <li>
           <DocMoveTo
             trigger={
@@ -58,9 +58,7 @@ export function DocumentActions({
                 To
               </>
             }
-         
             document={document}
-
           />
         </li>
         <li>

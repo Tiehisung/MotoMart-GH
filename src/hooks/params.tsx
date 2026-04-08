@@ -75,26 +75,4 @@ export function useClearParams() {
   return { clearAll, clearOnly };
 }
 
-// Alternative version with window.location if you need to force a refresh
-export function useClearParamsWithRefresh() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const clearAll = () => {
-    navigate(location.pathname, { replace: true });
-    // Optional: force a refresh if needed
-    // window.location.reload();
-  };
-
-  const clearOnly = (...keys: string[]) => {
-    const params = new URLSearchParams(location.search);
-    keys.forEach((k) => params.delete(k));
-
-    const search = params.toString();
-    navigate(`${location.pathname}${search ? `?${search}` : ""}`, {
-      replace: true,
-    });
-  };
-
-  return { clearAll, clearOnly };
-}
+ 
