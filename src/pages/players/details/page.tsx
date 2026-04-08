@@ -7,10 +7,10 @@ import {
   useGetPlayersQuery,
   useGetPlayerStatsQuery,
 } from "@/services/player.endpoints";
-import { PageSEO } from "@/utils/PageSEO";
-import { TEAM } from "@/data/team";
 import PageLoader from "@/components/loaders/Page";
 import DataErrorAlert from "@/components/error/DataError";
+import { PageSEO } from "@/utils/PageSEO";
+import { ENV } from "@/lib/env";
 
 export default function PlayerProfilePage() {
   const [searchParams] = useSearchParams();
@@ -20,9 +20,11 @@ export default function PlayerProfilePage() {
     useGetPlayersQuery("");
   const { data: galleriesData, isLoading: galleriesLoading } =
     useGetGalleriesQuery(`tags=${playerId}`);
-  const { data: statsData, isLoading: statsLoading } = useGetPlayerStatsQuery(
-    playerId || "",
-  );
+  const {
+    data: statsData,
+    isLoading: statsLoading,
+    error,
+  } = useGetPlayerStatsQuery(playerId || "");
 
   const isLoading = playersLoading || galleriesLoading || statsLoading;
   const players = playersData;
@@ -31,24 +33,23 @@ export default function PlayerProfilePage() {
 
   const player = players?.data?.find((p) => p._id === playerId);
 
+  const name = `${player?.firstName} ${player?.lastName}`;
+  const title = `${player?.firstName} ${player?.lastName} • ${ENV.APP_NAME}`;
+  const description = `Player profile for ${name}. ${player?.position} wearing jersey #${player?.number}. Stats, appearances, goals, and career highlights.`;
+
   if (isLoading) {
     return <PageLoader />;
   }
 
   if (!player) {
-    return <DataErrorAlert message={"Player Not Found"} />;
+    return <DataErrorAlert message={error} />;
   }
-
-  const name = `${player?.firstName} ${player?.lastName}`;
-  const title = `${name} - ${player?.position} | ${TEAM.name}`;
-  const description = `Player profile for ${name}. ${player?.position} wearing jersey #${player?.number}. Stats, appearances, goals, and career highlights.`;
 
   return (
     <>
-      <PageSEO page="players" title={title} description={description}  />
+      <PageSEO page="players" title={title} description={description} />
 
       <main className="pl-2">
-       
         <PlayerProfile
           players={players?.data as IPlayer[]}
           galleries={galleries?.data}
