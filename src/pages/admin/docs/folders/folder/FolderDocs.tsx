@@ -1,4 +1,4 @@
-import { DragAndDropUpload } from "../../../../components/DragAndDrop";
+import { DragAndDropUpload } from "../../../../../components/DragAndDrop";
 import { useParams } from "react-router-dom";
 import { IDocFile } from "@/types/doc";
 import {
@@ -9,7 +9,7 @@ import { smartToast } from "@/utils/toast";
 import TableLoader from "@/components/loaders/Table";
 import DataErrorAlert from "@/components/error/DataError";
 import InfiniteLimitScroller from "@/components/InfiniteScroll";
-import { UploadedFilesDisplay } from "../UploadedFilesDisplay";
+import { UploadedFilesDisplay } from "../../UploadedFilesDisplay";
 
 export default function FolderDocuments() {
   const { folderId } = useParams<{ folderId: string }>();
@@ -24,12 +24,16 @@ export default function FolderDocuments() {
   const handleUpload = async (docs: IDocFile[]) => {
     try {
       if (docs.length == 0) return;
-      const result = await uploadeDoc({ folderId:folderId as string, files: docs }).unwrap();
+      const result = await uploadeDoc({
+        folderId: folderId as string,
+        files: docs,
+      }).unwrap();
       smartToast(result);
     } catch (error) {
       smartToast({ error });
     }
   };
+
   if (docsLoading) {
     return <TableLoader rows={3} cols={3} className="h-24" />;
   }

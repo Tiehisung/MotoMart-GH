@@ -7,9 +7,9 @@ export default function AdminDashboardPage() {
   return (
     <div className="  ">
       {/* Main Content */}
-      <main className="flex-1 _page px-4">
+      <main className="flex-1">
         <HEADER
-          className="bg-accent"
+          className=""
           title={"CLUB MANAGEMENT & CONTROL ADMIN"}
           subtitle="Manage your squad, track performance, insights and analysis"
         ></HEADER>

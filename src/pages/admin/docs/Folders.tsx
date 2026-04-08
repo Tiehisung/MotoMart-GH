@@ -1,39 +1,50 @@
-
 import { FolderActions } from "./FolderActions";
 import { PiFolderThin } from "react-icons/pi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGetFoldersQuery } from "@/services/docs.endpoints";
 import Loader from "@/components/loaders/Loader";
+import { Button } from "@/components/buttons/Button";
+import { ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export default function DocumentFolders() {
-  const { data: foldersData, isLoading } = useGetFoldersQuery();
-  const { pathname } = useLocation();
+export default function DocumentFolders({
+  defaultsOnly,
+}: {
+  defaultsOnly?: boolean;
+}) {
+  const navigate = useNavigate();
+  const { data: foldersData, isLoading } = useGetFoldersQuery({
+    isDefault: defaultsOnly ? "true" : "",
+  });
 
   if (isLoading) return <Loader />;
   return (
     <main className="flex items-start gap-4 ">
-      <ul className="grid grid-cols-2 sm:flex flex-wrap items-center justify-start gap-3 border rounded-2xl overflow-hidden w-fit">
+      <ul className="flex flex-wrap items-center justify-start border rounded-2xl w-full overflow-hidden ">
         {foldersData?.data?.map((f, index) => {
           return (
             <li
               key={index}
-              className="flex _hover relative group select-auto sm:w-32 "
+              className="flex _hover relative group select-auto w-28 overflow-hidden"
             >
-              <Link to={`${pathname}/folders/${f?._id}`} className="flex grow p-2">
+              <Link
+                to={`/admin/docs/folders/${f?._id}`}
+                className="flex grow px-2"
+              >
                 <div className=" flex flex-col justify-center items-center grow ">
                   <PiFolderThin
-                    className={`text-Orange/80 text-7xl lg:text-8xl dark:text-Orange ${
-                      f?.isDefault
-                        ? "text-muted-foreground dark:text-muted-foreground"
-                        : ""
-                    }`}
+                    className={cn(
+                      `text-muted-foreground text-7xl lg:text-8xl`,
+                      f?.isDefault ? " text-primary" : "",
+                    )}
                     size={44}
                   />
                   <span className="font-light text-sm text-muted-foreground mx-auto">
-                    {f?.docsCount ?? 0} file{f?.documents?.length==1?'':'s'}
+                    {f?.docsCount ?? 0} file
+                    {f?.documents?.length == 1 ? "" : "s"}
                   </span>
 
-                  <span className="text-sm capitalize font-normal text line-clamp-2 text-center h-10 ">
+                  <span className="text-xs capitalize font-normal text line-clamp-2 text-center h-10 w-28 wrap-break-word ">
                     {f?.name}
                   </span>
                 </div>
@@ -45,7 +56,17 @@ export default function DocumentFolders() {
           );
         })}
 
-        
+        {defaultsOnly && (
+          <li className="flex items-center justify-center relative sm:w-32 ">
+            <Button
+              variant={"ghost"}
+              className="h-20 px-6 font-normal items-center flex "
+              onClick={() => navigate("/admin/docs/folders")}
+            >
+              More <ChevronRight />
+            </Button>
+          </li>
+        )}
       </ul>
     </main>
   );

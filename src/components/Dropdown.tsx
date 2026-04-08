@@ -20,7 +20,7 @@ export function PrimaryDropdown({
   hideAngle = true,
   align = "end",
   size = "icon-sm",
-  variant='secondary',
+  variant='ghost',
 }: {
   children: ReactNode;
   trigger?: ReactNode;
@@ -39,7 +39,7 @@ export function PrimaryDropdown({
           variant={variant}
           size={size}
           className={cn(
-            ` gap-1 flex items-center cursor-pointer bg-muted text-muted-foreground backdrop-blur-sm p-2 rounded-full `,
+            ` gap-1 flex items-center cursor-pointer text-muted-foreground p-2 rounded-full `,
             triggerStyles
           )}
         >

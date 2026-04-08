@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button, TButtonSize, TButtonVariant } from "@/components/ui/button";
+import { TButtonSize, TButtonVariant } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   AlertDialog,
@@ -13,6 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
+import { Button } from "./buttons/Button";
 
 interface ConfirmDialogProps {
   title?: string;
@@ -27,7 +28,6 @@ interface ConfirmDialogProps {
   className?: string;
   onConfirm?: () => Promise<void> | void;
   isLoading?: boolean;
-  loadingText?: string;
 }
 
 export function ConfirmDialog({
@@ -43,7 +43,6 @@ export function ConfirmDialog({
   triggerStyles,
   onConfirm,
   isLoading: externalLoading,
-  loadingText = "Please wait...",
 }: ConfirmDialogProps) {
   const [internalLoading, setInternalLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -104,9 +103,9 @@ export function ConfirmDialog({
               variant={variant}
               onClick={handleConfirm}
               disabled={isLoading}
-            >
-              {isLoading ? loadingText : confirmText}
-            </Button>
+              waiting={isLoading}
+              primaryText={confirmText}
+            />
           </AlertDialogAction>
 
           {/* Option 2: Or just use a regular Button without AlertDialogAction */}

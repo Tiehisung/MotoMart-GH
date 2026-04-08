@@ -1,5 +1,5 @@
 // documents.endpoints.ts
-import type { IQueryResponse } from "@/types";
+import type { IQueryParams, IQueryResponse } from "@/types";
 import { api } from "./api";
 import type { IDocFile, IFolder, } from "@/types/doc";
 import { formatError } from "@/lib/error";
@@ -8,8 +8,8 @@ const documentsApi = api.injectEndpoints({
     endpoints: (builder) => ({
 
         // Document endpoints
-        getDocuments: builder.query<IQueryResponse<IDocFile[]>, string | void>({
-            query: (queryString = "") => `/documents${queryString}`,
+        getDocuments: builder.query<IQueryResponse<IDocFile[]>, IQueryParams>({
+            query: (params) => ({ url: `/documents`, params }),
             providesTags: ["Folders", 'Documents'],
             transformErrorResponse: (response) => formatError(response),
         }),
@@ -73,8 +73,8 @@ const documentsApi = api.injectEndpoints({
         }),
 
         // Folder endpoints
-        getFolders: builder.query<IQueryResponse<IFolder[]>, void>({
-            query: () => `/documents/folders`,
+        getFolders: builder.query<IQueryResponse<IFolder[]>, IQueryParams>({
+            query: (params) => ({ url: `/documents/folders`, params }),
             providesTags: ["Folders", 'Documents'],
             transformErrorResponse: (response) => formatError(response),
 

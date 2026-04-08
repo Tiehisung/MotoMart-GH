@@ -13,6 +13,7 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import { fireDoubleEscape } from "@/hooks/Esc";
 import { cn } from "@/lib/utils";
+import { LoadingSpinner } from "./loaders/LoadingSpinner";
 
 interface IDialog {
   hideCloseBtn?: boolean;
@@ -29,6 +30,7 @@ interface IDialog {
   onOpen?: (b: boolean) => void;
   escapeOnClose?: boolean;
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 export const DIALOG: FC<IDialog> = ({
@@ -45,6 +47,7 @@ export const DIALOG: FC<IDialog> = ({
   modal = true,
   escapeOnClose = true,
   disabled,
+  isLoading,
 }) => {
   if (!trigger) return null;
   return (
@@ -76,7 +79,7 @@ export const DIALOG: FC<IDialog> = ({
         </DialogHeader>
 
         <main className={` max-h-[80vh] overflow-y-auto max-w-full pb-6`}>
-          {children}
+          {isLoading ? <LoadingSpinner /> : children}
         </main>
 
         <DialogFooter>

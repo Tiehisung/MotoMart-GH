@@ -1,14 +1,11 @@
- 
-
-import { ConfirmActionButton } from "@/components/buttons/ConfirmAction";
 import { PrimaryDropdown } from "@/components/Dropdown";
-import { Edit } from "lucide-react";
-import { MdOutlineDelete } from "react-icons/md";
+import { Edit, Trash } from "lucide-react";
 import { DIALOG } from "@/components/Dialog";
 import { FolderForm } from "./FolderForm";
 import { IFolder } from "@/types/doc";
 import { useDeleteFolderMutation } from "@/services/docs.endpoints";
 import { fireEscape } from "@/hooks/Esc";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 interface IProps {
   folder?: IFolder;
@@ -20,17 +17,21 @@ export function FolderActions({ folder }: IProps) {
   const handleDelete = async () => {
     if (!folder?._id) return;
     await deleteFolder(folder._id);
-    fireEscape()
+    fireEscape();
   };
   return (
-    <PrimaryDropdown id={folder?._id} className="grid gap-1.5 p-4">
+    <PrimaryDropdown
+      id={folder?._id}
+      className="grid gap-1.5 p-4"
+      triggerStyles="rotate-90 opacity-90 _shrink"
+    >
       <DIALOG
         trigger={
           <>
             <Edit className="text-muted-foreground" /> Edit
           </>
         }
-        triggerStyles="justify-start"
+        triggerStyles="justify-start font-normal"
         title={<p>Edit folder - {folder?.name}</p>}
         escapeOnClose
         variant={"ghost"}
@@ -38,27 +39,23 @@ export function FolderActions({ folder }: IProps) {
         <FolderForm folder={folder} />
       </DIALOG>
 
-      <ConfirmActionButton
-        primaryText="Delete"
-        trigger={
-          <>
-            <MdOutlineDelete size={24} /> Delete
-          </>
-        }
-        triggerStyles={"justify-start"}
-        title="Delete Folder"
-        variant={"ghost"}
-        confirmVariant="delete"
-        confirmText={`Are you sure you want to delete ${folder?.name}? ${
+      <ConfirmDialog
+        description={`Are you sure you want to delete ${folder?.name}? ${
           (folder?.docsCount ?? folder?.documents?.length ?? 0) > 0
             ? `${folder?.docsCount} file${
                 folder?.docsCount !== 1 ? "s" : ""
               } in this folder will be deleted as well!`
             : ""
         } `}
-        escapeOnEnd
-        disabled={folder?.isDefault}
         onConfirm={handleDelete}
+        trigger={
+          <>
+            <Trash size={24} className="text-muted-foreground" /> Delete
+          </>
+        }
+        triggerStyles={"justify-start font-normal"}
+        title="Delete Folder"
+        variant={"ghost"}
         isLoading={isLoading}
       />
     </PrimaryDropdown>

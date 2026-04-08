@@ -3,7 +3,7 @@ import { IQueryResponse } from "@/types";
 import { PrimaryDropdown } from "@/components/Dropdown";
 import { LVOutPutTable } from "@/components/tables/VerticalTable";
 import { Edit, Plus, Trash } from "lucide-react";
-import { ConfirmDialog } from "@/components/Confirm-dialog";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { StackModal } from "@/components/modals/StackModal";
 
 import { useDeleteTeamMutation } from "@/services/team.endpoints";
@@ -57,7 +57,7 @@ const DisplayTeams = ({ teams }: { teams?: IQueryResponse<ITeam[]> }) => {
             <p className="_heading">{team?.name}</p>
             <div className="flex flex-wrap gap-3.5">
               <img
-                src={team?.logo }
+                src={team?.logo}
                 alt={team?.name ?? "logo"}
                 className="object-cover h-60 w-60 aspect-4/3 rounded-xl"
               />

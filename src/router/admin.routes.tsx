@@ -21,7 +21,7 @@ import SquadPage from "@/pages/admin/squad/page";
 import FinancePage from "@/pages/admin/finance/page";
 import DocsPage from "@/pages/admin/docs/page";
 import AllDocsPage from "@/pages/admin/docs/files/page";
-import FolderPage from "@/pages/admin/docs/folder/page";
+import FolderPage from "@/pages/admin/docs/folders/folder/page";
 import CardsPage from "@/pages/admin/cards/page";
 import TeamsPage from "@/pages/admin/teams/page";
 import TrainingSettingsAdm from "@/pages/admin/training/page";
@@ -42,6 +42,7 @@ import UploadPage from "@/pages/admin/media/upload/page";
 import CreateNewsPage from "@/pages/admin/news/create-news/page";
 import AdminTeamsLayout from "@/pages/admin/teams/layout";
 import TeamPage from "@/pages/admin/teams/team/Page";
+import FoldersPage from "@/pages/admin/docs/folders/Page";
 
 export const adminRoutes: RouteObject[] = [
   { path: "", element: <AdminDashboardPage /> },
@@ -109,7 +110,13 @@ export const adminRoutes: RouteObject[] = [
     children: [
       { index: true, element: <DocsPage /> },
       { path: "files", element: <AllDocsPage /> },
-      { path: "folders/:folderId", element: <FolderPage /> },
+      {
+        path: "folders",
+        children: [
+          { index: true, element: <FoldersPage /> },
+          { path: ":folderId", element: <FolderPage /> },
+        ],
+      },
     ],
   },
   {

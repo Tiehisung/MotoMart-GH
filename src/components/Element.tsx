@@ -19,18 +19,18 @@ export default function HEADER({
 }) {
   return (
     <header
-      className={cn(
-        `border-b border-border grow `,
-        "font-noto-sans-georgian", // Using the font class
-        className,
-      )}
+      className={cn(`border-b border-border grow mb-6 pb-2`, "pt-4", className)}
     >
       <div className={`mx-auto`}>
-        <H >{title}</H>
+        <div className="font-semibold text-xl md:text-2x font-open-sans">
+          {title}
+        </div>
         {subtitle && (
-          <div className={`font-light text-muted-foreground text-lg`}>
+          <p
+            className={`font-normal text-sm text-muted-foreground font-ibarra-real-nova`}
+          >
             {subtitle}
-          </div>
+          </p>
         )}
       </div>
       <div>{children}</div>
@@ -65,7 +65,7 @@ export function TITLE({ text, icon }: IProps) {
 
 export function H({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-2 my-6 font-semibold text-3xl tracking-wide">
+    <div className="flex items-center gap-2 my-4 font-semibold text-3xl tracking-wide">
       {children}
     </div>
   );

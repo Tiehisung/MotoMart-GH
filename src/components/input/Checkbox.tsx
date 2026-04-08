@@ -19,7 +19,7 @@ export const CHECKBOX = React.forwardRef<HTMLInputElement, CheckboxProps>(
             className={cn("rounded border-gray-300 ", className)}
             {...props}
           />
-          {label && <span className="text-sm text-gray-700">{label}</span>}
+          {label && <span className="text-sm ">{label}</span>}
         </label>
         {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
       </div>

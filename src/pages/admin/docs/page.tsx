@@ -19,7 +19,7 @@ export default function DocsPage() {
     return (
       <div>
         <HEADER title="DOCUMENTATION" />
-        <main className="_page mt-6 pb-6">
+        <main className=" mt-6 pb-6">
           <div className="flex justify-center items-center min-h-100">
             <Loader message="Loading documents..." />
           </div>
@@ -34,17 +34,13 @@ export default function DocsPage() {
       <main className="mt-6 pb-6">
         <RecentDocs />
 
-        <section className=" my-6">
-          <DocumentUploader className="w-fit my-2 " />
-        </section>
+        <DocumentUploader className="w-fit  my-6" />
 
-        <DocumentFolders />
-
-        <br />
+        <DocumentFolders defaultsOnly/>
 
         <Divider
           content="GENERATE CONSENT FORMS"
-          className="text-Orange my-6"
+          className="text-mteted-foreground my-6"
         />
 
         <ConsentForm players={players?.data} />

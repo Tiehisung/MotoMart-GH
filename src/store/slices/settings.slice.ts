@@ -4,10 +4,12 @@ interface IinitState {
   displayType: 'grid' | 'list';
   news: Record<string, any>;
   player: Record<string, any>;
+   
 }
 // Initial state with proper type
 const initialState: IinitState = {
   displayType: 'grid',
+ 
 
   //not implemented
   news: {},
