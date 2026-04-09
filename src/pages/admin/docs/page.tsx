@@ -33,8 +33,6 @@ export default function DocsPage() {
       <main className="mt-6 pb-6">
         <RecentDocs />
 
-      
-
         <DocumentFolders defaultsOnly />
 
         <Divider

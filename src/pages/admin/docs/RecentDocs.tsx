@@ -26,22 +26,19 @@ export function RecentDocs() {
           <DocumentUploader className="w-fit" /> <DisplayType />
         </div>
       </header>
-      <main>
-        <div className="mb-6 space-y-2 divide-y">
-          <DocFilesDisplay
-            files={recentDocs?.data!}
-            showMetadata={true}
-            deletable={true}
-          />
-          <div className="py-6">
-            <Link
-              to="/admin/docs/files"
-              className="_link border rounded-full py-2 px-5 flex items-center justify-between gap-3"
-            >
-              View More <ChevronRight />
-            </Link>
-          </div>
-        </div>
+      <main className="mb-6 space-y-2">
+        <DocFilesDisplay
+          files={recentDocs?.data!}
+          showMetadata={true}
+          deletable={true}
+        />
+
+        <Link
+          to="/admin/docs/files"
+          className="_link border rounded-full py-2 px-5 flex items-center justify-between gap-3"
+        >
+          View More <ChevronRight />
+        </Link>
       </main>
       <br />
     </div>
