@@ -62,6 +62,7 @@ import AdminUsersPage from "@/pages/admin/AdminUsersPage";
 import AdminListingDetailPage from "@/pages/admin/listing/AdminListingDetailPage";
 import AdminUserDetailPage from "@/pages/admin/AdminUserDetailPage";
 import AdminInspectionDetailPage from "@/pages/admin/inspection/AdminInspectionDetailPage";
+import DashboardLayout from "@/pages/dashboard/Layout";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -74,7 +75,7 @@ const AdminLayoutWithScroll = () => (
 const DashboardLayoutWithScroll = () => (
   <>
     <ScrollToTop />
-    {/* <DashboardLayout /> */}
+    <DashboardLayout />
   </>
 );
 

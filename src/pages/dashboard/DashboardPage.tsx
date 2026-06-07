@@ -56,6 +56,8 @@ const DashboardPage = () => {
     },
   ];
 
+  console.log("Current User:", currentUser,listings);
+
   return (
     <div className="space-y-8">
       {/* Header */}
