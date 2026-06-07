@@ -1,7 +1,7 @@
 import { EUserRole } from '@/types/user';
 import { z } from 'zod';
 
-export const loginSchema = z.object({
+export const signinSchema = z.object({
     phoneNumber: z
         .string()
         .min(1, 'Phone number is required')
@@ -36,5 +36,5 @@ export const registerSchema = z.object({
     path: ['confirmPassword'],
 });
 
-export type ILoginFormData = z.infer<typeof loginSchema>;
+export type ISigninFormData = z.infer<typeof signinSchema>;
 export type IRegisterFormData = z.infer<typeof registerSchema>;

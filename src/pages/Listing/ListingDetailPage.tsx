@@ -46,6 +46,8 @@ const ListingDetailPage = () => {
 
     try {
       const result = await contactSeller(listingId!).unwrap();
+
+      console.log(result)
       setShowContact(true);
       toast.success('Contact details retrieved', {
         description: 'Remember: never pay before seeing the bike in person.',

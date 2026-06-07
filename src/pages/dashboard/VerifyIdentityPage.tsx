@@ -98,7 +98,7 @@ const VerifyIdentityPage = () => {
           <label className="block text-sm font-medium text-surface-foreground mb-1.5">
             Ghana Card Photo
           </label>
-          <div className="border-2 border-dashed border-border rounded-2xl p-6 text-center hover:border-brand/50 transition-colors cursor-pointer">
+          <div className= " relative border-2 border-dashed border-border rounded-2xl p-6 text-center hover:border-brand/50 transition-colors cursor-pointer">
             {ghanaCard ? (
               <div className="flex items-center gap-2 text-success">
                 <HiOutlineCheckCircle className="w-5 h-5" />
@@ -131,7 +131,7 @@ const VerifyIdentityPage = () => {
           <label className="block text-sm font-medium text-surface-foreground mb-1.5">
             Selfie with Ghana Card
           </label>
-          <div className="border-2 border-dashed border-border rounded-2xl p-6 text-center hover:border-brand/50 transition-colors cursor-pointer relative">
+          <div className= " relative border-2 border-dashed border-border rounded-2xl p-6 text-center hover:border-brand/50 transition-colors cursor-pointer ">
             {selfie ? (
               <div className="flex items-center gap-2 text-success">
                 <HiOutlineCheckCircle className="w-5 h-5" />

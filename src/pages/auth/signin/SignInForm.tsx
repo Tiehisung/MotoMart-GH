@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate,   } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -14,9 +14,9 @@ import {
 } from "react-icons/hi2";
 import { useAppDispatch } from "@/store/hooks/store";
 import { setCredentials } from "@/store/slices/auth.slice";
-import { ILoginFormData, loginSchema } from "@/components/auth/validations";
+import { ISigninFormData,   signinSchema} from "@/pages/auth/validations";
 
-const SignInPage = () => {
+const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState("");
 
@@ -24,17 +24,17 @@ const SignInPage = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ILoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<ISigninFormData>({
+    resolver: zodResolver(signinSchema),
   });
 
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = (location.state as any)?.from?.pathname || "/dashboard";
+  // const location = useLocation();
+  // const from = (location.state as any)?.from?.pathname;
 
-  const onSubmit = async (data: ILoginFormData) => {
+  const onSubmit = async (data: ISigninFormData) => {
     setServerError("");
 
     try {
@@ -43,11 +43,14 @@ const SignInPage = () => {
         password: data.password,
       }).unwrap();
 
-      dispatch(setCredentials({ user: result.user, token: result.token }));
+      const { user, token } = result;
+
+      dispatch(setCredentials({ user, token }));
       toast.success("Welcome back! 👋", {
         description: `Signed in as ${result.user.fullName}`,
       });
-      navigate(from, { replace: true });
+      const path =  (user.role === "admin" ? "/admin" : "/dashboard");
+      navigate(path, { replace: true });
     } catch (err: any) {
       const message = err?.data?.message || "Invalid credentials";
       setServerError(message);
@@ -134,4 +137,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default SignInForm;

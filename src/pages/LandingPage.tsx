@@ -28,7 +28,7 @@ const HomePage = () => {
   return (
     <div className="space-y-10 pb-12">
       {/* ============ HERO ============ */}
-      <section className="text-center pt-10 pb-4">
+      <section className="text-center pt-16 pb-4">
         <div className="inline-flex items-center gap-2 bg-brand-muted text-brand text-xs font-medium px-3 py-1 rounded-full mb-4">
           <HiOutlineShieldCheck className="w-3.5 h-3.5" />
           Trusted marketplace in Upper West

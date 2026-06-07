@@ -12,13 +12,13 @@ import {
   HiOutlinePhone,
   HiOutlineUser,
 } from "react-icons/hi2";
-import { IRegisterFormData, registerSchema } from "@/components/auth/validations";
+import { IRegisterFormData, registerSchema } from "@/pages/auth/validations";
 import { useAppDispatch } from "@/store/hooks/store";
 import { EUserRole } from "@/types/user";
 import { setCredentials } from "@/store/slices/auth.slice";
 import { cn } from "@/lib/utils";
 
-const RegisterPage = () => {
+const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState("");
 
@@ -204,4 +204,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default RegisterForm;

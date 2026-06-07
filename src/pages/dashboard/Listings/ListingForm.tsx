@@ -68,7 +68,7 @@ const ListingForm = () => {
   });
 
   const hasDocuments = watch("hasDocuments");
-  const listingType = watch("listingType");
+ 
 
   const onSubmit = async (data: ICreateListingFormData) => {
     try {

@@ -1,5 +1,6 @@
 import { IUser } from '@/types/user';
 import { api } from './api';
+import { IRegisterFormData, ISigninFormData } from '@/pages/auth/validations';
 
 export interface IAuthResponse {
   success: boolean;
@@ -10,10 +11,10 @@ export interface IAuthResponse {
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    register: builder.mutation<IAuthResponse, { fullName: string; phoneNumber: string; password: string; role: string }>({
+    register: builder.mutation<IAuthResponse, Exclude<IRegisterFormData, 'confirmPassword'>>({
       query: (body) => ({ url: '/auth/register', method: 'POST', body }),
     }),
-    login: builder.mutation<IAuthResponse, { phoneNumber: string; password: string }>({
+    login: builder.mutation<IAuthResponse, ISigninFormData>({
       query: (body) => ({ url: '/auth/login', method: 'POST', body }),
     }),
     getMe: builder.query<{ success: boolean; user: IUser }, void>({

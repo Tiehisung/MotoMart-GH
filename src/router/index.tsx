@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import ScrollToTop from "@/utils/ScrollToTop";
-import AdminLayout from "@/pages/admin/layout";
 
 // Layouts
 // import MainLayout from "@/layouts/MainLayout";
@@ -15,7 +14,7 @@ import AdminLayout from "@/pages/admin/layout";
 // import NotFound from "@/pages/public/NotFound";
 
 // Auth Pages
-import RegisterPage from "@/pages/auth/RegisterPage";
+import RegisterPage from "@/pages/auth/register/Page";
 // import NotAuthorizedPage from "@/pages/auth/NotAuthorizedPage";
 
 // Dashboard Pages (Seller/Buyer)
@@ -36,14 +35,14 @@ import RegisterPage from "@/pages/auth/RegisterPage";
 // import AdminPaymentsPage from "@/pages/admin/AdminPaymentsPage";
 
 // Components
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import ProtectedRoute from "@/pages/auth/ProtectedRoute";
 import { EUserRole } from "@/types/user";
 import HomePage from "@/pages/LandingPage";
 import MainLayout from "@/pages/Layout";
 import NotFound from "@/pages/NotFound";
 import NotAuthorizedPage from "@/pages/auth/NotAuthorized";
 import AuthLayout from "@/pages/auth/AuthLayout";
-import SignInPage from "@/pages/auth/SigninPage";
+import SignInPage from "@/pages/auth/signin/Page";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
 import ListingDetailPage from "@/pages/Listing/ListingDetailPage";
 import CreateListingPage from "@/pages/dashboard/Listings/CreateListingPage";
@@ -63,6 +62,7 @@ import AdminListingDetailPage from "@/pages/admin/listing/AdminListingDetailPage
 import AdminUserDetailPage from "@/pages/admin/AdminUserDetailPage";
 import AdminInspectionDetailPage from "@/pages/admin/inspection/AdminInspectionDetailPage";
 import DashboardLayout from "@/pages/dashboard/Layout";
+import AdminLayout from "@/pages/admin/AdminLayout";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -214,6 +214,7 @@ const applicationRouter = createBrowserRouter([
         ],
       },
       { path: "payments", element: <AdminPaymentsPage /> },
+      { path: "profile", element: <ProfilePage /> },
     ],
   },
 ]);
