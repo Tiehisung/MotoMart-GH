@@ -34,6 +34,7 @@ export function Button({
   variant,
   size,
   id,
+  loadingText,
 }: ClickButtonProps) {
   return (
     <Btn
@@ -49,7 +50,7 @@ export function Button({
       style={styles}
       id={id}
     >
-      <span hidden={!text}>{text}</span>
+      <span hidden={!text}>{loading && loadingText ? loadingText : text}</span>
       {loading ? <VscLoading className={` animate-spin `} /> : children}
     </Btn>
   );

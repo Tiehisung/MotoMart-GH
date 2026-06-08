@@ -51,7 +51,7 @@ const NotAuthorizedPage = () => {
           </Link>
           <BackBtn
             label="Return"
-            className="_primaryBtn px-6 py-2 transition duration-200"
+            className=" px-6 py-2 transition duration-200"
           />
         </div>
 
