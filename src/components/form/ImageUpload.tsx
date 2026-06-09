@@ -16,7 +16,7 @@ interface ImageUploadProps {
   maxFileSize?: number;
 }
 
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];     
 const DEFAULT_MAX_SIZE = 5; // 5MB
 
 export const ImageUpload = ({

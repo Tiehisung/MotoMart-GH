@@ -8,7 +8,7 @@ import { HiOutlineArrowLeft } from "react-icons/hi2";
 import { useCreateListingMutation } from "@/services/listingsApi";
 import { useListingForm } from "@/hooks/useListingForm";
 import { Input, Select, Textarea } from "@/components/form";
-import { ImageUpload, validateImages } from "@/components/form/ImageUpload";
+import { ImageUpload, validateImages } from "@/components/form/ImageUpload";   
 import {
   createListingSchema,
   type ICreateListingFormData,
