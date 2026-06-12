@@ -1,3 +1,4 @@
+import { ThemeModeToggle } from "@/components/ThemeToggle";
 import { symbols } from "@/data";
 
 const Footer = () => {
@@ -8,8 +9,9 @@ const Footer = () => {
           <div className="flex items-center gap-2">
             <span className="text-lg pb-2 animate-pulse">{symbols.motor}</span>
             <span className="font-display font-semibold text-surface-700">
-              Moto<span className="text-brand-500">Trust</span>
+              Moto<span className="text-brand">Trust</span>
             </span>
+            <ThemeModeToggle className="w-full" />
           </div>
           <p className="text-xs text-surface-400">
             © {new Date().getFullYear()} MotoTrust. Built in Wa, Upper West.
