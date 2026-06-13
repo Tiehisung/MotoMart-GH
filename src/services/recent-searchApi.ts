@@ -1,8 +1,8 @@
 // services/recent-search.endpoints.ts
 import { IRecentSearch } from "@/store/slices/recentSearch.slice";
-import { api } from "./api";
+import { api } from "./_api";
 
- 
+
 export const recentSearchApi = api.injectEndpoints({
     endpoints: (builder) => ({
         // Sync local searches with backend (optional)

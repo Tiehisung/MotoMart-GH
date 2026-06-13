@@ -20,8 +20,8 @@ export const api = createApi({
         'User', 'Users', 'Listings', 'MyListings', 'Payments',
         'Inspections', 'Uploads', 'Me', 'Brands', 'Locations'
     ],
-    // keepUnusedDataFor: 300, // Keep data for 5 minutes (in seconds)
-    // refetchOnMountOrArgChange: 30, // Refetch if data is older than 30 seconds
+    refetchOnMountOrArgChange: true,  // Refetch when component mounts OR params change
+    keepUnusedDataFor: 0,            // Don't keep unused data (prevents stale cache across users)
     endpoints: () => ({}),
 
 });

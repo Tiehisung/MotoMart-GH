@@ -172,20 +172,11 @@ const MyListingsPage = () => {
 
 export default MyListingsPage;
 
-
-
-
-// ============================================
-// TYPES
-// ============================================
 interface SellerListingCardProps {
   listing: IListing;
   onUpdate?: () => void; // Callback to refresh parent list
 }
 
-// ============================================
-// STATUS CONFIG
-// ============================================
 const STATUS_CONFIG: Record<
   string,
   {
@@ -221,9 +212,6 @@ const STATUS_CONFIG: Record<
   },
 };
 
-// ============================================
-// COMPONENT
-// ============================================
 const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
   const [deleteListing] = useDeleteListingMutation();
   const [markAsSold, { isLoading: isSelling }] = useMarkAsSoldMutation();
@@ -244,9 +232,6 @@ const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
   const statusConfig = STATUS_CONFIG[listing.status] || STATUS_CONFIG.pending;
   const StatusIcon = statusConfig.icon;
 
-  // ============================================
-  // HANDLERS
-  // ============================================
   const handleDelete = async () => {
     try {
       await deleteListing(listing._id).unwrap();
@@ -281,9 +266,6 @@ const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
     }).format(price);
   };
 
-  // ============================================
-  // RENDER
-  // ============================================
   return (
     <>
       <div className="bg-surface-elevated border border-border rounded-2xl overflow-hidden hover:shadow-md transition-all">
@@ -478,15 +460,12 @@ const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
             <ConfirmDialog
               onConfirm={handleDelete}
               trigger={
-                <div
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-red-400
-                  hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
-                  title="Delete listing"
-                >
+                <>
                   <HiOutlineTrash className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Delete</span>
-                </div>
+                  {/* <span className="hidden sm:inline">Delete</span> */}
+                </>
               }
+            size={'sm'}
               title={`Delete "${listing.brand} ${listing.model || ""}"?`}
               description="This action cannot be undone. All images and data will be permanently removed."
               confirmText="Delete"
@@ -513,4 +492,3 @@ const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
     </>
   );
 };
-

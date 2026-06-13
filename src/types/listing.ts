@@ -71,5 +71,5 @@ export enum EListingStatus {
     Approved = 'approved',
     Rejected = 'rejected',
     Sold = 'sold',
-    Expired = 'expired'
+    Expired = 'expired',
 }

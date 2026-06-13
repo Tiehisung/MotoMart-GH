@@ -1,5 +1,5 @@
 import { ICloudinaryFile, } from '@/types/file.interface';
-import { api } from './api';
+import { api } from './_api';
 import { IQueryResponse } from '@/types';
 
 export interface UploadMixedResponse {
@@ -114,7 +114,7 @@ export const {
     useUploadVideoMutation,
     useUploadDocumentMutation,
 
- 
+
 
     // Mixed upload hooks
     useUploadMixedMutation,

@@ -109,7 +109,7 @@ const PaymentModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 -bottom-12 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="bg-surface-elevated rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5">
         {/* Header */}
         <div className="flex items-center justify-between">

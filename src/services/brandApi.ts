@@ -1,5 +1,5 @@
 import { IQueryResponse } from '@/types';
-import { api } from './api';
+import { api } from './_api';
 
 export interface IBrandData {
     _id: string;

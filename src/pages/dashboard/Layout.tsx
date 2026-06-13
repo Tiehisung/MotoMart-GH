@@ -23,37 +23,45 @@ type DashboardLink = {
 export const sellerDashboardQuickLinks: DashboardLink[] = [
   {
     href: "/dashboard/listings",
-    icon: <HiOutlinePlusCircle />,
+    icon: <HiOutlinePlusCircle className="w-5 h-5" />,
     label: "My Listings",
   },
   {
     href: "/dashboard/payments",
-    icon: <HiOutlineCreditCard />,
+    icon: <HiOutlineCreditCard className="w-5 h-5" />,
     label: "Payments",
   },
   {
     href: "/dashboard/inspections",
-    icon: <HiOutlineClipboardDocumentCheck />,
+    icon: <HiOutlineClipboardDocumentCheck className="w-5 h-5" />,
     label: "Inspections",
   },
-  { href: "/dashboard/profile", icon: <HiOutlineUser />, label: "Profile" },
+  {
+    href: "/dashboard/profile",
+    icon: <HiOutlineUser className="w-5 h-5" />,
+    label: "Profile",
+  },
   {
     href: "/dashboard/verify-identity",
-    icon: <HiOutlineShieldCheck />,
+    icon: <HiOutlineShieldCheck className="w-5 h-5" />,
     label: "Verify Identity",
   },
 ];
 export const buyerDashboardQuickLinks: DashboardLink[] = [
   {
     href: "/dashboard/payments",
-    icon: <HiOutlineCreditCard />,
+    icon: <HiOutlineCreditCard className="w-5 h-5" />,
     label: "Payments",
   },
 
-  { href: "/dashboard/profile", icon: <HiOutlineUser />, label: "Profile" },
+  {
+    href: "/dashboard/profile",
+    icon: <HiOutlineUser className="w-5 h-5" />,
+    label: "Profile",
+  },
   {
     href: "/dashboard/verify-identity",
-    icon: <HiOutlineShieldCheck />,
+    icon: <HiOutlineShieldCheck className="w-5 h-5" />,
     label: "Verify Identity",
   },
 ];
@@ -67,7 +75,7 @@ const DashboardLayout = () => {
   const sidebarLinks = [
     {
       href: "/dashboard",
-      icon: <HiOutlineHome />,
+      icon: <HiOutlineHome className="w-5 h-5" />,
       label: "Overview",
       end: true,
     },
@@ -121,10 +129,9 @@ const DashboardLayout = () => {
             to="/"
             className="font-display font-bold text-xl text-surface-foreground"
           >
-            <div className='flex items-center '>
-
-            <span className="pb-2.5"> {symbols.motor}</span> Moto
-            <span className="text-brand">Trust</span>
+            <div className="flex items-center ">
+              <span className="pb-2.5"> {symbols.motor}</span> Moto
+              <span className="text-brand">Trust</span>
             </div>
           </Link>
         </div>

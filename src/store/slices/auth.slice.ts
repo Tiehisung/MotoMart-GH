@@ -9,8 +9,8 @@ interface AuthState {
 
 const initialState: AuthState = {
     user: null,
-    token: localStorage.getItem('mototrust_token'),
-    isAuthenticated: !!localStorage.getItem('mototrust_token'),
+    token: localStorage.getItem('motomart_token'),
+    isAuthenticated: !!localStorage.getItem('motomart_token'),
 };
 
 const authSlice = createSlice({
@@ -21,7 +21,7 @@ const authSlice = createSlice({
             state.user = action.payload.user;
             state.token = action.payload.token;
             state.isAuthenticated = true;
-            localStorage.setItem('mototrust_token', action.payload.token);
+            localStorage.setItem('motomart_token', action.payload.token);
         },
         setUser: (state, action: PayloadAction<IUser>) => {
             state.user = action.payload;
@@ -30,7 +30,7 @@ const authSlice = createSlice({
             state.user = null;
             state.token = null;
             state.isAuthenticated = false;
-            localStorage.removeItem('mototrust_token');
+            localStorage.removeItem('motomart_token');
         },
     },
 });
