@@ -30,7 +30,7 @@ export const contactApi = api.injectEndpoints({
             createdAt: string;
         }>, IContactFormData>({
             query: (body) => ({
-                url: '/contact',
+                url: '/contacts',
                 method: 'POST',
                 body,
             }),
