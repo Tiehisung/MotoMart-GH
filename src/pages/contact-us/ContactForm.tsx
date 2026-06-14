@@ -15,10 +15,7 @@ import { Button } from "@/components/buttons/Button";
 import { ENV } from "@/lib/env";
 import { useAppSelector } from "@/store/hooks/store";
 import { useSubmitContactMutation } from "@/services/contactApi";
-
-// ============================================
-// VALIDATION SCHEMA
-// ============================================
+ 
 const contactSchema = z.object({
   fullName: z.string().min(2, "Name is required"),
   phoneNumber: z
@@ -34,10 +31,7 @@ const contactSchema = z.object({
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
-
-// ============================================
-// CONSTANTS
-// ============================================
+ 
 const INQUIRY_OPTIONS = [
   { value: "", label: "Select inquiry type" },
   { value: "buying", label: "I want to buy a motorbike" },
@@ -48,10 +42,7 @@ const INQUIRY_OPTIONS = [
   { value: "partnership", label: "Partnership / Business inquiry" },
   { value: "other", label: "Other" },
 ];
-
-// ============================================
-// COMPONENT
-// ============================================
+ 
 export function ContactSection() {
   const { user } = useAppSelector((s) => s.auth);
   const [submitContact, { isLoading: isSubmitting }] =
@@ -86,9 +77,7 @@ export function ContactSection() {
     }
   };
 
-  // ============================================
-  // CONTACT CARD STYLES
-  // ============================================
+ 
   const contactCardClasses = `
     bg-muted/50 rounded-2xl p-5
     border border-border/50
