@@ -63,8 +63,8 @@ const applicationRouter = createBrowserRouter([
     path: "/",
     element: <MainLayout />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: "welcome", element: <LandingPage /> },
+      { index: true, element: <LandingPage /> },
+      { path: "welcome", element: <HomePage /> },
       {
         path: "browse",
         element: <BrowseListingsPage />,

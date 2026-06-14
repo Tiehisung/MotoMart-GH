@@ -1,13 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HiOutlinePlusCircle } from "react-icons/hi2";
 import { useAppSelector } from "@/store/hooks/store";
 import { UserMenu } from "../components/auth/UserMenu";
 import { symbols } from "@/data";
+import HomeNav from "./home/HomeNav";
 
 const Navbar = () => {
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
-
+  const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  if (pathname == "/") return <HomeNav />;
 
   return (
     <nav className="fixed top-0 w-full z-50 _glass">
