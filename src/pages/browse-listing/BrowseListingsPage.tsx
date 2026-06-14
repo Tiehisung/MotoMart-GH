@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetListingsQuery } from "@/services/listingsApi";
 import { useGetBrandsQuery } from "@/services/brandApi";
@@ -12,6 +12,7 @@ import {
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
 import { Select } from "@/components/form";
+import useGetParam from "@/hooks/params";
 
 // ============================================
 // STATIC FILTER OPTIONS
@@ -45,9 +46,7 @@ const SORT_OPTIONS = [
 // COMPONENT
 // ============================================
 const BrowseListingsPage = () => {
-  // ============================================
-  // BRANDS FROM API
-  // ============================================
+  const defaultBrand = useGetParam("brand");
   const { data: brandsData } = useGetBrandsQuery();
   const allBrands = brandsData?.data || [];
   const popularBrands = [
@@ -60,7 +59,7 @@ const BrowseListingsPage = () => {
   // STATE
   // ============================================
   const [filters, setFilters] = useState({
-    brand: "All",
+    brand: defaultBrand || "All",
     location: "All",
     condition: "All",
     minPrice: "",
@@ -68,13 +67,18 @@ const BrowseListingsPage = () => {
     sort: "-createdAt",
     verified: false,
   });
+
+  useEffect(() => {
+    if (defaultBrand) {
+      setFilters((p) => ({ ...p, brand: defaultBrand }));
+    }
+  }, [defaultBrand,]);
+
   const [showFilters, setShowFilters] = useState(false);
   const [page, setPage] = useState(1);
   const limit = 12;
 
-  // ============================================
-  // QUERY PARAMS
-  // ============================================
+
   const queryParams: Record<string, any> = { page, limit, sort: filters.sort };
   if (filters.brand !== "All") queryParams.brand = filters.brand;
   if (filters.location !== "All") queryParams.location = filters.location;

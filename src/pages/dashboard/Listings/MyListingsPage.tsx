@@ -23,6 +23,8 @@ import { EPaymentStatus, IListing } from "@/types/listing";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { cn } from "@/lib/utils";
 import PaymentModal from "../payments/PaymentModal";
+import { ResizableContent } from "@/components/resizables/ResizableContent";
+import { Button } from "@/components/buttons/Button";
 
 const LISTING_STATUS_TABS = [
   { value: "all", label: "All" },
@@ -401,56 +403,58 @@ const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
           </div>
 
           {/* ============ ACTIONS ============ */}
-          <div className="flex items-center gap-1 pt-2 border-t border-border">
+          <ResizableContent className="flex items-center gap-1 pt-2 border-t border-border">
             {/* View */}
             <Link
               to={`/listing/${listing._id}`}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-muted-foreground
+              className="inline-flex items-center gap-1.5 px-2 py-2 text-xs font-medium text-muted-foreground
                 hover:text-surface-foreground hover:bg-surface-muted rounded-lg transition-colors"
               title="View listing"
             >
               <HiOutlineEye className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">View</span>
+              <span className="sm:inline">View</span>
             </Link>
 
             {/* Edit (only if not sold/live) */}
             {isEditable && (
               <Link
                 to={`/dashboard/listings/${listing._id}/edit`}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-muted-foreground
+                className="inline-flex items-center gap-1.5 px-2 py-2 text-xs font-medium text-muted-foreground
                   hover:text-surface-foreground hover:bg-surface-muted rounded-lg transition-colors"
                 title="Edit listing"
               >
                 <HiOutlinePencil className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Edit</span>
+                <span className="sm:inline">Edit</span>
               </Link>
             )}
 
             {/* Pay Now (if unpaid) */}
             {isUnpaid && (
-              <button
+              <Button
+                size={"sm"}
+                variant="ghost"
                 onClick={() => setShowPayment(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-warning
-                  hover:bg-warning/5 rounded-lg transition-colors"
+                className="font-medium text-xs text-muted-foreground gap-1"
                 title="Pay listing fee"
               >
                 <HiOutlineCreditCard className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Pay Now</span>
-              </button>
+                <span className="sm:inline">Pay Now</span>
+              </Button>
             )}
 
             {/* Mark as Sold (only if live) */}
             {canMarkSold && (
-              <button
+              <Button
+                size={"sm"}
+                variant="ghost"
                 onClick={handleMarkSold}
                 disabled={isSelling}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-success
-                  hover:bg-success/5 rounded-lg transition-colors disabled:opacity-50"
+                className="font-medium text-xs text-muted-foreground gap-1"
                 title="Mark as sold"
               >
                 <HiOutlineCheck className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Mark Sold</span>
-              </button>
+                <span className="sm:inline">Mark Sold</span>
+              </Button>
             )}
 
             {/* Spacer */}
@@ -465,13 +469,13 @@ const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
                   {/* <span className="hidden sm:inline">Delete</span> */}
                 </>
               }
-            size={'sm'}
+              size={"sm"}
               title={`Delete "${listing.brand} ${listing.model || ""}"?`}
               description="This action cannot be undone. All images and data will be permanently removed."
               confirmText="Delete"
               variant="destructive"
             />
-          </div>
+          </ResizableContent>
         </div>
       </div>
 

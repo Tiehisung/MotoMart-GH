@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -15,6 +14,7 @@ import { Input, Select, Textarea } from "@/components/form";
 import { Button } from "@/components/buttons/Button";
 import { ENV } from "@/lib/env";
 import { useAppSelector } from "@/store/hooks/store";
+import { useSubmitContactMutation } from "@/services/contactApi";
 
 // ============================================
 // VALIDATION SCHEMA
@@ -54,7 +54,8 @@ const INQUIRY_OPTIONS = [
 // ============================================
 export function ContactSection() {
   const { user } = useAppSelector((s) => s.auth);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitContact, { isLoading: isSubmitting }] =
+    useSubmitContactMutation();
 
   const {
     register,
@@ -65,8 +66,8 @@ export function ContactSection() {
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      fullName: user?.fullName || "",
-      phoneNumber: user?.phoneNumber || "",
+      fullName: user?.fullName||"",
+      phoneNumber:user?.phoneNumber|| "",
       email: "",
       inquiryType: "",
       message: "",
@@ -74,22 +75,14 @@ export function ContactSection() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    console.log(data.message?.length);
-    setIsSubmitting(true);
-
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      toast.success("Message sent successfully!", {
-        description: "We'll get back to you within 24 hours.",
-      });
-
+      const result = await submitContact(data).unwrap();
+      toast.success(result.message || "Message sent successfully!");
       reset();
-    } catch (error) {
-      toast.error("Failed to send message. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+    } catch (err: any) {
+      toast.error("Failed to send message", {
+        description: err?.data?.message || "Please try again.",
+      });
     }
   };
 
@@ -294,7 +287,6 @@ export function ContactSection() {
               className="rounded-xl h-12 w-full "
             >
               <HiOutlineEnvelope className="w-4 h-4" />
-              
             </Button>
 
             {/* Footer note */}

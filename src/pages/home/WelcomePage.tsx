@@ -7,7 +7,7 @@ import {
   HiOutlineStar,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
-import { ContactSection } from "../Contact/ContactForm";
+import { ContactSection } from "../contact/ContactForm";
 import Footer from "../Footer";
 import { BikeCard } from "./BikeCard";
 import Hero from "./Hero";

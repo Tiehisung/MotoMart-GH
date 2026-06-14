@@ -9,6 +9,7 @@ import {
   HiOutlineXMark,
   HiOutlineArrowRight,
   HiOutlineTag,
+  HiOutlineEnvelope,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
 import { LogoutBtn } from "../auth/LogoutButton";
@@ -62,7 +63,12 @@ const adminLinks: AdminLink[] = [
   {
     label: "Settings",
     href: `/admin/profile`,
-    icon: <Settings className="w-4 h-4" />,
+    icon: <Settings className="w-5 h-5" />,
+  },
+  {
+    href: "/admin/contacts",
+    label: "Messages",
+    icon: <HiOutlineEnvelope className="w-5 h-5" />,
   },
 ];
 const AdminLayout = () => {

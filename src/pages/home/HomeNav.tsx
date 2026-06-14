@@ -33,24 +33,15 @@ const HomeNav = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <Link
-              hidden={!!user}
-              to="/auth/signin"
-              className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block"
-            >
-              Sign In
-            </Link>
-            <Link
-              to={
-                user?.role === "seller"
-                  ? "/dashboard/listings/create"
-                  : "/auth/register?role=seller"
-              }
-              className="max-sm:hidden inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider bg-primary text-primary-foreground px-5 py-2.5 rounded-full hover:opacity-90 transition-all duration-300 shadow-[0_0_20px_rgba(249,115,22,0.2)] dark:shadow-[0_0_20px_rgba(249,115,22,0.3)]"
-            >
-              Start Selling
-              <HiOutlineArrowRight className="w-3.5 h-3.5" />
-            </Link>
+            {(!user || user?.role == "seller") && (
+              <Link
+                to={"/dashboard/listings/create"}
+                className="max-sm:hidden inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider bg-primary text-primary-foreground px-5 py-2.5 rounded-full hover:opacity-90 transition-all duration-300 shadow-[0_0_20px_rgba(249,115,22,0.2)] dark:shadow-[0_0_20px_rgba(249,115,22,0.3)]"
+              >
+                Start Selling
+                <HiOutlineArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            )}
             <UserMenu />
           </div>
         </div>
