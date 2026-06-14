@@ -35,10 +35,8 @@ const LandingPage = () => {
         style={{ transformOrigin: "left center", transform: "scaleX(0)" }}
       />
 
-      {/* ============ NAVBAR ============ */}
       <HomeNav />
 
-      {/* ============ HERO ============ */}
       <Hero />
 
       {/* ============ TRUST STRIP ============ */}

@@ -39,13 +39,13 @@ export const contactApi = api.injectEndpoints({
         //============= ADMIN =====================================
         // Get all contacts
         getAdminContacts: builder.query<IQueryResponse<IContactMessage[]>, Record<string, any>>({
-            query: (params) => ({ url: '/admin/contacts', params }),
+            query: (params) => ({ url: '/contacts', params }),
             providesTags: ['AdminContacts'],
         }),
 
         // Get single contact
         getAdminContact: builder.query<{ success: boolean; data: IContactMessage }, string>({
-            query: (id) => `/admin/contacts/${id}`,
+            query: (id) => `/contacts/${id}`,
             providesTags: (_r, _e, id) => [{ type: 'AdminContacts', id }],
         }),
 
@@ -55,7 +55,7 @@ export const contactApi = api.injectEndpoints({
             { id: string; status: string; notes?: string }
         >({
             query: ({ id, ...body }) => ({
-                url: `/admin/contacts/${id}/status`,
+                url: `/contacts/${id}/status`,
                 method: 'PATCH',
                 body,
             }),
@@ -65,7 +65,7 @@ export const contactApi = api.injectEndpoints({
         // Delete contact
         deleteContact: builder.mutation<{ success: boolean; message: string }, string>({
             query: (id) => ({
-                url: `/admin/contacts/${id}`,
+                url: `/contacts/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['AdminContacts'],
