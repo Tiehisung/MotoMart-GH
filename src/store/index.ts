@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { persistedReducer } from "./rootReducer";
-import { api } from "../services/api";
+import { api } from "../services/_api";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import {
     persistStore,

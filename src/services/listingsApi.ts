@@ -1,5 +1,5 @@
 import { IListing } from '@/types/listing';
-import { api } from './api';
+import { api } from './_api';
 import { IPagination, IQueryResponse } from '@/types';
 
 interface IListingsResponse {

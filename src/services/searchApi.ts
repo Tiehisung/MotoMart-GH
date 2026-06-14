@@ -1,5 +1,5 @@
 // services/search.endpoints.ts
-import { api } from "./api";
+import { api } from "./_api";
 
 export interface SearchResult {
     type: string;

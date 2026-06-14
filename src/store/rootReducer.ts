@@ -2,7 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import authReducer from "./slices/auth.slice";
-import { api } from "../services/api";
+import { api } from "../services/_api";
 import tempDataReducer from './slices/index'
 import settingsSlice from './slices/settings.slice'
 import recentSearchesReducer from './slices/recentSearch.slice'

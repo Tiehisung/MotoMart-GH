@@ -38,6 +38,7 @@ import AdminLocationsPage from "@/pages/admin/locations/AdminLocationsPage";
 import AdminUsersPage from "@/pages/admin/users/AdminUsersPage";
 import EditListingPage from "@/pages/dashboard/Listings/EditListingPage";
 import LandingPage from "@/pages/home/WelcomePage";
+import AdminContactsPage from "@/pages/admin/AdminContactsPage";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -137,7 +138,7 @@ const applicationRouter = createBrowserRouter([
         path: "listings/:listingId/edit",
         element: (
           <ProtectedRoute allowedRoles={[EUserRole.SELLER]}>
-            <EditListingPage  />
+            <EditListingPage />
           </ProtectedRoute>
         ),
       },
@@ -199,6 +200,10 @@ const applicationRouter = createBrowserRouter([
         element: <AdminLocationsPage />,
       },
       { path: "profile", element: <ProfilePage /> },
+      {
+        path: "contacts",
+        element: <AdminContactsPage />,
+      },
     ],
   },
 ]);

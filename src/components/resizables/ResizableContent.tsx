@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 
 export const ResizableContent = ({
   children,
-  className = "grow  max-w-[85vw]",
+  className = "grow max-w-[85vw]",
 }: {
   children: ReactNode[];
   className?: string;
