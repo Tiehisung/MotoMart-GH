@@ -4,12 +4,8 @@ import { fireDoubleEscape } from "@/hooks/Esc";
 import { validateFile } from "@/lib/file";
 import { ICloudinaryFile } from "@/types/file.interface";
 import { getErrorMessage } from "@/lib/error";
-import {
-  useUploadDocumentMutation,
-  useUploadImageMutation,
-  useUploadVideoMutation,
-} from "@/services/upload.endpoints";
 import { smartToast } from "@/utils/toast";
+import { useUploadImageMutation, useUploadVideoMutation, useUploadDocumentMutation } from "@/services/uploadApi";
 
 export const DragAndDropUpload = ({
   onChange,
