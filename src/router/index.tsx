@@ -37,7 +37,7 @@ import AdminLocationsPage from "@/pages/admin/locations/AdminLocationsPage";
 import AdminUsersPage from "@/pages/admin/users/AdminUsersPage";
 import EditListingPage from "@/pages/dashboard/Listings/EditListingPage";
 import LandingPage from "@/pages/home/HomePage";
-import AdminContactsPage from "@/pages/admin/AdminContactsPage";
+import AdminContactsPage from "@/pages/admin/messages/AdminContactsPage";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
