@@ -9,7 +9,6 @@ import RegisterPage from "@/pages/auth/register/Page";
 // Components
 import ProtectedRoute from "@/pages/auth/ProtectedRoute";
 import { EUserRole } from "@/types/user";
-import HomePage from "@/pages/LandingPage";
 import MainLayout from "@/pages/Layout";
 import NotFound from "@/pages/NotFound";
 import NotAuthorizedPage from "@/pages/auth/NotAuthorized";
@@ -37,7 +36,7 @@ import AdminBrandsPage from "@/pages/admin/brand/AdminBrandsPage";
 import AdminLocationsPage from "@/pages/admin/locations/AdminLocationsPage";
 import AdminUsersPage from "@/pages/admin/users/AdminUsersPage";
 import EditListingPage from "@/pages/dashboard/Listings/EditListingPage";
-import LandingPage from "@/pages/home/WelcomePage";
+import LandingPage from "@/pages/home/HomePage";
 import AdminContactsPage from "@/pages/admin/AdminContactsPage";
 
 // Wrapper for Admin with ScrollToTop
@@ -64,7 +63,6 @@ const applicationRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <LandingPage /> },
-      { path: "welcome", element: <HomePage /> },
       {
         path: "browse",
         element: <BrowseListingsPage />,

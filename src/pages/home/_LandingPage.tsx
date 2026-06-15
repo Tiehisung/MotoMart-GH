@@ -3,8 +3,8 @@ import { useGetListingsQuery } from "@/services/listingsApi";
 import { HiOutlineMapPin, HiOutlineShieldCheck } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa";
 import { useGetPopularBrandsQuery } from "@/services/brandApi";
-import { BikeCard } from "./home/BikeCard";
-import Hero from "./home/Hero";
+import { BikeCard } from "./BikeCard";
+import Hero from "./Hero";
 
 const LOCATIONS = ["All", "Wa", "Lawra", "Tumu", "Jirapa", "Nadowli", "Bamahu"];
 
