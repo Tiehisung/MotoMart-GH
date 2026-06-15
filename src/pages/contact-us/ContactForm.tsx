@@ -15,7 +15,7 @@ import { Button } from "@/components/buttons/Button";
 import { ENV } from "@/lib/env";
 import { useAppSelector } from "@/store/hooks/store";
 import { useSubmitContactMutation } from "@/services/contactApi";
- 
+
 const contactSchema = z.object({
   fullName: z.string().min(2, "Name is required"),
   phoneNumber: z
@@ -31,7 +31,7 @@ const contactSchema = z.object({
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
- 
+
 const INQUIRY_OPTIONS = [
   { value: "", label: "Select inquiry type" },
   { value: "buying", label: "I want to buy a motorbike" },
@@ -42,7 +42,7 @@ const INQUIRY_OPTIONS = [
   { value: "partnership", label: "Partnership / Business inquiry" },
   { value: "other", label: "Other" },
 ];
- 
+
 export function ContactSection() {
   const { user } = useAppSelector((s) => s.auth);
   const [submitContact, { isLoading: isSubmitting }] =
@@ -54,16 +54,19 @@ export function ContactSection() {
     control,
     reset,
     formState: { errors },
+    watch,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      fullName: user?.fullName||"",
-      phoneNumber:user?.phoneNumber|| "",
+      fullName: user?.fullName || "",
+      phoneNumber: user?.phoneNumber || "",
       email: "",
       inquiryType: "",
       message: "",
     },
   });
+
+  const form = watch();
 
   const onSubmit = async (data: ContactFormData) => {
     try {
@@ -77,7 +80,6 @@ export function ContactSection() {
     }
   };
 
- 
   const contactCardClasses = `
     bg-muted/50 rounded-2xl p-5
     border border-border/50
@@ -257,13 +259,19 @@ export function ContactSection() {
             />
 
             {/* Message */}
-            <Textarea
-              label="Your Message"
-              placeholder="Tell us more about what you need. If it's about a specific bike, include the brand and model..."
-              error={errors.message?.message}
-              rows={4}
-              {...register("message")}
-            />
+            <div className="relative">
+              <Textarea
+                label="Your Message"
+                placeholder="Tell us more about what you need. If it's about a specific bike, include the brand and model..."
+                error={errors.message?.message}
+                rows={4}
+                {...register("message")}
+                maxLength={800}
+              />
+              {form.message && (
+                <p className="absolute right-2 top-1 text-xs font-normal text-muted-foreground">{`${form.message?.length} of ${800}`}</p>
+              )}
+            </div>
 
             {/* Submit */}
             <Button

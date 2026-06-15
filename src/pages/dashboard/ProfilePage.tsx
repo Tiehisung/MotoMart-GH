@@ -3,11 +3,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 
-import { useUpdateProfileMutation } from "@/services/authApi";
+import {
+  useGetMyProfileQuery,
+  useUpdateProfileMutation,
+} from "@/services/authApi";
 
 import { Input, Select } from "@/components/form";
 import { HiOutlineUser, HiOutlineMapPin } from "react-icons/hi2";
-import { useAppDispatch, useAppSelector } from "@/store/hooks/store";
+import { useAppDispatch } from "@/store/hooks/store";
 import { setUser } from "@/store/slices/auth.slice";
 import { GHANA_REGIONS } from "@/data/location";
 
@@ -25,9 +28,10 @@ const REGIONS = [
 ];
 
 const ProfilePage = () => {
-  const { user } = useAppSelector((state) => state.auth);
+  const { data: myProfile } = useGetMyProfileQuery();
   const dispatch = useAppDispatch();
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+  const profile = myProfile?.user;
 
   const {
     register,
@@ -36,11 +40,13 @@ const ProfilePage = () => {
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      fullName: user?.fullName || "",
-      region: user?.region || "",
-      town: user?.town || "",
+      fullName: profile?.fullName || "",
+      region: profile?.region || "",
+      town: profile?.town || "",
     },
   });
+
+
 
   const onSubmit = async (data: ProfileFormData) => {
     try {
@@ -69,17 +75,17 @@ const ProfilePage = () => {
       >
         <div className="flex items-center gap-4 pb-4 border-b border-border">
           <div className="w-16 h-16 bg-brand-muted rounded-full flex items-center justify-center text-brand font-bold text-2xl">
-            {user?.fullName?.charAt(0)?.toUpperCase() || "?"}
+            {profile?.fullName?.charAt(0)?.toUpperCase() || "?"}
           </div>
           <div>
             <p className="font-semibold text-surface-foreground">
-              {user?.fullName}
+              {profile?.fullName}
             </p>
-            <p className="text-sm text-muted-foreground">{user?.phoneNumber}</p>
+            <p className="text-sm text-muted-foreground">{profile?.phoneNumber}</p>
             <span
-              className={`_badge text-xs mt-1 ${user?.isVerified ? "_badgeVerified" : "_badgePending"}`}
+              className={`_badge text-xs mt-1 ${profile?.isVerified ? "_badgeVerified" : "_badgePending"}`}
             >
-              {user?.isVerified ? "Verified" : "Not verified"}
+              {profile?.isVerified ? "Verified" : "Not verified"}
             </span>
           </div>
         </div>

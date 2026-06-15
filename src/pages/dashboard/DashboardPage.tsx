@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { useGetMeQuery } from "@/services/authApi";
+import { useGetMyProfileQuery } from "@/services/authApi";
 import { useGetMyListingsQuery } from "@/services/listingsApi";
 import {
   HiOutlinePlusCircle,
@@ -14,7 +14,7 @@ import { FaMotorcycle } from "react-icons/fa6";
 
 const DashboardPage = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const { data: profile } = useGetMeQuery();
+  const { data: profile } = useGetMyProfileQuery();
   const { data: myListings } = useGetMyListingsQuery({ limit: 5 });
 
   const currentUser = profile?.user || user;

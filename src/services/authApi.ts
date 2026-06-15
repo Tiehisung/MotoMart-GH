@@ -17,7 +17,7 @@ export const authApi = api.injectEndpoints({
     login: builder.mutation<IAuthResponse, ISigninFormData>({
       query: (body) => ({ url: '/auth/login', method: 'POST', body }),
     }),
-    getMe: builder.query<{ success: boolean; user: IUser }, void>({
+    getMyProfile: builder.query<{ success: boolean; user: IUser }, void>({
       query: () => '/auth/me',
       providesTags: ['User'],
     }),
@@ -31,6 +31,6 @@ export const authApi = api.injectEndpoints({
 export const {
   useRegisterMutation,
   useLoginMutation,
-  useGetMeQuery,
+  useGetMyProfileQuery,
   useUpdateProfileMutation,
 } = authApi;
