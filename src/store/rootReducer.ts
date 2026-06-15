@@ -3,7 +3,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import authReducer from "./slices/auth.slice";
 import { api } from "../services/_api";
-import tempDataReducer from './slices/index'
+import tempDataReducer from './slices/temp'
 import settingsSlice from './slices/settings.slice'
 import recentSearchesReducer from './slices/recentSearch.slice'
 import listingReducer from './slices/listing.slice';
