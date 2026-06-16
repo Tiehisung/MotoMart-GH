@@ -3,6 +3,7 @@ import { logout } from "@/store/slices/auth.slice";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { PiSignOut } from "react-icons/pi";
+import { api } from "@/services/_api";
 
 interface IProps {
   className?: string;
@@ -20,9 +21,14 @@ export const LogoutBtn = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
+
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(api.util.resetApiState());
+    localStorage.clear();
+    sessionStorage.clear();
     navigate("/");
+    // window.location.reload();
   };
 
   if (!user) return null;

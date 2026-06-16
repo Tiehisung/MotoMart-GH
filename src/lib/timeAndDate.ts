@@ -26,14 +26,14 @@ export const formatDate = (
     | "dd-mm-yyyy"
     | "yyyy-mm-dd"
     | "March 2, 2025"
-    | "MAR 28, 2025"
+    | "28 Mar 2025"
     | "Sunday, March 2, 2025"
     | "HH:MM"
     | "HH:MM:SS"
     | "HH:MM:SS A"
     | "full"
     | "iso"
-    | "timestamp" = 'MAR 28, 2025',
+    | "timestamp" = '28 Mar 2025',
 ) => {
   if (!dateString) return "";
 
@@ -46,12 +46,15 @@ export const formatDate = (
         createdAt
       );
 
-    case "MAR 28, 2025":
-      return createdAt.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      }).toUpperCase();
+    case "28 Mar 2025":
+      return createdAt.toLocaleDateString(
+        "en-GH",
+        {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        },
+      )
 
     case "dd/mm/yyyy":
       return moment(dateString).format("DD/MM/YYYY");

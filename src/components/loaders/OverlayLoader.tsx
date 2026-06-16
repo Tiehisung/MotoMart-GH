@@ -10,7 +10,7 @@ interface IOverlayLoader {
 }
 
 export function OverlayLoader({
-  isLoading = true,
+  isLoading,
   iconClassName = "text-4xl",
   className,
   message,
@@ -19,17 +19,21 @@ export function OverlayLoader({
   if (!isLoading) return null;
   return (
     <div
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
       className={cn(
-        `fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none`,
-        blur ? "bg-modalOverlay/20 backdrop-blur-[1px]" : "",
+        `absolute inset-0 flex items-center justify-center z-100 p-4 pointer-events-none`,
+        blur ? " backdrop-blur-[1px]" : "",
         className,
       )}
+      style={{ zIndex: 100 }}
     >
       {message && (
-        <p className="mb-2 text-sm font-medium text-muted-foreground">
+        <span className="mb-2 text-sm font-medium text-muted-foreground">
           {message}
-        </p>
+        </span>
       )}
       <VscLoading className={`animate-spin ${iconClassName}`} />
     </div>

@@ -134,6 +134,9 @@ const DashboardLayout = () => {
               <span className="text-brand">Trust</span>
             </div>
           </Link>
+          <span className="block text-xs text-surface-400 font-normal mt-1">
+            {`${user?.fullName?.split(" ")?.[1]} ...${user?.phoneNumber?.substring(6)}`}
+          </span>
         </div>
         <div className="flex-1 overflow-y-auto px-4 pb-6">
           <NavLinks />
@@ -171,7 +174,10 @@ const DashboardLayout = () => {
           {/* Drawer */}
           <div className="lg:hidden fixed top-14 left-0 bottom-0 z-40 w-72 bg-surface-elevated border-r border-border shadow-2xl animate-in slide-in-from-left duration-200">
             <div className="p-4 overflow-y-auto h-full">
-              <NavLinks onClick={closeMobileMenu} />
+               
+              <NavLinks onClick={closeMobileMenu} /><p className="block text-xs text-surface-400 font-normal mt-12 text-center grow bg-accent py-2">
+                {`${user?.fullName?.split(" ")?.[1]} ...${user?.phoneNumber?.substring(6)}`}
+              </p>
             </div>
           </div>
         </>

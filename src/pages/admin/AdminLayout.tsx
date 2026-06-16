@@ -13,7 +13,8 @@ import {
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
 import { LogoutBtn } from "../auth/LogoutButton";
-import { MapPin, Settings, Users } from "lucide-react";
+import { Dot, MapPin, Settings, Users } from "lucide-react";
+import { useAppSelector } from "@/store/hooks/store";
 
 type AdminLink = {
   href: string;
@@ -72,6 +73,7 @@ const adminLinks: AdminLink[] = [
   },
 ];
 const AdminLayout = () => {
+  const { user } = useAppSelector((s) => s.auth);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
@@ -108,8 +110,8 @@ const AdminLayout = () => {
           <Link to="/" className="font-display font-bold text-xl">
             Moto<span className="text-brand">Trust</span>
           </Link>
-          <span className="block text-xs text-surface-400 font-normal mt-1">
-            Admin Panel
+          <span className="flex items-center text-xs text-surface-400 font-normal mt-1">
+            Admin Panel <Dot size={12}/> {user?.phoneNumber?.substring(6)}
           </span>
         </div>
         <div className="flex-1 overflow-y-auto px-4 pb-6">

@@ -31,6 +31,13 @@ const authSlice = createSlice({
             state.token = null;
             state.isAuthenticated = false;
             localStorage.removeItem('motomart_token');
+            
+            // Clear localStorage
+            localStorage.removeItem('persist:auth');
+            localStorage.removeItem('persist:listing');
+
+            // Clear sessionStorage (if used)
+            sessionStorage.clear();
         },
     },
 });
