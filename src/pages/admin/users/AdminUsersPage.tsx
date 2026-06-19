@@ -21,6 +21,7 @@ import {
   useToggleUserActiveMutation,
   useDeleteUserMutation,
 } from "@/services/userApi";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 const ROLES = ["all", "seller", "buyer", "admin"];
 const STATUS_FILTERS = ["all", "active", "inactive", "verified", "unverified"];
@@ -73,13 +74,7 @@ const AdminUsersPage = () => {
     }
   };
 
-  const handleDelete = async (id: string, name: string) => {
-    if (
-      !confirm(
-        `Delete "${name}" and all their listings? This cannot be undone.`,
-      )
-    )
-      return;
+  const handleDelete = async (id: string,) => {
     try {
       await deleteUser(id).unwrap();
       toast.success("User deleted");
@@ -365,15 +360,18 @@ const AdminUsersPage = () => {
                           <HiOutlineUser className="w-4 h-4 text-muted-foreground" />
                         </Link>
                         {user.role !== "admin" && (
-                          <button
-                            onClick={() =>
-                              handleDelete(user._id, user.fullName)
+                          <ConfirmDialog
+                            onConfirm={() =>
+                              handleDelete(user._id,)
                             }
-                            className="p-1.5 hover:bg-red-50 rounded-lg transition-colors"
-                            title="Delete user"
-                          >
-                            <HiOutlineTrash className="w-4 h-4 text-red-400" />
-                          </button>
+                            confirmText="Confirm Delete"
+                            trigger={
+                              <HiOutlineTrash className="w-4 h-4 text-red-400" />
+                            }
+                            triggerStyles="rounded-full w-7 p-1"
+                            size={"sm"}
+                            title={`Do you want to delete "${user?.fullName}"`}
+                          />
                         )}
                       </div>
                     </td>

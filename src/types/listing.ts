@@ -31,12 +31,11 @@ export interface IListing {
     reviewedAt?: Date;
     inspectionId?: string
     inquiryCount: number;
-
     createdAt: string;
     updatedAt: string;
     expiresAt: string;
 }
- 
+
 
 export enum EBikeCondition {
     Excellent = 'Excellent',

@@ -13,27 +13,22 @@ import {
 import { FaMotorcycle } from "react-icons/fa6";
 import { Select } from "@/components/form";
 import useGetParam from "@/hooks/params";
+import { useGetLocationsQuery } from "@/services/locationApi";
+import { CONDITIONS } from "@/data/motor";
 
 // ============================================
 // STATIC FILTER OPTIONS
 // ============================================
-const LOCATIONS = [
-  { value: "All", label: "All Locations" },
-  { value: "Wa", label: "Wa" },
-  { value: "Lawra", label: "Lawra" },
-  { value: "Tumu", label: "Tumu" },
-  { value: "Jirapa", label: "Jirapa" },
-  { value: "Nadowli", label: "Nadowli" },
-  { value: "Bamahu", label: "Bamahu" },
-];
-
-const CONDITIONS = [
-  { value: "All", label: "Any Condition" },
-  { value: "Excellent", label: "Excellent" },
-  { value: "Good", label: "Good" },
-  { value: "Fair", label: "Fair" },
-  { value: "Needs Repair", label: "Needs Repair" },
-];
+// const LOCATIONS = [
+//   { value: "All", label: "All Locations" },
+//   { value: "Wa", label: "Wa" },
+//   { value: "Lawra", label: "Lawra" },
+//   { value: "Tumu", label: "Tumu" },
+//   { value: "Jirapa", label: "Jirapa" },
+//   { value: "Nadowli", label: "Nadowli" },
+//   { value: "Bamahu", label: "Bamahu" },
+// ];
+ 
 
 const SORT_OPTIONS = [
   { value: "-createdAt", label: "Newest First" },
@@ -47,6 +42,7 @@ const SORT_OPTIONS = [
 // ============================================
 const BrowseListingsPage = () => {
   const defaultBrand = useGetParam("brand");
+  const { data: locationsData } = useGetLocationsQuery();
   const { data: brandsData } = useGetBrandsQuery();
   const allBrands = brandsData?.data || [];
   const popularBrands = [
@@ -72,12 +68,11 @@ const BrowseListingsPage = () => {
     if (defaultBrand) {
       setFilters((p) => ({ ...p, brand: defaultBrand }));
     }
-  }, [defaultBrand,]);
+  }, [defaultBrand]);
 
   const [showFilters, setShowFilters] = useState(false);
   const [page, setPage] = useState(1);
   const limit = 12;
-
 
   const queryParams: Record<string, any> = { page, limit, sort: filters.sort };
   if (filters.brand !== "All") queryParams.brand = filters.brand;
@@ -255,7 +250,7 @@ const BrowseListingsPage = () => {
   // RENDER
   // ============================================
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6 pb-12 _page">
       {/* ============ HEADER ============ */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -375,7 +370,10 @@ const BrowseListingsPage = () => {
               label="Location"
               faintLabel
               value={filters.location}
-              options={LOCATIONS}
+              options={locationsData?.data?.map((ld) => ({
+                value: ld.name,
+                label: ld.name,
+              }))!}
               onChange={(e) => {
                 setFilters({ ...filters, location: e.target.value });
                 setPage(1);

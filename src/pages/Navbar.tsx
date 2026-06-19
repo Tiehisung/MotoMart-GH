@@ -4,7 +4,7 @@ import { useAppSelector } from "@/store/hooks/store";
 import { UserMenu } from "../components/auth/UserMenu";
 import { symbols } from "@/data";
 import HomeNav from "./home/HomeNav";
-import { GlobalSearch } from "@/components/searcher/Global";
+// import { GlobalSearch } from "@/components/searcher/Global";
 
 const Navbar = () => {
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
@@ -51,7 +51,7 @@ const Navbar = () => {
           )}
         </div>
 
-        <GlobalSearch/>
+        {/* <GlobalSearch/> */}
 
         <UserMenu />
       </div>
