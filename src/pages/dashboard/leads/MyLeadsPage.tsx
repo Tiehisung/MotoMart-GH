@@ -12,7 +12,8 @@ import { Button } from "@/components/buttons/Button";
 import { PrimaryDropdown } from "@/components/Dropdown";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { MdConnectWithoutContact } from "react-icons/md";
-import { Badge } from "@/components/ui/badge";
+import { CiCircleCheck } from "react-icons/ci";
+import { fireEscape } from "@/hooks/Esc";
 
 const STATUS_TABS = [
   { value: "all", label: "All" },
@@ -43,6 +44,7 @@ const MyLeadsPage = () => {
       await markContacted(id).unwrap();
       toast.success("Marked as contacted");
       refetch();
+      fireEscape()
     } catch {
       toast.error("Failed to update");
     }
@@ -171,8 +173,10 @@ const MyLeadsPage = () => {
                         <h3 className="font-semibold text-foreground truncate">
                           {lead.buyer?.fullName || "Buyer"}
                         </h3>
-                        {lead.status === "pending" && (
+                        {lead.status === "pending" ? (
                           <span className="w-2 h-2 bg-success rounded-full animate-pulse shrink-0" />
+                        ) : (
+                          <CiCircleCheck className="text-muted-foreground w-3 h-3" />
                         )}
                       </div>
                       <Link
@@ -227,16 +231,7 @@ const MyLeadsPage = () => {
                       ))}
                   </div>
 
-                  <Badge
-                    variant={
-                      lead.status == "pending" ? "destructive" : "secondary"
-                    }
-                    className="capitalize text-xs font-light"
-                  >
-                    {lead?.status}
-                  </Badge>
-
-                  {lead.status !== "contacted" && (
+                  {lead.status == "pending" && (
                     <Button
                       variant="outline"
                       size="xs"
