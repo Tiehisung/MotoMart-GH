@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '@/store';
-import type { ICreateListingFormData } from '@/pages/dashboard/Listings/validations';
+import type { ICreateListingFormData } from '@/pages/dashboard/my-listings/validations';
 import {
     updateField,
     setCurrentStep,

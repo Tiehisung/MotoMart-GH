@@ -14,8 +14,8 @@ import AuthLayout from "@/pages/auth/AuthLayout";
 import SignInPage from "@/pages/auth/signin/Page";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
 import ListingDetailPage from "@/pages/browse-listing/Listing/DetailPage";
-import CreateListingPage from "@/pages/dashboard/Listings/CreateListingPage";
-import MyListingsPage from "@/pages/dashboard/Listings/MyListingsPage";
+import CreateListingPage from "@/pages/dashboard/my-listings/CreateListingPage";
+import MyListingsPage from "@/pages/dashboard/my-listings/MyListingsPage";
 import ProfilePage from "@/pages/dashboard/ProfilePage";
 import VerifyIdentityPage from "@/pages/dashboard/VerifyIdentityPage";
 import MyInspectionsPage from "@/pages/dashboard/MyInspectionsPage";
@@ -33,7 +33,7 @@ import AdminLayout from "@/pages/admin/AdminLayout";
 import AdminBrandsPage from "@/pages/admin/brand/AdminBrandsPage";
 import AdminLocationsPage from "@/pages/admin/locations/AdminLocationsPage";
 import AdminUsersPage from "@/pages/admin/users/AdminUsersPage";
-import EditListingPage from "@/pages/dashboard/Listings/EditListingPage";
+import EditListingPage from "@/pages/dashboard/my-listings/EditListingPage";
 import LandingPage from "@/pages/home/HomePage";
 import AdminContactsPage from "@/pages/admin/messages/AdminContactsPage";
 import MyLeadsPage from "@/pages/dashboard/leads/MyLeadsPage";
@@ -152,7 +152,7 @@ const applicationRouter = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      
+
       { path: "leads", element: <MyLeadsPage /> },
 
       {

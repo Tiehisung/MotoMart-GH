@@ -93,8 +93,7 @@
 
   /* Legacy color mappings (keep existing) */
   --red: #ef4444;
-  --green: #32de84
-  --blue: #2563eb;
+  --green: #32de84 --blue: #2563eb;
   --arsh: #ddd9d9;
   --orange: #f97316;
   --gold: #c6a763;
@@ -257,9 +256,12 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
   body {
     @apply bg-surface text-surface-foreground font-sans antialiased;
     -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
   }
 
   ::selection {
@@ -316,7 +318,6 @@
 ._link {
   @apply hover:underline underline-offset-2 visited:text-purple-500 dark:visited:text-purple-300 hover:text-black dark:hover:text-white;
 }
- 
 
 /* Buttons */
 ._transition ease-linear duration-100 {

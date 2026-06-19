@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { ICreateListingFormData } from '@/pages/dashboard/Listings/validations';
+import type { ICreateListingFormData } from '@/pages/dashboard/my-listings/validations';
 import { EListingType } from '@/types/listing';
 
 // ============================================
