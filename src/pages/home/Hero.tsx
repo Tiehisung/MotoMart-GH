@@ -88,7 +88,7 @@ const Hero = ({ type = "primary" }: { type?: "primary" | "secondary" }) => {
           </div>
 
           {/* Scroll indicator */}
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-4">
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-4">
             <span className="text-[10px] font-medium tracking-widest uppercase text-muted-foreground">
               Scroll
             </span>

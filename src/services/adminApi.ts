@@ -28,6 +28,7 @@ export const adminApi = api.injectEndpoints({
         }),
         verifyUser: builder.mutation<any, string>({
             query: (id) => ({ url: `/admin/users/${id}/verify`, method: 'PUT' }),
+            invalidatesTags:['Users']
         }),
 
         // Inspections

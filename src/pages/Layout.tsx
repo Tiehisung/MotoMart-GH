@@ -17,7 +17,7 @@ export default function MainLayout() {
 
       <Navbar />
       <div className={`min-h-screen overflow-x-hidden pb-6 pt-16 lg:pt-20`}>
-        <div className="_page">
+        <div className="">
           <Outlet />
         </div>
         <Swinger className="fixed bottom-6 right-6 z-30">

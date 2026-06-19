@@ -2,10 +2,12 @@ import { cn } from "@/lib/utils";
 import { forwardRef, InputHTMLAttributes } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
 import { Label } from "./Label";
+import { OverlayLoader } from "../loaders/OverlayLoader";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   faintLabel?: boolean;
+  isLoading?: boolean;
   error?: string;
   icon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -36,7 +38,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             {label}
           </Label>
         )}
-        <div className="relative">
+        <div className="relative overflow-hidden">
           {icon && (
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
               {icon}
@@ -62,6 +64,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
              `,
               className,
             )}
+            disabled={props.isLoading}
             {...props}
           />
           {rightIcon && (
@@ -76,6 +79,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {error && !rightIcon && (
             <HiOutlineExclamationCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-red-400" />
           )}
+
+          <OverlayLoader isLoading={props.isLoading} />
         </div>
         {error && (
           <p className="text-xs text-red-500 dark:text-red-400">{error}</p>

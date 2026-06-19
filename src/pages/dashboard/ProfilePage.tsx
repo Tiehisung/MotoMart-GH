@@ -13,6 +13,7 @@ import { HiOutlineUser, HiOutlineMapPin } from "react-icons/hi2";
 import { useAppDispatch } from "@/store/hooks/store";
 import { setUser } from "@/store/slices/auth.slice";
 import { GHANA_REGIONS } from "@/data/location";
+import { useEffect } from "react";
 
 const profileSchema = z.object({
   fullName: z.string().min(2, "Name too short").max(50, "Name too long"),
@@ -28,15 +29,19 @@ const REGIONS = [
 ];
 
 const ProfilePage = () => {
-  const { data: myProfile } = useGetMyProfileQuery();
+  const { data: myProfile, isLoading: loadingProfile } = useGetMyProfileQuery();
   const dispatch = useAppDispatch();
-  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+  const [updateProfile, { isLoading: updatingProfile }] =
+    useUpdateProfileMutation();
   const profile = myProfile?.user;
+
+  const isLoading = loadingProfile || updatingProfile;
 
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty },
+    reset,
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -46,7 +51,13 @@ const ProfilePage = () => {
     },
   });
 
-
+  useEffect(() => {
+    reset({
+      fullName: profile?.fullName || "",
+      region: profile?.region || "",
+      town: profile?.town || "",
+    });
+  }, [myProfile]);
 
   const onSubmit = async (data: ProfileFormData) => {
     try {
@@ -81,7 +92,9 @@ const ProfilePage = () => {
             <p className="font-semibold text-surface-foreground">
               {profile?.fullName}
             </p>
-            <p className="text-sm text-muted-foreground">{profile?.phoneNumber}</p>
+            <p className="text-sm text-muted-foreground">
+              {profile?.phoneNumber}
+            </p>
             <span
               className={`_badge text-xs mt-1 ${profile?.isVerified ? "_badgeVerified" : "_badgePending"}`}
             >
@@ -91,6 +104,7 @@ const ProfilePage = () => {
         </div>
 
         <Input
+          isLoading={isLoading}
           label="Full Name"
           icon={<HiOutlineUser className="w-5 h-5" />}
           error={errors.fullName?.message}
@@ -98,6 +112,7 @@ const ProfilePage = () => {
         />
 
         <Select
+          isLoading={isLoading}
           label="Region"
           options={REGIONS}
           error={errors.region?.message}
@@ -105,6 +120,7 @@ const ProfilePage = () => {
         />
 
         <Input
+          isLoading={isLoading}
           label="Town"
           icon={<HiOutlineMapPin className="w-5 h-5" />}
           placeholder="e.g., Wa"

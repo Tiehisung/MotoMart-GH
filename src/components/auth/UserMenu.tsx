@@ -9,13 +9,11 @@ import { Settings, User } from "lucide-react";
 import { PiSignOut } from "react-icons/pi";
 import { logout } from "@/store/slices/auth.slice";
 import { adminQuickLinks } from "@/pages/admin/AdminLayout";
-import {
-  buyerDashboardQuickLinks,
-  sellerDashboardQuickLinks,
-} from "@/pages/dashboard/Layout";
+
 import { useTheme } from "@/contexts/ThemContext";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { RiMoonClearLine } from "react-icons/ri";
+import { dashboardSidebarLinks } from "@/pages/dashboard/Layout";
 
 export function UserMenu() {
   const { user } = useAppSelector((s) => s.auth);
@@ -29,13 +27,13 @@ export function UserMenu() {
   const quicklinks =
     user?.role === "admin"
       ? adminQuickLinks
-      : user?.role == "seller"
-        ? sellerDashboardQuickLinks
-        : buyerDashboardQuickLinks;
+      : dashboardSidebarLinks
+          .filter((dl) => dl.role?.includes(user?.role!))
+          ?.slice(0, 4);
 
   const menuItems = [
     {
-      label: "My Shop",
+      label: user?.role == "admin" ? "Dashboard" : "My Shop",
       href: path,
       icon: <User className="w-5 h-5" />,
     },

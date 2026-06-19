@@ -1,3 +1,4 @@
+import { formatDate } from "@/lib/timeAndDate";
 import { useGetAllPaymentsQuery } from "@/services/adminApi";
 import { FaMotorcycle } from "react-icons/fa6";
 import {
@@ -30,7 +31,7 @@ const AdminPaymentsPage = () => {
 
   const payments = data?.data || [];
   const totalRevenue = payments
-    .filter((p: any) => p.status === "success")
+    .filter((p: any) => p.status === "paid")
     .reduce((sum: number, p: any) => sum + (p.amount || 0), 0);
 
   return (
@@ -113,14 +114,7 @@ const AdminPaymentsPage = () => {
                         )}
                       </div>
                       <p className="text-xs text-muted-foreground mt-1">
-                        {new Date(payment.createdAt).toLocaleDateString(
-                          "en-GH",
-                          {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          },
-                        )}
+                        {formatDate(payment.createdAt) }
                         {payment.momoNumber && ` · ${payment.momoNumber}`}
                       </p>
                     </div>

@@ -9,22 +9,32 @@ import {
   HiOutlineBars3,
   HiOutlineXMark,
   HiOutlinePlusCircle,
+  HiOutlinePhone,
 } from "react-icons/hi2";
 import { useAppSelector } from "@/store/hooks/store";
 import { LogoutBtn } from "@/pages/auth/LogoutButton";
 import { symbols } from "@/data";
-type DashboardLink = {
+import { EUserRole } from "@/types/user";
+interface IDashboardLink {
   href: string;
   icon: ReactNode;
   label: string;
   end?: boolean;
-};
+  role?: EUserRole[];
+}
 
-export const sellerDashboardQuickLinks: DashboardLink[] = [
+export const dashboardSidebarLinks: IDashboardLink[] = [
+  {
+    href: "/dashboard",
+    icon: <HiOutlineHome className="w-5 h-5" />,
+    label: "Overview",
+    end: true,
+  },
   {
     href: "/dashboard/listings",
     icon: <HiOutlinePlusCircle className="w-5 h-5" />,
     label: "My Listings",
+    role: [EUserRole.SELLER],
   },
   {
     href: "/dashboard/payments",
@@ -35,23 +45,19 @@ export const sellerDashboardQuickLinks: DashboardLink[] = [
     href: "/dashboard/inspections",
     icon: <HiOutlineClipboardDocumentCheck className="w-5 h-5" />,
     label: "Inspections",
+    role: [EUserRole.SELLER],
   },
-  {
-    href: "/dashboard/profile",
-    icon: <HiOutlineUser className="w-5 h-5" />,
-    label: "Profile",
-  },
+
   {
     href: "/dashboard/verify-identity",
     icon: <HiOutlineShieldCheck className="w-5 h-5" />,
     label: "Verify Identity",
   },
-];
-export const buyerDashboardQuickLinks: DashboardLink[] = [
   {
-    href: "/dashboard/payments",
-    icon: <HiOutlineCreditCard className="w-5 h-5" />,
-    label: "Payments",
+    href: "/dashboard/leads",
+    icon: <HiOutlinePhone className="w-5 h-5" />,
+    label: "Buyer Leads",
+    role: [EUserRole.SELLER],
   },
 
   {
@@ -59,10 +65,12 @@ export const buyerDashboardQuickLinks: DashboardLink[] = [
     icon: <HiOutlineUser className="w-5 h-5" />,
     label: "Profile",
   },
+
   {
-    href: "/dashboard/verify-identity",
-    icon: <HiOutlineShieldCheck className="w-5 h-5" />,
-    label: "Verify Identity",
+    href: "/dashboard/requests",
+    icon: <HiOutlinePhone className="w-5 h-5" />,
+    label: "My Requests",
+    role: [EUserRole.BUYER],
   },
 ];
 
@@ -72,17 +80,9 @@ const DashboardLayout = () => {
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
-  const sidebarLinks = [
-    {
-      href: "/dashboard",
-      icon: <HiOutlineHome className="w-5 h-5" />,
-      label: "Overview",
-      end: true,
-    },
-    user?.role == "seller"
-      ? sellerDashboardQuickLinks
-      : buyerDashboardQuickLinks,
-  ].flat();
+  const userSidebarLinks = dashboardSidebarLinks
+    .filter((sl) => !sl.role || sl.role?.includes(user?.role!))
+    .flat();
 
   const NavLinks = ({ onClick }: { onClick?: () => void }) => (
     <nav className="space-y-1">
@@ -97,7 +97,7 @@ const DashboardLayout = () => {
           Post New Listing
         </Link>
       )}
-      {sidebarLinks.map((link) => (
+      {userSidebarLinks.map((link) => (
         <NavLink
           key={link.href}
           to={link.href}
@@ -134,6 +134,9 @@ const DashboardLayout = () => {
               <span className="text-brand">Trust</span>
             </div>
           </Link>
+          <span className="block text-xs text-surface-400 font-normal mt-1">
+            {`${user?.fullName?.split(" ")?.[1]} ...${user?.phoneNumber?.substring(6)}`}
+          </span>
         </div>
         <div className="flex-1 overflow-y-auto px-4 pb-6">
           <NavLinks />
@@ -172,6 +175,9 @@ const DashboardLayout = () => {
           <div className="lg:hidden fixed top-14 left-0 bottom-0 z-40 w-72 bg-surface-elevated border-r border-border shadow-2xl animate-in slide-in-from-left duration-200">
             <div className="p-4 overflow-y-auto h-full">
               <NavLinks onClick={closeMobileMenu} />
+              <p className="block text-xs text-surface-400 font-normal mt-12 text-center grow bg-accent py-2">
+                {`${user?.fullName?.split(" ")?.[1]} ...${user?.phoneNumber?.substring(6)}`}
+              </p>
             </div>
           </div>
         </>

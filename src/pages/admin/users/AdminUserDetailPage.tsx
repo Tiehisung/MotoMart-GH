@@ -13,7 +13,13 @@ import {
   HiOutlineIdentification,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
-import { useGetAdminUserQuery } from "@/services/userApi";
+import {
+  useGetAdminUserQuery,
+  useToggleUserActiveMutation,
+} from "@/services/userApi";
+import { formatDate } from "@/lib/timeAndDate";
+import { useVerifyUserMutation } from "@/services/adminApi";
+import { Button } from "@/components/buttons/Button";
 
 // We'll fetch user data directly since we don't have a single-user admin endpoint
 // For now, we use the getMe pattern or you can add a getUser endpoint
@@ -26,14 +32,26 @@ const AdminUserDetailPage = () => {
   const user = data?.data?.user;
   console.log(data, userId);
 
+  const [verifyUser, { isLoading: verifying }] = useVerifyUserMutation();
   const handleVerify = async () => {
-    toast.success("User verified successfully");
+    try {
+      await verifyUser(userId!).unwrap();
+      toast.success("User verified");
+    } catch {
+      toast.error("Failed");
+    }
   };
 
-  const handleDeactivate = async () => {
-    toast.success("User deactivated");
+  const [toggleActive, { isLoading: togglingActive }] =
+    useToggleUserActiveMutation();
+  const handleToggleActive = async () => {
+    try {
+      const r = await toggleActive(userId!).unwrap();
+      toast.success(r.message);
+    } catch {
+      toast.error("Failed");
+    }
   };
-
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       <button
@@ -55,7 +73,7 @@ const AdminUserDetailPage = () => {
       ) : (
         <>
           {/* User Header Card */}
-          <div className="bg-surface-elevated border border-border rounded-3xl p-6">
+          <header className="bg-surface-elevated border border-border rounded-3xl p-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="w-20 h-20 bg-brand-muted rounded-full flex items-center justify-center text-brand font-bold text-3xl shrink-0">
                 {user?.fullName?.charAt(0)?.toUpperCase() || "?"}
@@ -90,39 +108,37 @@ const AdminUserDetailPage = () => {
                   )}
                   <span className="flex items-center gap-1.5">
                     <HiOutlineCalendarDays className="w-4 h-4" />
-                    Joined{" "}
-                    {new Date(user?.createdAt as string).toLocaleDateString(
-                      "en-GH",
-                      {
-                        dateStyle: "medium",
-                      },
-                    )}
+                    Joined {formatDate(user?.createdAt)}
                   </span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 {!user?.isVerified && (
-                  <button
+                  <Button
                     onClick={handleVerify}
                     className="px-4 py-2 bg-success text-success-foreground rounded-xl text-sm font-medium
                       hover:opacity-90 flex items-center gap-1.5"
+                    loading={verifying}
+                    loadingText={"Verifying"}
+                    text="Verify User"
                   >
                     <HiOutlineCheck className="w-4 h-4" />
-                    Verify User
-                  </button>
+                  </Button>
                 )}
-                {user?.isActive && (
-                  <button
-                    onClick={handleDeactivate}
-                    className="px-4 py-2 bg-red-50 text-red-600 rounded-xl text-sm font-medium
-                      hover:bg-red-100 transition-colors"
-                  >
-                    Deactivate
-                  </button>
-                )}
+
+                <Button
+                  variant="destructive"
+                  onClick={handleToggleActive}
+                  className="border rounded-xl"
+                  text={user?.isActive ? "Deactivate" : "Re-activate"}
+                  loading={togglingActive}
+                  loadingText={
+                    user?.isActive ? "Deactivating" : "Re-activating"
+                  }
+                />
               </div>
             </div>
-          </div>
+          </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left - Details */}
@@ -223,16 +239,18 @@ const AdminUserDetailPage = () => {
                   Quick Actions
                 </h2>
                 <div className="space-y-2">
-                  <button
-                    onClick={handleVerify}
-                    disabled={user?.isVerified}
-                    className="w-full py-2.5 bg-success text-success-foreground rounded-xl text-sm font-medium
+                  {!user?.isVerified && (
+                    <button
+                      onClick={handleVerify}
+                      disabled={user?.isVerified}
+                      className="w-full py-2.5 bg-success text-success-foreground rounded-xl text-sm font-medium
                       hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed
                       flex items-center justify-center gap-2"
-                  >
-                    <HiOutlineCheck className="w-4 h-4" />
-                    Verify Identity
-                  </button>
+                    >
+                      <HiOutlineCheck className="w-4 h-4" />
+                      Verify Identity
+                    </button>
+                  )}
                   <Link
                     to={`/admin/listings?seller=${user?._id}`}
                     className="w-full py-2.5 bg-surface-muted text-surface-foreground rounded-xl text-sm font-medium
@@ -248,15 +266,7 @@ const AdminUserDetailPage = () => {
               {/* Metadata */}
               <div className="text-xs text-muted-foreground space-y-1 p-2">
                 <p>User ID: {user?._id}</p>
-                <p>
-                  Created:{" "}
-                  {new Date(user?.createdAt as string).toLocaleDateString(
-                    "en-GH",
-                    {
-                      dateStyle: "medium",
-                    },
-                  )}
-                </p>
+                <p>Created: {formatDate(user?.createdAt)}</p>
               </div>
             </div>
           </div>

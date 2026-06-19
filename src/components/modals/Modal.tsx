@@ -34,7 +34,7 @@ export function MODAL({
   footer,
   isLoading = false,
   variant,
-  trigger='ghost',
+  trigger='Modal Trigger',
   triggerStyles,
   modalSize = "md",
 }: ModalProps) {

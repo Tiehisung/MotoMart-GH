@@ -1,6 +1,7 @@
 import { IListing } from '@/types/listing';
 import { api } from './_api';
 import { IPagination, IQueryResponse } from '@/types';
+import { ILead } from '@/types/lead';
 
 interface IListingsResponse {
     success: boolean;
@@ -24,10 +25,13 @@ export const listingsApi = api.injectEndpoints({
             query: (id) => `/listings/${id}`,
             providesTags: (_result, _error, id) => [{ type: 'Listings', id }],
         }),
+
+        // Seller
         getMyListings: builder.query<IListingsResponse, Record<string, any>>({
             query: (params) => ({ url: '/listings/user/mine', params }),
             providesTags: ['MyListings'],
         }),
+
         createListing: builder.mutation<ISingleListingResponse, FormData | any>({
             query: (body) => ({ url: '/listings', method: 'POST', body }),
             invalidatesTags: ['Listings', 'MyListings'],
@@ -52,6 +56,10 @@ export const listingsApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Listings'],
         }),
+
+        /**
+         * @deprecated Deprecated endpoint. Now using requestCall
+         */
         contactSeller: builder.mutation<IQueryResponse<{
             sellerName: string,
             sellerPhone: string,
@@ -59,6 +67,48 @@ export const listingsApi = api.injectEndpoints({
         }>, string>({
             query: (id) => ({ url: `/listings/${id}/contact`, method: 'POST' }),
         }),
+
+        // Buyer
+        getMyRequests: builder.query<IListingsResponse, Record<string, any>>({
+            query: (params) => ({
+                url: '/listings/requests/mine', params
+            }),
+            providesTags: ['Listings', 'Leads'],
+        }),
+        checkRequestStatus: builder.query<IQueryResponse<ILead>, string>({
+            query: (listingId) => ({
+                url: `/listings/${listingId}/requests/check-status`
+            }),
+            providesTags: ['Listings', 'Leads', 'MyLeads'],
+        }),
+        requestSellerCall: builder.mutation<any, { listingId: string; buyerPhone: string }>({
+            query: ({ listingId, buyerPhone }) => ({
+                url: `/listings/${listingId}/request-call`,
+                method: 'POST',
+                body: { buyerPhone },
+                invalidatesTags: ['Listings', 'Leads', 'MyLeads'],
+            }),
+        }),
+
+        // Seller
+        getMyLeads: builder.query<IQueryResponse<ILead[]> & {
+            stats: {
+                total: number;
+                new: any;
+                notified: any;
+                contacted: any;
+            }
+        }, Record<string, any>>({
+            query: (params) => ({ url: '/listings/leads/mine', params }),
+            providesTags: ['MyLeads'],
+        }),
+
+        markLeadContacted: builder.mutation<any, string>({
+            query: (id) => ({ url: `/listings/leads/${id}/contacted`, method: 'PATCH' }),
+            invalidatesTags: ['MyLeads'],
+        }),
+
+
     }),
 });
 
@@ -72,4 +122,13 @@ export const {
     useMarkAsSoldMutation,
     useUploadListingImagesMutation,
     useContactSellerMutation,
+
+    //Buyer
+    useRequestSellerCallMutation,
+    useGetMyRequestsQuery,
+    useCheckRequestStatusQuery,
+
+    // Seller
+    useGetMyLeadsQuery,
+    useMarkLeadContactedMutation,
 } = listingsApi;

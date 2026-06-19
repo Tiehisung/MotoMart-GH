@@ -117,6 +117,7 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
     setValue,
     trigger,
     formState: { errors },
+    reset,
   } = useForm<ICreateListingFormData>({
     resolver: zodResolver(createListingSchema as any),
     mode: "onChange",
@@ -131,9 +132,10 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
           setValue(key as keyof ICreateListingFormData, value);
         }
       });
+    } else {
+      reset({ ...existingListing });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [existingListing]);
 
   // Watch values
   const hasDocuments = watch("hasDocuments");

@@ -1,10 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import ScrollToTop from "@/utils/ScrollToTop";
- 
 
 // Auth Pages
 import RegisterPage from "@/pages/auth/register/Page";
- 
 
 // Components
 import ProtectedRoute from "@/pages/auth/ProtectedRoute";
@@ -15,7 +13,7 @@ import NotAuthorizedPage from "@/pages/auth/NotAuthorized";
 import AuthLayout from "@/pages/auth/AuthLayout";
 import SignInPage from "@/pages/auth/signin/Page";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
-import ListingDetailPage from "@/pages/browse-listing/ListingDetailPage";
+import ListingDetailPage from "@/pages/browse-listing/Listing/DetailPage";
 import CreateListingPage from "@/pages/dashboard/Listings/CreateListingPage";
 import MyListingsPage from "@/pages/dashboard/Listings/MyListingsPage";
 import ProfilePage from "@/pages/dashboard/ProfilePage";
@@ -38,6 +36,8 @@ import AdminUsersPage from "@/pages/admin/users/AdminUsersPage";
 import EditListingPage from "@/pages/dashboard/Listings/EditListingPage";
 import LandingPage from "@/pages/home/HomePage";
 import AdminContactsPage from "@/pages/admin/messages/AdminContactsPage";
+import MyLeadsPage from "@/pages/dashboard/leads/MyLeadsPage";
+import MyRequestsPage from "@/pages/dashboard/requests/MyRequestsPage";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -152,6 +152,13 @@ const applicationRouter = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      
+      { path: "leads", element: <MyLeadsPage /> },
+
+      {
+        path: "requests",
+        element: <MyRequestsPage />,
+      },
     ],
   },
 
@@ -198,6 +205,7 @@ const applicationRouter = createBrowserRouter([
         element: <AdminLocationsPage />,
       },
       { path: "profile", element: <ProfilePage /> },
+
       {
         path: "contacts",
         element: <AdminContactsPage />,

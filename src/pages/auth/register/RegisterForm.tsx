@@ -18,6 +18,7 @@ import { EUserRole } from "@/types/user";
 import { setCredentials } from "@/store/slices/auth.slice";
 import { cn } from "@/lib/utils";
 import useGetParam from "@/hooks/params";
+import { Mail } from "lucide-react";
 
 const RegisterForm = () => {
   const roleFromUrl = useGetParam("role");
@@ -30,13 +31,14 @@ const RegisterForm = () => {
     control,
     formState: { errors, isSubmitting },
     setValue,
+    watch,
   } = useForm<IRegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       role: roleFromUrl as EUserRole,
     },
   });
-  
+
   useEffect(() => {
     if (
       roleFromUrl &&
@@ -46,11 +48,11 @@ const RegisterForm = () => {
     }
   }, [roleFromUrl, setValue]);
 
- 
-
   const [registerUser] = useRegisterMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const roletype = watch("role");
 
   const onSubmit = async (data: IRegisterFormData) => {
     setServerError("");
@@ -110,6 +112,16 @@ const RegisterForm = () => {
           {...register("phoneNumber")}
           type="tel"
         />
+        {roletype == "seller" && (
+          <Input
+            label="Seller Email"
+            placeholder="yourmail@example.com"
+            icon={<Mail className="w-5 h-5" />}
+            error={errors.email?.message}
+            {...register("email")}
+            type="email"
+          />
+        )}
 
         <Input
           label="Password"
