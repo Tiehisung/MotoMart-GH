@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,35 +9,29 @@ import {
   useCreateListingMutation,
   useUpdateListingMutation,
 } from "@/services/listingsApi";
-import { useGetBrandsQuery } from "@/services/brandApi";
-import { useGetLocationsQuery } from "@/services/locationApi";
-import { useListingForm } from "@/hooks/useListingForm";
 import { Input, Select, Textarea } from "@/components/form";
 import { ImageUpload, validateImages } from "@/components/form/ImageUpload";
 import {
   createListingSchema,
   type ICreateListingFormData,
 } from "./validations";
-import { IListing } from "@/types/listing";
+import { Button } from "@/components/buttons/Button";
+import { useListingForm } from "@/hooks/useListingForm";
+import { useGetBrandsQuery } from "@/services/brandApi";
+import { useGetLocationsQuery } from "@/services/locationApi";
+import { CONDITIONS } from "@/data/motor";
+import { EDocumentType, IListing } from "@/types/listing";
+import PaymentModal from "../payments/PaymentModal";
+import { enumToOptions } from "@/lib/select";
 
 // ============================================
 // CONSTANTS
 // ============================================
 const TOTAL_STEPS = 5;
 
-const CONDITIONS = [
-  { value: "", label: "Select condition" },
-  { value: "Excellent", label: "Excellent - Like new" },
-  { value: "Good", label: "Good - Minor signs of use" },
-  { value: "Fair", label: "Fair - Visible wear, runs well" },
-  { value: "Needs Repair", label: "Needs Repair - Requires work" },
-];
-
 const DOCUMENT_TYPES = [
   { value: "", label: "Select document type" },
-  { value: "Original Registration", label: "Original Registration" },
-  { value: "Duplicate Registration", label: "Duplicate Registration" },
-  { value: "Receipt Only", label: "Receipt Only" },
+  ...enumToOptions(EDocumentType),
 ];
 
 const STEP_FIELDS: Record<number, (keyof ICreateListingFormData)[]> = {
@@ -55,33 +49,45 @@ interface ListingFormProps {
   existingListing?: IListing;
 }
 
-const EditableListingForm = ({ existingListing }: ListingFormProps) => {
+const ListingForm = ({ existingListing }: ListingFormProps) => {
   const navigate = useNavigate();
+  const { data: brandsData } = useGetBrandsQuery();
+  const { data: locationsData } = useGetLocationsQuery();
+
+  // ============================================
+  // PAYMENT MODAL STATE
+  // ============================================
+  const [paymentModal, setPaymentModal] = useState({
+    isOpen: false,
+    listingId: "",
+    listingTitle: "",
+    amount: 0,
+  });
+
+  // Build brand options from API
+  const brandOptions = [
+    { value: "", label: "Select brand" },
+    ...(brandsData?.data || []).map((brand) => ({
+      value: brand.name,
+      label: `${brand.name}${brand.isPopular ? " ⭐" : ""}`,
+    })),
+  ];
+
+  // Build location options from API
+  const locationOptions = [
+    { value: "", label: "Select location" },
+    ...(locationsData?.data || []).map((loc) => ({
+      value: loc.name,
+      label: loc.name,
+    })),
+  ];
+
   const [createListing, { isLoading: isCreating }] = useCreateListingMutation();
   const [updateListing, { isLoading: isUpdating }] = useUpdateListingMutation();
 
   const isLoading = isCreating || isUpdating;
 
-  // Fetch brands and locations
-  const { data: brandsData } = useGetBrandsQuery();
-  const { data: locationsData } = useGetLocationsQuery();
-
-  const brandOptions = [
-    { value: "", label: "Select brand" },
-    ...(brandsData?.data.map((b) => ({
-      value: b.name,
-      label: b.isPopular ? `⭐ ${b.name}` : b.name,
-    })) || []),
-  ];
-
-  const locationOptions = [
-    { value: "", label: "Select location" },
-    ...(locationsData?.data.map((l) => ({
-      value: l.name,
-      label: l.isPopular ? `📍 ${l.name}` : l.name,
-    })) || []),
-  ];
-  // Form state (only for create mode)
+  // Redux form state (create mode only)
   const {
     formData,
     currentStep,
@@ -92,9 +98,16 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
     clearForm,
   } = useListingForm();
 
-  // Build default values
-  const defaultValues =
-    existingListing && existingListing ? { ...existingListing } : formData;
+  // Build default values based on mode
+  const getDefaultValues = () => {
+    if (existingListing) {
+      return {
+        ...existingListing,
+        images: existingListing.images || [],
+      };
+    }
+    return formData;
+  };
 
   const {
     register,
@@ -104,13 +117,15 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
     setValue,
     trigger,
     formState: { errors },
+    reset,
   } = useForm<ICreateListingFormData>({
     resolver: zodResolver(createListingSchema as any),
     mode: "onChange",
-    defaultValues,
+    defaultValues: getDefaultValues(),
   });
 
-  // Sync Redux → Form (create mode only, on mount)
+  console.log(errors)
+  // Sync Redux → Form on mount (create mode only)
   useEffect(() => {
     if (!existingListing) {
       Object.entries(formData).forEach(([key, value]) => {
@@ -118,9 +133,10 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
           setValue(key as keyof ICreateListingFormData, value);
         }
       });
+    } else {
+      reset({ ...existingListing });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [existingListing]);
 
   // Watch values
   const hasDocuments = watch("hasDocuments");
@@ -173,7 +189,7 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
   const onSubmit = async (data: ICreateListingFormData) => {
     try {
       if (existingListing?._id) {
-        // Update existing
+        // ============ EDIT MODE ============
         const result = await updateListing({
           id: existingListing._id,
           data,
@@ -181,27 +197,71 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
         toast.success("Listing updated!", {
           description: "Your changes have been saved.",
         });
+        if (!result.data.listingFee) {
+          setPaymentModal({
+            isOpen: true,
+            listingId: result.data._id,
+            listingTitle:
+              `${result.data.brand} ${result.data.model || ""}`.trim(),
+            amount:
+              result.data.listingFee ||
+              (data.listingType === "premium" ? 40 : 25),
+          });
+        }
+        reset({})
         navigate(`/listing/${result.data._id}`);
       } else {
-        // Create new
+        // ============ CREATE MODE ============
         const result = await createListing(data).unwrap();
         submitSuccess();
         clearForm();
-        toast.success("Listing created!", {
-          description: "Pay the listing fee to publish it.",
+
+        // Open payment modal
+        setPaymentModal({
+          isOpen: true,
+          listingId: result.data._id,
+          listingTitle:
+            `${result.data.brand} ${result.data.model || ""}`.trim(),
+          amount:
+            result.data.listingFee ||
+            (data.listingType === "premium" ? 40 : 25),
         });
-        navigate(`/listing/${result.data._id}`);
+          reset({});
       }
     } catch (err: any) {
-      toast.error(existingListing ? "Failed to update" : "Failed to create", {
-        description: err?.data?.message || "Please try again",
-      });
+      toast.error(
+        existingListing
+          ? "Failed to update listing"
+          : "Failed to create listing",
+        { description: err?.data?.message || "Please try again" },
+      );
     }
+  };
+
+  const handlePaymentSuccess = () => {
+    toast.success("Payment confirmed! Your listing is now live.", {
+      description: "It will be visible after admin approval.",
+    });
+  };
+
+  const handlePaymentClose = () => {
+    setPaymentModal((prev) => ({ ...prev, isOpen: false }));
+    navigate(`/listing/${paymentModal.listingId}`);
   };
 
   const formatLastSaved = () => {
     if (!lastSaved) return null;
     return new Date(lastSaved).toLocaleTimeString();
+  };
+
+  // ============================================
+  // RENDER HELPERS
+  // ============================================
+  const renderStep = (step: number, content: React.ReactNode) => {
+    if (existingListing || currentStep === step) {
+      return content;
+    }
+    return null;
   };
 
   // ============================================
@@ -224,21 +284,23 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
             </h1>
             <p className="text-sm text-muted-foreground">
               {existingListing
-                ? `${existingListing?.brand || ""} ${existingListing?.model || ""}`
+                ? `${existingListing?.brand || "Bike"} ${existingListing?.model || ""}`.trim()
                 : `Step ${currentStep} of ${TOTAL_STEPS}`}
             </p>
           </div>
         </div>
-        {!existingListing && lastSaved && (
-          <span className="text-xs text-muted-foreground bg-surface-muted px-2 py-1 rounded-lg">
-            💾 {formatLastSaved()}
-          </span>
-        )}
-        {existingListing && (
-          <span className="text-xs text-warning bg-warning/10 px-2 py-1 rounded-lg">
-            Editing
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {existingListing && (
+            <span className="text-xs text-warning bg-warning/10 px-2 py-1 rounded-lg font-medium">
+              Editing
+            </span>
+          )}
+          {!existingListing && lastSaved && (
+            <span className="text-xs text-muted-foreground bg-surface-muted px-2 py-1 rounded-lg">
+              💾 {formatLastSaved()}
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Progress (create mode only) */}
@@ -258,7 +320,8 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* ============ STEP 1: BIKE DETAILS ============ */}
-        {(currentStep === 1 || existingListing) && (
+        {renderStep(
+          1,
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Bike Details
@@ -305,11 +368,12 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
               error={errors.mileage?.message}
               {...register("mileage", { valueAsNumber: true })}
             />
-          </div>
+          </div>,
         )}
 
         {/* ============ STEP 2: CONDITION & PRICE ============ */}
-        {(currentStep === 2 || existingListing) && (
+        {renderStep(
+          2,
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Condition & Price
@@ -358,11 +422,12 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
                 />
               )}
             />
-          </div>
+          </div>,
         )}
 
         {/* ============ STEP 3: DETAILS & DOCUMENTS ============ */}
-        {(currentStep === 3 || existingListing) && (
+        {renderStep(
+          3,
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Details & Documents
@@ -419,11 +484,12 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
                 </div>
               )}
             </div>
-          </div>
+          </div>,
         )}
 
         {/* ============ STEP 4: PHOTOS ============ */}
-        {(currentStep === 4 || existingListing) && (
+        {renderStep(
+          4,
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Photos
@@ -435,11 +501,12 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
               error={errors.images?.message}
               maxFiles={10}
             />
-          </div>
+          </div>,
         )}
 
         {/* ============ STEP 5: LISTING TYPE ============ */}
-        {(currentStep === 5 || existingListing) && (
+        {renderStep(
+          5,
           <div className="space-y-4 bg-surface-elevated border border-border rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Listing Type
@@ -496,12 +563,12 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
                 {errors.listingType.message}
               </p>
             )}
-          </div>
+          </div>,
         )}
 
         {/* ============ NAVIGATION ============ */}
         <div className="flex gap-3">
-          {currentStep > 1 && !existingListing && (
+          {!existingListing && currentStep > 1 && (
             <button
               type="button"
               onClick={handlePrevStep}
@@ -512,57 +579,41 @@ const EditableListingForm = ({ existingListing }: ListingFormProps) => {
             </button>
           )}
 
-          {existingListing ? (
-            // Edit mode: just show update button
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="flex-1 py-2.5 bg-brand text-brand-foreground rounded-xl text-sm font-medium
-                hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed
-                flex items-center justify-center gap-2"
-            >
-              {isLoading ? (
-                <>
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                "Save Changes"
-              )}
-            </button>
-          ) : currentStep < TOTAL_STEPS ? (
-            // Create mode: Continue button
-            <button
+          {/* Do not combine these two logic */}
+          {currentStep < TOTAL_STEPS && (
+            <Button
               type="button"
               onClick={handleNextStep}
-              className="flex-1 py-2.5 bg-brand text-brand-foreground rounded-xl text-sm font-medium
-                hover:opacity-90 transition-opacity"
-            >
-              Continue
-            </button>
-          ) : (
-            // Create mode: Submit button
-            <button
+              text="Continue"
+              size="lg"
+              className="rounded-xl grow"
+            />
+          )}
+
+          {currentStep >= TOTAL_STEPS && (
+            <Button
               type="submit"
-              disabled={isLoading}
-              className="flex-1 py-2.5 bg-brand text-brand-foreground rounded-xl text-sm font-medium
-                hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed
-                flex items-center justify-center gap-2"
-            >
-              {isLoading ? (
-                <>
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Creating...
-                </>
-              ) : (
-                "Create Listing"
-              )}
-            </button>
+              loading={isLoading}
+              text={existingListing ? "Save Changes" : "Create Listing"}
+              loadingText={existingListing ? "Saving..." : "Creating..."}
+              size="lg"
+              className="rounded-xl grow"
+            />
           )}
         </div>
       </form>
+
+      {/* ============ PAYMENT MODAL ============ */}
+      <PaymentModal
+        isOpen={paymentModal.isOpen}
+        onClose={handlePaymentClose}
+        listingId={paymentModal.listingId}
+        listingTitle={paymentModal.listingTitle}
+        amount={paymentModal.amount}
+        onSuccess={handlePaymentSuccess}
+      />
     </div>
   );
 };
 
-export default EditableListingForm;
+export default ListingForm;

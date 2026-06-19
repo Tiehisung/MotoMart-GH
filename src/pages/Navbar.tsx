@@ -2,8 +2,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HiOutlinePlusCircle } from "react-icons/hi2";
 import { useAppSelector } from "@/store/hooks/store";
 import { UserMenu } from "../components/auth/UserMenu";
-import { symbols } from "@/data";
 import HomeNav from "./home/HomeNav";
+import { cn } from "@/lib/utils";
+import { FaMotorcycle } from "react-icons/fa";
 // import { GlobalSearch } from "@/components/searcher/Global";
 
 const Navbar = () => {
@@ -16,15 +17,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full z-50 _glass">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link
-          to={window.location.pathname == "/" ? "/welcome" : "/"}
-          className="flex items-center gap-2 group"
-        >
-          <span className="text-2xl pb-3">{symbols.motor}</span>
-          <span className="font-display font-bold text-xl ">
-            Moto<span className="text-brand">Trust</span>
-          </span>
-        </Link>
+        <AppName />
 
         <div className="flex items-center gap-1">
           {isAuthenticated ? (
@@ -60,3 +53,19 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+export const AppName = ({ className }: { className?: string }) => {
+  return (
+    <div>
+      <Link to={"/"} className="flex items-center gap-2 group">
+        <FaMotorcycle className="w-8 h-8 text-primary" />
+        <span className={cn("font-bold text-xl text-foreground", className)}>
+          Moto<span className="text-primary">Mart</span>
+          <span className="text-xs text-muted-foreground font-normal ml-1">
+            GH
+          </span>
+        </span>
+      </Link>
+    </div>
+  );
+};

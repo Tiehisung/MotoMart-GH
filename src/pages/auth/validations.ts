@@ -27,16 +27,11 @@ export const registerSchema = z
             .string()
             .min(6, 'Password must be at least 6 characters')
             .max(50, 'Password cannot exceed 50 characters'),
-        confirmPassword: z.string(),
         role: z.nativeEnum(EUserRole, {
             error: 'Please select a role',
         }).refine((value) => !value.includes('admin'), {
             message: 'Please select a non-admin role',
         }),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        message: 'Passwords do not match',
-        path: ['confirmPassword'],
     })
     .refine(
         (data) => {

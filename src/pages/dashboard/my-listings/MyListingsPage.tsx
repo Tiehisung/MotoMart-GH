@@ -466,9 +466,10 @@ const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
               trigger={
                 <>
                   <HiOutlineTrash className="w-3.5 h-3.5" />
-                  {/* <span className="hidden sm:inline">Delete</span> */}
+                  Delete
                 </>
               }
+              triggerStyles="justify-start"
               size={"sm"}
               title={`Delete "${listing.brand} ${listing.model || ""}"?`}
               description="This action cannot be undone. All images and data will be permanently removed."

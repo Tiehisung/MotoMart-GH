@@ -140,14 +140,7 @@ const RegisterForm = () => {
           {...register("password")}
         />
 
-        <Input
-          label="Confirm Password"
-          required
-          type={showPassword ? "text" : "password"}
-          placeholder="Re-enter password"
-          error={errors.confirmPassword?.message}
-          {...register("confirmPassword")}
-        />
+         
 
         {/* Role Selection */}
         <div>
