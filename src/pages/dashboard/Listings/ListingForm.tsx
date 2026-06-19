@@ -124,6 +124,7 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
     defaultValues: getDefaultValues(),
   });
 
+  console.log(errors)
   // Sync Redux → Form on mount (create mode only)
   useEffect(() => {
     if (!existingListing) {
