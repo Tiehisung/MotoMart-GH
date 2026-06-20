@@ -71,6 +71,11 @@ const adminLinks: AdminLink[] = [
     label: "Messages",
     icon: <HiOutlineEnvelope className="w-5 h-5" />,
   },
+  {
+    href: "/admin/pricing",
+    label: "Pricing",
+    icon: <HiOutlineBanknotes className="w-5 h-5" />,
+  },
 ];
 const AdminLayout = () => {
   const { user } = useAppSelector((s) => s.auth);

@@ -18,7 +18,7 @@ export const api = createApi({
     }),
     tagTypes: [
         'User', 'Users', 'Listings', 'MyListings', 'Payments',
-        'Inspections', 'Uploads', 'Brands', 'Locations', 'AdminContacts', 'MyLeads', 'Leads'
+        'Inspections', 'Uploads', 'Brands', 'Locations', 'AdminContacts', 'MyLeads', 'Leads','Pricing'
     ],
     refetchOnMountOrArgChange: true,  // Refetch when component mounts OR params change
     keepUnusedDataFor: 0,            // Don't keep unused data (prevents stale cache across users)

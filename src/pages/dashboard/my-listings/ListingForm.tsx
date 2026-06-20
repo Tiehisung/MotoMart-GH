@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { HiOutlineArrowLeft } from "react-icons/hi2";
+import { HiOutlineArrowLeft, HiOutlineCheck, HiOutlineStar } from "react-icons/hi2";
 
 import {
   useCreateListingMutation,
@@ -23,6 +23,7 @@ import { CONDITIONS } from "@/data/motor";
 import { EDocumentType, IListing } from "@/types/listing";
 import PaymentModal from "../payments/PaymentModal";
 import { enumToOptions } from "@/lib/select";
+import { usePricing } from "@/hooks/usePricing";
 
 // ============================================
 // CONSTANTS
@@ -50,6 +51,8 @@ interface ListingFormProps {
 }
 
 const ListingForm = ({ existingListing }: ListingFormProps) => {
+  const { listingFeeOptions, isLoading: isPricingLoading } = usePricing();
+
   const navigate = useNavigate();
   const { data: brandsData } = useGetBrandsQuery();
   const { data: locationsData } = useGetLocationsQuery();
@@ -124,7 +127,7 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
     defaultValues: getDefaultValues(),
   });
 
-  console.log(errors)
+  console.log(errors);
   // Sync Redux → Form on mount (create mode only)
   useEffect(() => {
     if (!existingListing) {
@@ -208,7 +211,7 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
               (data.listingType === "premium" ? 40 : 25),
           });
         }
-        reset({})
+        reset({});
         navigate(`/listing/${result.data._id}`);
       } else {
         // ============ CREATE MODE ============
@@ -226,7 +229,7 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
             result.data.listingFee ||
             (data.listingType === "premium" ? 40 : 25),
         });
-          reset({});
+        reset({});
       }
     } catch (err: any) {
       toast.error(
@@ -516,45 +519,85 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
               name="listingType"
               render={({ field }) => (
                 <div className="space-y-3">
-                  {[
-                    {
-                      value: "standard",
-                      label: "Standard",
-                      price: 25,
-                      desc: "30-day listing • Appears in search results",
-                    },
-                    {
-                      value: "premium",
-                      label: "Premium",
-                      price: 40,
-                      desc: "Featured badge • Top of search • 30-day listing",
-                    },
-                  ].map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => field.onChange(option.value)}
-                      className={`w-full text-left p-4 rounded-2xl border transition-all ${
-                        field.value === option.value
-                          ? "border-brand bg-brand-muted"
-                          : "border-border hover:bg-surface-muted"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="font-semibold text-surface-foreground">
-                            {option.label}
+                  {isPricingLoading ? (
+                    <div className="space-y-3">
+                      {Array.from({ length: 2 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className="h-24 bg-muted rounded-2xl _shimmer"
+                        />
+                      ))}
+                    </div>
+                  ) : listingFeeOptions.length === 0 ? (
+                    <p className="text-sm text-muted-foreground">
+                      No listing options available.
+                    </p>
+                  ) : (
+                    listingFeeOptions.map((option) => (
+                      <button
+                        key={option.key}
+                        type="button"
+                        onClick={() => field.onChange(option.key)}
+                        className={`w-full text-left p-5 rounded-2xl border transition-all ${
+                          field.value === option.key
+                            ? "border-primary bg-primary/5 ring-1 ring-primary/20"
+                            : "border-border hover:bg-muted"
+                        } ${option.isPopular ? "relative" : ""}`}
+                      >
+                        {/* Popular badge */}
+                        {option.isPopular && (
+                          <span className="absolute -top-3 right-4 inline-flex items-center gap-1 px-3 py-1 bg-warning text-warning-foreground text-[10px] font-bold rounded-full uppercase tracking-wider">
+                            <HiOutlineStar className="w-3 h-3" />
+                            Most Popular
                           </span>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            {option.desc}
-                          </p>
+                        )}
+
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="font-semibold text-foreground text-base">
+                                {option.label}
+                              </span>
+                              {field.value === option.key && (
+                                <span className="inline-flex items-center justify-center w-5 h-5 bg-primary text-primary-foreground rounded-full">
+                                  <HiOutlineCheck className="w-3 h-3" />
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                              {option.description}
+                            </p>
+
+                            {/* Features */}
+                            {option.features && option.features.length > 0 && (
+                              <ul className="mt-3 space-y-1">
+                                {option.features.map((feature, idx) => (
+                                  <li
+                                    key={idx}
+                                    className="flex items-center gap-2 text-xs text-muted-foreground"
+                                  >
+                                    <HiOutlineCheck className="w-3 h-3 text-success shrink-0" />
+                                    {feature}
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+
+                          <div className="text-right shrink-0 ml-4">
+                            <p className="text-2xl font-bold text-primary">
+                              {option.currency} {option.amount.toFixed(0)}
+                            </p>
+                            {option.metadata?.durationDays && (
+                              <p className="text-[10px] text-muted-foreground mt-0.5">
+                                {option.metadata.durationDays}-day listing
+                              </p>
+                            )}
+                          </div>
                         </div>
-                        <span className="text-brand font-bold">
-                          GHS {option.price}
-                        </span>
-                      </div>
-                    </button>
-                  ))}
+                      </button>
+                    ))
+                  )}
                 </div>
               )}
             />

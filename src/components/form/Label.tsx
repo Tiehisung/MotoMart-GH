@@ -20,7 +20,7 @@ export function Label({
     <label
       htmlFor={htmlFor}
       className={cn(
-        "block text-xs font-medium mb-2 ",
+        "block text-xs font-medium mb-1 ",
         faint ? "text-muted-foreground" : " text-surface-foreground",
         className,
       )}
