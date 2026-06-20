@@ -165,7 +165,7 @@ const AdminPricingPage = () => {
                           <tr
                             key={option._id}
                             className={`border-b border-border last:border-0 ${
-                              !option.isActive ? "opacity-50" : ""
+                              !option.isActive ? "opacity-50 " : ""
                             }`}
                           >
                             <td className="px-4 py-3">

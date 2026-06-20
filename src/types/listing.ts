@@ -34,6 +34,12 @@ export interface IListing {
     createdAt: string;
     updatedAt: string;
     expiresAt: string;
+
+    isBoosted: boolean,
+    boostType: '7day' | '30day' | null,
+    boostExpiresAt: Date,
+    boostPurchasedAt: Date,
+    boostPaymentReference: string,
 }
 
 

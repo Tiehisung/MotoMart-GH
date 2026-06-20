@@ -17,6 +17,7 @@ import {
   HiOutlineExclamationTriangle,
   HiOutlineShieldCheck,
   HiOutlineXCircle,
+  HiOutlineRocketLaunch,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
 import { EPaymentStatus, IListing } from "@/types/listing";
@@ -25,6 +26,8 @@ import { cn } from "@/lib/utils";
 import PaymentModal from "../payments/PaymentModal";
 import { ResizableContent } from "@/components/resizables/ResizableContent";
 import { Button } from "@/components/buttons/Button";
+import { useCheckBoostStatusQuery } from "@/services/services/boostApi";
+import BoostModal from "./BoostModal";
 
 const LISTING_STATUS_TABS = [
   { value: "all", label: "All" },
@@ -215,6 +218,13 @@ const STATUS_CONFIG: Record<
 };
 
 const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
+
+    const [showBoost, setShowBoost] = useState(false);
+    const { data: boostStatus } = useCheckBoostStatusQuery(listing._id);
+
+    const isBoosted = boostStatus?.data?.isBoosted;
+
+
   const [deleteListing] = useDeleteListingMutation();
   const [markAsSold, { isLoading: isSelling }] = useMarkAsSoldMutation();
 
@@ -402,6 +412,16 @@ const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
             </div>
           </div>
 
+          {/* Boost badge on card */}
+          {isBoosted && (
+            <div className="absolute top-2 left-2 z-10">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-warning text-warning-foreground text-[10px] font-bold rounded-full">
+                <HiOutlineRocketLaunch className="w-3 h-3" />
+                Boosted • {boostStatus?.data?.remainingDays}d left
+              </span>
+            </div>
+          )}
+
           {/* ============ ACTIONS ============ */}
           <ResizableContent className="flex items-center gap-1 pt-2 border-t border-border">
             {/* View */}
@@ -456,7 +476,19 @@ const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
                 <span className="sm:inline">Mark Sold</span>
               </Button>
             )}
-
+            {listing.status === "approved" && (
+              <button
+                onClick={() => setShowBoost(true)}
+                className={`inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+                  isBoosted
+                    ? "text-warning hover:bg-warning/5"
+                    : "text-primary hover:bg-primary/5"
+                }`}
+              >
+                <HiOutlineRocketLaunch className="w-3.5 h-3.5" />
+                {isBoosted ? "Boosted" : "Boost"}
+              </button>
+            )}
             {/* Spacer */}
             <div className="flex-1" />
 
@@ -494,6 +526,15 @@ const SellerListingCard = ({ listing, onUpdate }: SellerListingCardProps) => {
           // onAbort={() => setShowPayment(false)}
         />
       )}
+
+      {/* Boost Modal */}
+      <BoostModal
+        isOpen={showBoost}
+        onClose={() => setShowBoost(false)}
+        listingId={listing._id}
+        listingTitle={`${listing.brand} ${listing.model || ""}`.trim()}
+        onBoostApplied={onUpdate}
+      />
     </>
   );
 };

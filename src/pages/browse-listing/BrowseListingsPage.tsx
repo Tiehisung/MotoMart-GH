@@ -9,26 +9,15 @@ import {
   HiOutlineXMark,
   HiOutlineStar,
   HiOutlineFire,
+  HiOutlineRocketLaunch,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
 import { Select } from "@/components/form";
 import useGetParam from "@/hooks/params";
 import { useGetLocationsQuery } from "@/services/locationApi";
 import { CONDITIONS } from "@/data/motor";
-
-// ============================================
-// STATIC FILTER OPTIONS
-// ============================================
-// const LOCATIONS = [
-//   { value: "All", label: "All Locations" },
-//   { value: "Wa", label: "Wa" },
-//   { value: "Lawra", label: "Lawra" },
-//   { value: "Tumu", label: "Tumu" },
-//   { value: "Jirapa", label: "Jirapa" },
-//   { value: "Nadowli", label: "Nadowli" },
-//   { value: "Bamahu", label: "Bamahu" },
-// ];
- 
+import { IListing } from "@/types/listing";
+import { ListingCardSkeleton } from "@/components/Skeletons/listing";
 
 const SORT_OPTIONS = [
   { value: "-createdAt", label: "Newest First" },
@@ -37,9 +26,6 @@ const SORT_OPTIONS = [
   { value: "-viewCount", label: "Most Viewed" },
 ];
 
-// ============================================
-// COMPONENT
-// ============================================
 const BrowseListingsPage = () => {
   const defaultBrand = useGetParam("brand");
   const { data: locationsData } = useGetLocationsQuery();
@@ -51,9 +37,7 @@ const BrowseListingsPage = () => {
   ].flat();
   const otherBrands = allBrands.filter((b) => !b.isPopular);
 
-  // ============================================
   // STATE
-  // ============================================
   const [filters, setFilters] = useState({
     brand: defaultBrand || "All",
     location: "All",
@@ -85,9 +69,7 @@ const BrowseListingsPage = () => {
   const { data, isLoading, isError, refetch } =
     useGetListingsQuery(queryParams);
 
-  // ============================================
   // HELPERS
-  // ============================================
   const clearFilters = () => {
     setFilters({
       brand: "All",
@@ -112,9 +94,7 @@ const BrowseListingsPage = () => {
   const totalPages = data?.pagination?.pages || 1;
   const totalListings = data?.pagination?.total || 0;
 
-  // ============================================
   // PAGINATION LOGIC
-  // ============================================
   const getPageNumbers = () => {
     if (totalPages <= 7) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -141,31 +121,8 @@ const BrowseListingsPage = () => {
     return pages;
   };
 
-  // ============================================
-  // RENDER: LOADING SKELETON
-  // ============================================
-  const renderSkeletons = () => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {Array.from({ length: 8 }).map((_, i) => (
-        <div
-          key={i}
-          className="bg-surface-elevated rounded-2xl overflow-hidden border border-border"
-        >
-          <div className="aspect-4/3 _shimmer" />
-          <div className="p-4 space-y-3">
-            <div className="h-4 w-3/4 _shimmer rounded-lg" />
-            <div className="h-5 w-1/3 _shimmer rounded-lg" />
-            <div className="h-3 w-1/2 _shimmer rounded-lg" />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-
-  // ============================================
   // RENDER: LISTING CARD
-  // ============================================
-  const renderListingCard = (listing: any) => (
+  const renderListingCard = (listing: IListing) => (
     <Link
       key={listing._id}
       to={`/listing/${listing._id}`}
@@ -228,6 +185,10 @@ const BrowseListingsPage = () => {
           <span className="truncate">{listing.location}</span>
           <span className="shrink-0">·</span>
           <span className="capitalize shrink-0">{listing.condition}</span>
+          {/* Boosted */}
+          {listing.isBoosted && (
+            <HiOutlineRocketLaunch className="w-3 h-3 text-primary animate-ping" />
+          )}
         </div>
 
         {/* Seller info */}
@@ -246,13 +207,11 @@ const BrowseListingsPage = () => {
     </Link>
   );
 
-  // ============================================
   // RENDER
-  // ============================================
   return (
     <div className="space-y-6 pb-12 _page">
-      {/* ============ HEADER ============ */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      {/* HEADER */}
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-surface-foreground">
             Browse Bikes
@@ -297,11 +256,11 @@ const BrowseListingsPage = () => {
             )}
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* ============ POPULAR BRANDS QUICK FILTER (Always visible) ============ */}
+      {/* POPULAR BRANDS QUICK FILTER (Always visible) */}
       {popularBrands?.length > 0 && (
-        <div>
+        <section>
           <div className="flex items-center gap-2 mb-2">
             <HiOutlineFire className="w-4 h-4 text-brand" />
             <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -330,12 +289,12 @@ const BrowseListingsPage = () => {
               </button>
             ))}
           </div>
-        </div>
+        </section>
       )}
 
-      {/* ============ FILTERS PANEL ============ */}
+      {/* FILTERS PANEL */}
       {showFilters && (
-        <div className="bg-surface-elevated border border-border rounded-2xl p-5 space-y-5 animate-in slide-in-from-top-2 duration-200">
+        <section className="bg-surface-elevated border border-border rounded-2xl p-5 space-y-5 animate-in slide-in-from-top-2 duration-200">
           {/* All Brands */}
           {otherBrands.length > 0 && (
             <div>
@@ -370,10 +329,12 @@ const BrowseListingsPage = () => {
               label="Location"
               faintLabel
               value={filters.location}
-              options={locationsData?.data?.map((ld) => ({
-                value: ld.name,
-                label: ld.name,
-              }))!}
+              options={
+                locationsData?.data?.map((ld) => ({
+                  value: ld.name,
+                  label: ld.name,
+                }))!
+              }
               onChange={(e) => {
                 setFilters({ ...filters, location: e.target.value });
                 setPage(1);
@@ -453,12 +414,12 @@ const BrowseListingsPage = () => {
               Clear all filters
             </button>
           )}
-        </div>
+        </section>
       )}
 
-      {/* ============ ACTIVE FILTER INDICATOR ============ */}
+      {/* ACTIVE FILTER INDICATOR */}
       {hasActiveFilters && !showFilters && (
-        <div className="flex items-center gap-2">
+        <section className="flex items-center gap-2">
           <span className="text-xs text-muted-foreground">Active filters:</span>
           <div className="flex items-center gap-1.5 flex-wrap">
             {filters.brand !== "All" && (
@@ -527,12 +488,16 @@ const BrowseListingsPage = () => {
               </span>
             )}
           </div>
-        </div>
+        </section>
       )}
 
-      {/* ============ RESULTS ============ */}
+      {/* RESULTS */}
       {isLoading ? (
-        renderSkeletons()
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <ListingCardSkeleton key={i} />
+          ))}
+        </div>
       ) : isError ? (
         <div className="text-center py-20">
           <FaMotorcycle className="w-16 h-16 text-muted-foreground/20 mx-auto mb-4" />
@@ -580,7 +545,7 @@ const BrowseListingsPage = () => {
             {data?.data?.map(renderListingCard)}
           </div>
 
-          {/* ============ PAGINATION ============ */}
+          {/* PAGINATION */}
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-1.5 pt-6">
               <button

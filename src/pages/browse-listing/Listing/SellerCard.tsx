@@ -29,7 +29,7 @@ export const ListingSellerCard = ({ listing }: Props) => {
   const {
     data: myRequest,
     isLoading: isCheckingRequest,
-    refetch:refetchRequest,
+    refetch: refetchRequest,
   } = useCheckRequestStatusQuery(listing._id);
 
   const [showSafetyModal, setShowSafetyModal] = useState(false);
@@ -118,6 +118,7 @@ export const ListingSellerCard = ({ listing }: Props) => {
               </div>
             )}
 
+      
           {/* ============ REQUEST CALL SECTION ============ */}
           {isCheckingRequest ? (
             <Loader />

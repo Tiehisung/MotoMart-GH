@@ -209,12 +209,13 @@ export const PricingForm = ({
       </div>
 
       <div className="flex gap-3 pt-2">
-        <button
+        <Button
           onClick={() => fireEscape()}
-          className="flex-1 py-2.5 bg-muted text-foreground rounded-xl text-sm font-medium"
+          variant={'secondary'}
+          className="flex-1 py-2.5 rounded-xl text-sm font-medium"
         >
           Cancel
-        </button>
+        </Button>
         <Button
           onClick={handleSubmit}
           loading={isCreating || isUpdating}

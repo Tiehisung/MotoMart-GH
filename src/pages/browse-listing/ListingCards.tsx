@@ -59,7 +59,7 @@ const LandingBikeCard = ({
 
 export default LandingBikeCard;
 
-export const BikeCard = ({ listing }: IBikeCard) => {
+export const MainListingCard = ({ listing }: IBikeCard) => {
   return (
     <Link
       key={listing?._id}
