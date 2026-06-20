@@ -38,6 +38,7 @@ import LandingPage from "@/pages/home/HomePage";
 import AdminContactsPage from "@/pages/admin/messages/AdminContactsPage";
 import MyLeadsPage from "@/pages/dashboard/leads/MyLeadsPage";
 import MyRequestsPage from "@/pages/dashboard/requests/MyRequestsPage";
+import AdminPricingPage from "@/pages/admin/pricing/AdminPricingPage";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -196,6 +197,7 @@ const applicationRouter = createBrowserRouter([
         ],
       },
       { path: "payments", element: <AdminPaymentsPage /> },
+      { path: "pricing", element: <AdminPricingPage /> },
       {
         path: "brands",
         element: <AdminBrandsPage />,
