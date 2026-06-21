@@ -35,7 +35,7 @@ const Footer = () => {
               confidence across Upper West and beyond.
             </p>
 
-            <ThemeSwitch/>
+            <ThemeSwitch />
           </div>
 
           <div>
@@ -44,10 +44,10 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3">
               {links.map((link) => (
-                <li key={link.to}>
+                <li key={link.to} className="_cardLift">
                   <Link
                     to={link.to}
-                    className="text-muted-foreground hover:text-foreground transition-colors text-sm font-light"
+                    className=" text-muted-foreground hover:text-foreground transition-colors text-sm font-light"
                   >
                     {link.label}
                   </Link>

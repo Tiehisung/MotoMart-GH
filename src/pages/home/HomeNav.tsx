@@ -21,11 +21,11 @@ const HomeNav = () => {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {["Browse", "How It Works", "About"].map((item) => (
+            {["Browse", "How It Works", 'Contact'].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                className="text-xs font-medium uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+                className="_cardLift py-1 text-xs font-medium uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
               >
                 {item}
               </a>

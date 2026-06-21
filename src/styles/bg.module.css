@@ -1,20 +1,20 @@
 /* Unused */
 
 /* background images */
-._blue-bg1 {
-  background-image: url(../public/images/bg/blue-bg1.png);
+._bg-img-1 {
+  background-image: url(../motor.png);
   background-position: bottom;
   background-size: cover;
   background-repeat: no-repeat;
 }
-._blue-bg2 {
-  background-image: url(../public/images/bg/blue-bg2.png);
+._bg-img-2 {
+  background-image: url(../yamaha.png);
   background-position: bottom;
-  background-size: auto;
+  background-size: cover;
   background-repeat: no-repeat;
 }
-._blue-bg3 {
-  background-image: url(../public/images/bg/blue-bg3.png);
+._bg-img-3 {
+  background-image: url(https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&q=80);
   background-position: bottom;
   background-size: cover;
   background-repeat: no-repeat;

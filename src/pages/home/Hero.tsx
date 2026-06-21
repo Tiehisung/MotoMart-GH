@@ -1,5 +1,4 @@
 import HOVER from "@/components/ui/hover-card";
-import { ENV } from "@/lib/env";
 import { useGetPopularLocationsQuery } from "@/services/locationApi";
 import { useAppSelector } from "@/store/hooks/store";
 import {
@@ -7,9 +6,9 @@ import {
   HiOutlineShieldCheck,
   HiOutlineMapPin,
   HiOutlineStar,
-  HiOutlineRocketLaunch,
 } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import HeroCarousel from "./HeroCarousel";
 
 const Hero = ({ type = "primary" }: { type?: "primary" | "secondary" }) => {
   const { user } = useAppSelector((s) => s.auth);
@@ -106,21 +105,21 @@ const Hero = ({ type = "primary" }: { type?: "primary" | "secondary" }) => {
     );
 
   return (
-    <section className="relative w-full min-h-svh flex items-center overflow-hidden bg-background">
+    <section className="relative w-full min-h-[90svh] lg:min-h-svh flex items-center overflow-hidden bg-background">
       {/* Background gradients */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-background to-primary/5" />
         <div className="absolute inset-0 bg-linear-to-b from-background/60 via-transparent to-background" />
       </div>
 
-      <div className="relative z-10 w-full max-w-350 mx-auto px-6 md:px-12 lg:px-24 ">
+      <div className="relative z-10 w-full max-w-350 mx-auto px-6 md:px-12 lg:px-24 pt-24 pb-12 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* LEFT - TEXT CONTENT */}
           <div className="max-w-xl">
             {/* Label */}
             <div className="flex items-center gap-4 mb-8 animate-fade-in">
               <span className="w-12 h-px bg-primary" />
-              <span className="text-xs font-semibold tracking-widest text-primary uppercase">
+              <span className="text-xs font-semibold tracking-widest text-primary uppercase ">
                 Ghana's Trusted Motorbike Marketplace
               </span>
             </div>
@@ -176,71 +175,12 @@ const Hero = ({ type = "primary" }: { type?: "primary" | "secondary" }) => {
           </div>
 
           {/* RIGHT - HERO IMAGE */}
-          <div className="relative hidden lg:block animate-fade-in-up-delayed">
+          <div className="relative hidden lg:block animate-fade-in-up-delayed ">
             {/* Glow behind the image */}
             <div className="absolute inset-0 bg-linear-to-br from-primary/20 via-primary/5 to-transparent rounded-full blur-3xl transform scale-150" />
 
             {/* Main image container */}
-            <div className="relative">
-              {/* Floating bike image */}
-              <img
-                src={ENV.HERO_IMAGE}
-                alt="Motorbike in Ghana"
-                className="relative z-10 w-full max-w-lg mx-auto drop-shadow-2xl rounded-3xl object-cover aspect-4/3"
-                loading="eager"
-              />
-
-              {/* Floating badge - Top Seller */}
-              <div className="absolute top-4 -left-4 z-20 bg-card border border-border rounded-2xl p-3 shadow-lg animate-float">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center">
-                    <HiOutlineShieldCheck className="w-4 h-4 text-success" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-foreground">
-                      Verified
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      100% Trusted
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating badge - Best Price */}
-              <div className="absolute bottom-8 -right-4 z-20 bg-card border border-border rounded-2xl p-3 shadow-lg animate-float-delayed">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-warning/10 flex items-center justify-center">
-                    <HiOutlineStar className="w-4 h-4 text-warning" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-foreground">
-                      Best Deals
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      Fair Prices
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating badge - Fast Sale */}
-              <div className="absolute top-1/2 -right-8 z-20 bg-card border border-border rounded-2xl p-3 shadow-lg animate-float-more-delayed">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-info/10 flex items-center justify-center">
-                    <HiOutlineRocketLaunch className="w-4 h-4 text-info" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-foreground">
-                      Fast Sale
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      Quick Deals
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <HeroCarousel />
           </div>
         </div>
       </div>

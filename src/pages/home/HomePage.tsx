@@ -7,7 +7,6 @@ import {
   HiOutlineStar,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
-import Footer from "../Footer";
 import { MainListingCard } from "../browse-listing/ListingCards";
 import Hero from "./Hero";
 import { useScrollProgressBar } from "@/hooks/useScroll";
@@ -306,12 +305,10 @@ const LandingPage = () => {
 
       {/* ============ CONTACT ============ */}
       <section className="relative py-24 bg-background border-t border-border">
-        <div className="max-w-350 mx-auto px-6 md:px-12 lg:px-24">
+        <div className="max-w-350 mx-auto px-6 md:px-12 lg:px-24" id="contact">
           <ContactSection />
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

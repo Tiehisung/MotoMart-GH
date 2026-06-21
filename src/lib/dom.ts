@@ -1,6 +1,7 @@
 import DOMPurify from 'dompurify';
 
 export function scrollToElement(elementId: string) {
+    if (!elementId) return
     setTimeout(() => {
         const element = document.getElementById(elementId);
         if (element) {
@@ -8,14 +9,6 @@ export function scrollToElement(elementId: string) {
         }
     }, 10)
 }
-
-export const scrollToSection = (id?: string) => {
-    if (!id) return
-    const element = document.getElementById(id);
-    if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-    }
-};
 
 export const toggleClick = (id?: string) => {
     setTimeout(() => {

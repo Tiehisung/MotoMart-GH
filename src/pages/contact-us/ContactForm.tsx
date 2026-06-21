@@ -91,7 +91,7 @@ export function ContactSection() {
   `;
 
   return (
-    <section className=" rounded-3xl max-w-4xl mx-auto border-border">
+    <section className="rounded-3xl max-w-4xl mx-auto border-border">
       {/* ============ HEADER ============ */}
       <div className="text-center mb-8 md:mb-10">
         <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
@@ -136,22 +136,22 @@ export function ContactSection() {
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
               Phone
             </h3>
-            <div className="flex items-start gap-3">
-              <div className={iconContainerClasses}>
-                <HiOutlinePhone className="w-5 h-5 text-primary" />
+            <a
+              href={`tel:${ENV.CONTACT.PHONE}`}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              
+              <div className="flex items-start gap-3">
+                <div className={iconContainerClasses}>
+                  <HiOutlinePhone className="w-5 h-5 text-primary" />
+                </div>
+                <div>Just place a call
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Mon-Sat, 8AM-6PM
+                  </p>
+                </div>
               </div>
-              <div>
-                <a
-                  href={`tel:${ENV.CONTACT.PHONE}`}
-                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-                >
-                  +233 XX XXX XXXX
-                </a>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Mon-Sat, 8AM-6PM
-                </p>
-              </div>
-            </div>
+            </a>
           </div>
 
           {/* WhatsApp */}
@@ -159,24 +159,24 @@ export function ContactSection() {
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
               WhatsApp
             </h3>
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-success/10 flex items-center justify-center shrink-0">
-                <HiOutlineDevicePhoneMobile className="w-5 h-5 text-success" />
-              </div>
-              <div>
-                <a
-                  href={`https://wa.me/${ENV.CONTACT.PHONE || "233055952000x"}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-foreground hover:text-success transition-colors"
-                >
+            <a
+              href={`https://wa.me/${ENV.CONTACT.PHONE || "233055952000x"}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-foreground hover:text-success transition-colors"
+            >
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-success/10 flex items-center justify-center shrink-0">
+                  <HiOutlineDevicePhoneMobile className="w-5 h-5 text-success" />
+                </div>
+                <div>
                   Chat on WhatsApp
-                </a>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Fastest response
-                </p>
-              </div>
-            </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Fastest response
+                  </p>
+                </div>
+              </div>{" "}
+            </a>
           </div>
 
           {/* Email */}
@@ -184,22 +184,22 @@ export function ContactSection() {
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
               Email
             </h3>
-            <div className="flex items-start gap-3">
-              <div className={iconContainerClasses}>
-                <HiOutlineEnvelope className="w-5 h-5 text-primary" />
+            <a
+              href={`mailto:${ENV.CONTACT.EMAIL || "hello@motomartgh.com"}`}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              <div className="flex items-start gap-3">
+                <div className={iconContainerClasses}>
+                  <HiOutlineEnvelope className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  Tap to send us a Mail
+                  <p className="text-xs text-muted-foreground mt-1">
+                    We reply within 24hrs
+                  </p>
+                </div>
               </div>
-              <div>
-                <a
-                  href={`mailto:${ENV.CONTACT.EMAIL || "hello@motomartgh.com"}`}
-                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-                >
-                  {ENV.CONTACT.EMAIL || "hello@motomartgh.com"}
-                </a>
-                <p className="text-xs text-muted-foreground mt-1">
-                  We reply within 24hrs
-                </p>
-              </div>
-            </div>
+            </a>
           </div>
 
           {/* Trust badge */}
