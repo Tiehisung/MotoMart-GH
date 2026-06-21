@@ -25,10 +25,13 @@ export const ENV = {
     // Contact
     CONTACT: {
         EMAIL: e.VITE_CONTACT_EMAIL,
+        OFFICE_LOCATION: e.VITE_OFFICE_LOCATION,
         PHONE: e.VITE_CONTACT_PHONE,
         MEDIA_EMAIL: e.VITE_MEDIA_EMAIL,
         SPONSORSHIP_EMAIL: e.VITE_SPONSORSHIP_EMAIL,
+        GOOGLE_MAP_URL: e.VITE_GOOGLE_MAP_URL,
     },
+
 
     // Social
     SOCIAL: {

@@ -73,7 +73,7 @@ export function MODAL({
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-all"
+          className="fixed inset-0 -bottom-5 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-all"
           onClick={handleBackdropClick}
         >
           <div

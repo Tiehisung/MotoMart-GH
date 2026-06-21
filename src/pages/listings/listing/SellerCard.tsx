@@ -1,7 +1,7 @@
 import { Button } from "@/components/buttons/Button";
 import { Input } from "@/components/form";
 import Loader from "@/components/loaders/Loader";
-import { ShareBtn } from "@/components/ShareButton";
+import { ShareButton } from "@/components/social-share/ShareButton";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/timeAndDate";
 import {
@@ -118,7 +118,6 @@ export const ListingSellerCard = ({ listing }: Props) => {
               </div>
             )}
 
-      
           {/* ============ REQUEST CALL SECTION ============ */}
           {isCheckingRequest ? (
             <Loader />
@@ -182,13 +181,13 @@ export const ListingSellerCard = ({ listing }: Props) => {
           )}
 
           {/* Share */}
-          <ShareBtn
+          <ShareButton
             title={`${listing?.brand} ${listing?.model} - GHS ${listing?.price?.toLocaleString()}`}
             files={[...(listing?.images?.slice(0, 2) || [])]}
             className="grow w-full rounded-xl mt-3"
             size="lg"
             variant="secondary"
-            label="Share listing"
+            label="Share this listing"
           />
 
           {/* Safety tip */}

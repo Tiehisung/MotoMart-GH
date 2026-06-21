@@ -2,7 +2,7 @@ import { IUser } from '@/types/user';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
-    user: IUser | null;
+    user: Partial<IUser> | null;
     token: string | null;
     isAuthenticated: boolean;
 }
@@ -17,13 +17,13 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setCredentials: (state, action: PayloadAction<{ user: IUser; token: string }>) => {
+        setCredentials: (state, action: PayloadAction<{ user: Partial<IUser>; token: string }>) => {
             state.user = action.payload.user;
             state.token = action.payload.token;
             state.isAuthenticated = true;
             localStorage.setItem('motomart_token', action.payload.token);
         },
-        setUser: (state, action: PayloadAction<IUser>) => {
+        setUser: (state, action: PayloadAction<Partial<IUser>>) => {
             state.user = action.payload;
         },
         logout: (state) => {

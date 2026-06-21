@@ -4,6 +4,7 @@ import { ENV } from "@/lib/env";
 import { scrollToElement } from "@/lib/dom";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import { ExternalLink } from "@/components/Link";
 
 const PrivacyPage = () => {
   const styles = {
@@ -37,9 +38,10 @@ const PrivacyPage = () => {
         <section>
           <h2 className={styles.title}>1. Introduction</h2>
           <p className="text-muted-foreground leading-relaxed">
-            {ENV.APP_NAME} ("we," "our," or "us") is committed to protecting
-            your privacy. This Privacy Policy explains how we collect, use,
-            disclose, and safeguard your information when you use our platform.
+            <ExternalLink to={ENV.APP_URL} content={ENV.APP_NAME} /> ("we,"
+            "our," or "us") is committed to protecting your privacy. This
+            Privacy Policy explains how we collect, use, disclose, and safeguard
+            your information when you use our platform.
           </p>
         </section>
 
@@ -185,40 +187,26 @@ const PrivacyPage = () => {
           <ul className="space-y-2 text-muted-foreground leading-relaxed list-disc pl-5 mt-2">
             <li>
               <strong>Paystack:</strong> Processes all payments. View their{" "}
-              <a
-                href="https://paystack.com/gh/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
+              <ExternalLink to="https://paystack.com/terms">
                 Privacy Policy
-              </a>
+              </ExternalLink>
               .
             </li>
             <li>
               <strong>Africa's Talking:</strong> Sends SMS notifications. View
               their{" "}
-              <a
-                href="https://africastalking.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
+              <ExternalLink to="https://africastalking.com/privacy">
                 Privacy Policy
-              </a>
+              </ExternalLink>
               .
             </li>
             <li>
               <strong>Cloudinary:</strong> Hosts and optimizes images. View
               their{" "}
-              <a
-                href="https://cloudinary.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                Privacy Policy
-              </a>
+              <ExternalLink
+                to="https://cloudinary.com/privacy"
+                content={"Privacy Policy"}
+              />
               .
             </li>
           </ul>
@@ -264,18 +252,17 @@ const PrivacyPage = () => {
             </li>
             <li className="flex items-center gap-2 pl-2">
               <Phone className="w-4 h-4" />
-              <a href={`tel:${ENV.CONTACT.PHONE}`} className="text-brand">
+
+              <ExternalLink to={`${ENV.CONTACT.PHONE}`} type="tel">
                 Call
-              </a>
+              </ExternalLink>
             </li>
             <li className="flex items-center gap-2 pl-2">
               <FaWhatsapp className="w-4 h-4" />
-              <a
-                href={`http://wa.me/${ENV.CONTACT.PHONE}`}
-                className="text-brand"
-              >
-                Chat Us
-              </a>
+              <ExternalLink
+                to={`http://wa.me/${ENV.CONTACT.PHONE}`}
+                content="Chat Us"
+              />
             </li>
 
             <li className=" flex items-center gap-2 pl-2">
