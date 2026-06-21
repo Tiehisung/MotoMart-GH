@@ -26,7 +26,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import PaymentModal from "../payments/PaymentModal";
 import BoostModal from "./BoostModal";
-import ListingViewers from "./ViewersModal";
+import ListingViewers from "./ListingViewers";
 import { Button } from "@/components/ui/button";
 
 interface SellerListingCardProps {

@@ -99,7 +99,7 @@ export function MODAL({
             )}
 
             {/* Content */}
-            <div className="p-6">{children}</div>
+            <div className="p-6 max-h-[80vh] overflow-y-auto mr-0.5">{children}</div>
 
             {/* Footer */}
             {footer && (

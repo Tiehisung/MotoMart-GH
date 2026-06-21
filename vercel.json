@@ -2,11 +2,29 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://bunyeni-fc-api.vercel.app/api/$1"
+      "destination": "https://motomartgh-api.vercel.app/api/$1"
     },
+
+    {
+      "source": "/listing/:id",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": "(facebookexternalhit|Facebot|Twitterbot|WhatsApp|Slackbot|Discordbot|TelegramBot|LinkedInBot|Googlebot|bingbot|Pinterest|redditbot|Applebot)"
+        }
+      ],
+      "destination": "/api/og/:id"
+    },
+    {
+      "source": "/listing/:id",
+      "destination": "/index.html"
+    },
+
     {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
 }
+
