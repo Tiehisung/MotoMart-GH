@@ -7,7 +7,7 @@ import {
   HiOutlineStar,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
-import { MainListingCard } from "../browse-listing/ListingCards";
+import { MainListingCard } from "../listings/ListingCards";
 import Hero from "./Hero";
 import { useScrollProgressBar } from "@/hooks/useScroll";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
