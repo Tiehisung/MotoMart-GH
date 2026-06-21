@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const HomeNav = () => {
   const { user } = useAppSelector((s) => s.auth);
   return (
-    <header className="fixed top-6 left-0 right-0 z-100 flex justify-center px-4 md:px-6 w-full pointer-events-none">
+    <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 md:px-6 w-full pointer-events-none">
       <nav className="pointer-events-auto w-full max-w-7xl border border-border bg-card/80 backdrop-blur-2xl rounded-full transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
         <div className="flex w-full px-6 md:px-12 py-4 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group">

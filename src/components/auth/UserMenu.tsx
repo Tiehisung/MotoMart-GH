@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Dropdown } from "../headlessUI/Dropdown";
 import { Button } from "../buttons/Button";
 import { useAppDispatch, useAppSelector } from "@/store/hooks/store";
-import { Settings, User } from "lucide-react";
+import { Menu, Settings, User } from "lucide-react";
 
 import { PiSignOut } from "react-icons/pi";
 import { logout } from "@/store/slices/auth.slice";
@@ -76,13 +76,13 @@ export function UserMenu() {
   return (
     <Dropdown
       trigger={
-        <button className="flex items-center space-x-1 border border-primary pr-1.5 rounded-full cursor-pointer hover:bg-card">
+        <button className="flex items-center space-x-3 borders border-primary pr-1.5 rounded-full cursor-pointer hover:bg-card">
           <div className="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-white uppercase">
             {user?.fullName?.[0] || "U"}
           </div>
           <span className=" md:block text-sm text-muted-foreground">
             {
-              "Menu"
+              <Menu/>
               // || user?.fullName?.split(" ")?.[0] ||
               //   user?.phoneNumber?.substring(7) ||
               //   "User"

@@ -31,7 +31,25 @@ export const listingsApi = api.injectEndpoints({
             query: (params) => ({ url: '/listings/user/mine', params }),
             providesTags: ['MyListings'],
         }),
-
+        getListingViewers: builder.query<
+            {
+                success: boolean;
+                count: number;
+                data: {
+                    listing: { _id: string; brand: string; model: string };
+                    viewers: Array<{
+                        fullName: string;
+                        phoneNumber: string | null;
+                        isAuthenticated: boolean;
+                        viewedAt: string;
+                    }>;
+                };
+            },
+            string
+        >({
+            query: (id) => `/listings/${id}/viewers`,
+            providesTags: (_result, _error, id) => [{ type: 'Listings', id }],
+        }),
         createListing: builder.mutation<ISingleListingResponse, FormData | any>({
             query: (body) => ({ url: '/listings', method: 'POST', body }),
             invalidatesTags: ['Listings', 'MyListings'],
@@ -130,5 +148,6 @@ export const {
 
     // Seller
     useGetMyLeadsQuery,
+    useGetListingViewersQuery,
     useMarkLeadContactedMutation,
 } = listingsApi;

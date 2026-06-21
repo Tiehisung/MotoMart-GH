@@ -13,7 +13,7 @@ import NotAuthorizedPage from "@/pages/auth/NotAuthorized";
 import AuthLayout from "@/pages/auth/AuthLayout";
 import SignInPage from "@/pages/auth/signin/Page";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
-import ListingDetailPage from "@/pages/browse-listing/Listing/DetailPage";
+import ListingDetailPage from "@/pages/browse-listing/listing/DetailPage";
 import CreateListingPage from "@/pages/dashboard/my-listings/CreateListingPage";
 import MyListingsPage from "@/pages/dashboard/my-listings/MyListingsPage";
 import ProfilePage from "@/pages/dashboard/ProfilePage";

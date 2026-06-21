@@ -13,8 +13,12 @@ import {
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
 import { ListingSellerCard } from "./SellerCard";
+import { useAppSelector } from "@/store/hooks/store";
+import { MODAL } from "@/components/modals/Modal";
+import ListingViewers from "@/pages/dashboard/my-listings/ViewersModal";
 
 const ListingDetailPage = () => {
+  const { user } = useAppSelector((s) => s.auth);
   const { listingId } = useParams<{ listingId: string }>();
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetListingQuery(listingId!);
@@ -23,9 +27,15 @@ const ListingDetailPage = () => {
 
   const listing = data?.data;
 
-  // ============================================
+  const isOwner =
+    user &&
+    listing?.seller &&
+    typeof listing.seller === "object" &&
+    listing.seller._id === user._id;
+
+    console.log(user)
+
   // LOADING STATE
-  // ============================================
   if (isLoading) {
     return (
       <div className="max-w-4xl mx-auto p-4 space-y-6">
@@ -40,9 +50,7 @@ const ListingDetailPage = () => {
     );
   }
 
-  // ============================================
   // ERROR STATE
-  // ============================================
   if (isError || !listing) {
     return (
       <div className="text-center py-20">
@@ -64,9 +72,7 @@ const ListingDetailPage = () => {
     );
   }
 
-  // ============================================
   // RENDER
-  // ============================================
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12 _page">
       {/* Back button */}
@@ -227,6 +233,47 @@ const ListingDetailPage = () => {
                     Original documents available with the bike
                   </p>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {isOwner && (
+            <div className="bg-card border border-border rounded-2xl p-5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-medium text-foreground">
+                    Listing Views
+                  </h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {listing.viewCount || 0} total views
+                  </p>
+                </div>
+
+                <MODAL
+                  title={`${listing?.brand} ${listing?.model || ""}`.trim()}
+                  modalSize="md"
+                  showCloseButton
+                  closeOnOutsideClick={!isLoading}
+                  closeOnEscape={!isLoading}
+                  trigger={
+                    <>
+                      <HiOutlineEye className="w-3.5 h-3.5" />
+                      <span className="inline">
+                        See Viewers
+                      </span>
+                    </>
+                  }
+                  triggerSize={"sm"}
+                  variant={"ghost"}
+                  triggerStyles={
+                    "px-3 py-1.5 bg-primary/10 text-primary rounded-lg text-xs font-medium hover:bg-primary/20 transition-colors"
+                  }
+                >
+                  <ListingViewers
+                    listingId={listing._id}
+                    listingTitle={`${listing?.brand} ${listing?.model || ""}`.trim()}
+                  />
+                </MODAL>
               </div>
             </div>
           )}

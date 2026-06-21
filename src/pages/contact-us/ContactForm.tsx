@@ -3,16 +3,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import {
-  HiOutlineMapPin,
   HiOutlinePhone,
   HiOutlineEnvelope,
   HiOutlineShieldCheck,
-  HiOutlineDevicePhoneMobile,
   HiOutlineUser,
 } from "react-icons/hi2";
 import { Input, Select, Textarea } from "@/components/form";
 import { Button } from "@/components/buttons/Button";
-import { ENV } from "@/lib/env";
 import { useAppSelector } from "@/store/hooks/store";
 import { useSubmitContactMutation } from "@/services/contactApi";
 
@@ -43,7 +40,7 @@ const INQUIRY_OPTIONS = [
   { value: "other", label: "Other" },
 ];
 
-export function ContactSection() {
+export function ContactForm() {
   const { user } = useAppSelector((s) => s.auth);
   const [submitContact, { isLoading: isSubmitting }] =
     useSubmitContactMutation();
@@ -80,220 +77,87 @@ export function ContactSection() {
     }
   };
 
-  const contactCardClasses = `
-    bg-muted/50 rounded-2xl p-5
-    border border-border/50
-    hover:border-border transition-colors duration-200
-  `;
-
-  const iconContainerClasses = `
-    w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0
-  `;
-
   return (
-    <section className="rounded-3xl max-w-4xl mx-auto border-border">
-      {/* ============ HEADER ============ */}
-      <div className="text-center mb-8 md:mb-10">
-        <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-          <HiOutlineShieldCheck className="w-3.5 h-3.5" />
-          Trusted Support
-        </div>
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-          Get in Touch
-        </h2>
-        <p className="text-muted-foreground max-w-lg mx-auto text-sm leading-relaxed">
-          Have questions about buying, selling, or verifying your identity? Our
-          team in Wa is ready to help. We respond within 24 hours.
-        </p>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {/* Full Name */}
+      <Input
+        label="Full Name"
+        required
+        placeholder="e.g., Ibrahim Musah"
+        icon={<HiOutlineUser className="w-5 h-5" />}
+        error={errors.fullName?.message}
+        {...register("fullName")}
+      />
+
+      {/* Phone Number */}
+      <Input
+        label="Phone Number"
+        required
+        type="tel"
+        placeholder="e.g., 024XXXXXXX"
+        icon={<HiOutlinePhone className="w-5 h-5" />}
+        error={errors.phoneNumber?.message}
+        {...register("phoneNumber")}
+      />
+
+      {/* Email */}
+      <Input
+        label="Email Address"
+        type="email"
+        placeholder={`e.g., ${user?.fullName?.replaceAll(" ", "")?.toLowerCase() || "ibrahim"}@email.com`}
+        icon={<HiOutlineEnvelope className="w-5 h-5" />}
+        error={errors.email?.message}
+        {...register("email")}
+      />
+
+      {/* Inquiry Type */}
+      <Controller
+        control={control}
+        name="inquiryType"
+        render={({ field }) => (
+          <Select
+            label="What do you need help with?"
+            required
+            options={INQUIRY_OPTIONS}
+            error={errors.inquiryType?.message}
+            {...field}
+          />
+        )}
+      />
+
+      {/* Message */}
+      <div className="relative">
+        <Textarea
+          label="Your Message"
+          placeholder="Tell us more about what you need. If it's about a specific bike, include the brand and model..."
+          error={errors.message?.message}
+          rows={4}
+          {...register("message")}
+          maxLength={800}
+        />
+        {form.message && (
+          <p className="absolute right-2 top-1 text-xs font-normal text-muted-foreground">{`${form.message?.length} of ${800}`}</p>
+        )}
       </div>
 
-      {/* ============ GRID ============ */}
-      <div className="grid md:grid-cols-5 gap-8 md:gap-10">
-        {/* ============ LEFT - CONTACT INFO ============ */}
-        <div className="md:col-span-2 space-y-4">
-          {/* Office */}
-          <div className={contactCardClasses}>
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-              Our Office
-            </h3>
-            <div className="flex items-start gap-3">
-              <div className={iconContainerClasses}>
-                <HiOutlineMapPin className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">
-                  Wa, Upper West Region
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Near Wa Central Market
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* Submit */}
+      <Button
+        type="submit"
+        loading={isSubmitting}
+        text={"Send Message"}
+        loadingText="Sending..."
+        size={"lg"}
+        variant="default"
+        className="rounded-xl h-12 w-full "
+      >
+        <HiOutlineEnvelope className="w-4 h-4" />
+      </Button>
 
-          {/* Phone */}
-          <div className={contactCardClasses}>
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-              Phone
-            </h3>
-            <a
-              href={`tel:${ENV.CONTACT.PHONE}`}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-            >
-              
-              <div className="flex items-start gap-3">
-                <div className={iconContainerClasses}>
-                  <HiOutlinePhone className="w-5 h-5 text-primary" />
-                </div>
-                <div>Just place a call
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Mon-Sat, 8AM-6PM
-                  </p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          {/* WhatsApp */}
-          <div className={contactCardClasses}>
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-              WhatsApp
-            </h3>
-            <a
-              href={`https://wa.me/${ENV.CONTACT.PHONE || "233055952000x"}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium text-foreground hover:text-success transition-colors"
-            >
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-success/10 flex items-center justify-center shrink-0">
-                  <HiOutlineDevicePhoneMobile className="w-5 h-5 text-success" />
-                </div>
-                <div>
-                  Chat on WhatsApp
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Fastest response
-                  </p>
-                </div>
-              </div>{" "}
-            </a>
-          </div>
-
-          {/* Email */}
-          <div className={contactCardClasses}>
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-              Email
-            </h3>
-            <a
-              href={`mailto:${ENV.CONTACT.EMAIL || "hello@motomartgh.com"}`}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-            >
-              <div className="flex items-start gap-3">
-                <div className={iconContainerClasses}>
-                  <HiOutlineEnvelope className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  Tap to send us a Mail
-                  <p className="text-xs text-muted-foreground mt-1">
-                    We reply within 24hrs
-                  </p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          {/* Trust badge */}
-          <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2">
-            <HiOutlineShieldCheck className="w-4 h-4 text-success" />
-            <span>Your information is secure and private</span>
-          </div>
-        </div>
-
-        {/* ============ RIGHT - FORM ============ */}
-        <div className="md:col-span-3">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Full Name */}
-            <Input
-              label="Full Name"
-              required
-              placeholder="e.g., Ibrahim Musah"
-              icon={<HiOutlineUser className="w-5 h-5" />}
-              error={errors.fullName?.message}
-              {...register("fullName")}
-            />
-
-            {/* Phone Number */}
-            <Input
-              label="Phone Number"
-              required
-              type="tel"
-              placeholder="e.g., 024XXXXXXX"
-              icon={<HiOutlinePhone className="w-5 h-5" />}
-              error={errors.phoneNumber?.message}
-              {...register("phoneNumber")}
-            />
-
-            {/* Email */}
-            <Input
-              label="Email Address"
-              type="email"
-              placeholder={`e.g., ${user?.fullName?.replaceAll(" ", "")?.toLowerCase() || "ibrahim"}@email.com`}
-              icon={<HiOutlineEnvelope className="w-5 h-5" />}
-              error={errors.email?.message}
-              {...register("email")}
-            />
-
-            {/* Inquiry Type */}
-            <Controller
-              control={control}
-              name="inquiryType"
-              render={({ field }) => (
-                <Select
-                  label="What do you need help with?"
-                  required
-                  options={INQUIRY_OPTIONS}
-                  error={errors.inquiryType?.message}
-                  {...field}
-                />
-              )}
-            />
-
-            {/* Message */}
-            <div className="relative">
-              <Textarea
-                label="Your Message"
-                placeholder="Tell us more about what you need. If it's about a specific bike, include the brand and model..."
-                error={errors.message?.message}
-                rows={4}
-                {...register("message")}
-                maxLength={800}
-              />
-              {form.message && (
-                <p className="absolute right-2 top-1 text-xs font-normal text-muted-foreground">{`${form.message?.length} of ${800}`}</p>
-              )}
-            </div>
-
-            {/* Submit */}
-            <Button
-              type="submit"
-              loading={isSubmitting}
-              text={"Send Message"}
-              loadingText="Sending..."
-              size={"lg"}
-              variant="default"
-              className="rounded-xl h-12 w-full "
-            >
-              <HiOutlineEnvelope className="w-4 h-4" />
-            </Button>
-
-            {/* Footer note */}
-            <p className="text-center text-[11px] text-muted-foreground flex items-center justify-center gap-1.5">
-              <HiOutlineShieldCheck className="w-3.5 h-3.5 text-success" />
-              Secure communication • We respect your privacy
-            </p>
-          </form>
-        </div>
-      </div>
-    </section>
+      {/* Footer note */}
+      <p className="text-center text-[11px] text-muted-foreground flex items-center justify-center gap-1.5">
+        <HiOutlineShieldCheck className="w-3.5 h-3.5 text-success" />
+        Secure communication • We respect your privacy
+      </p>
+    </form>
   );
 }

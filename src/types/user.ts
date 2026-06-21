@@ -15,9 +15,16 @@ export interface IUser {
   __v: number;
 }
 
+// export interface IAuthUser extends Pick<IUser, '_id' | 'fullName' | 'phoneNumber' | 'role' | 'isVerified' | 'momoVerified'> { }
+
+export interface IAuth extends IUser {
+
+}
+
 export enum EUserRole {
   SELLER = "seller",
   BUYER = "buyer",
   ADMIN = "admin"
 }
- 
+
+

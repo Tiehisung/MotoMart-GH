@@ -4,6 +4,7 @@ import { ENV } from "@/lib/env";
 import { scrollToElement } from "@/lib/dom";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import { ExternalLink } from "@/components/Link";
 
 const TermsPage = () => {
   return (
@@ -35,9 +36,11 @@ const TermsPage = () => {
             1. Acceptance of Terms
           </h2>
           <p className="text-muted-foreground leading-relaxed">
-            By accessing or using {ENV.APP_NAME} ("the Platform"), you agree to
-            be bound by these Terms of Service. If you do not agree with any
-            part of these terms, you may not use the Platform.
+            By accessing or using{" "}
+            <ExternalLink to={ENV.APP_URL} content={ENV.APP_NAME} /> ("the
+            Platform"), you agree to be bound by these Terms of Service. If you
+            do not agree with any part of these terms, you may not use the
+            Platform.
           </p>
         </section>
 
@@ -46,10 +49,12 @@ const TermsPage = () => {
             2. Description of Service
           </h2>
           <p className="text-muted-foreground leading-relaxed">
-            {ENV.APP_NAME} is an online marketplace that connects motorbike
-            buyers and sellers in Ghana. The Platform provides listing services,
-            verification services, and communication tools. {ENV.APP_NAME} does
-            not buy, sell, or own any motorbikes listed on the Platform.
+            <ExternalLink to={ENV.APP_URL} content={ENV.APP_NAME} /> is an
+            online marketplace that connects motorbike buyers and sellers in
+            Ghana. The Platform provides listing services, verification
+            services, and communication tools.{" "}
+            <ExternalLink to={ENV.APP_URL} content={ENV.APP_NAME} /> does not
+            buy, sell, or own any motorbikes listed on the Platform.
           </p>
         </section>
 
@@ -123,7 +128,8 @@ const TermsPage = () => {
           </h2>
           <p className="text-muted-foreground leading-relaxed">
             Listing fees are displayed at the time of posting and are subject to
-            change. All payments are processed through Paystack. {ENV.APP_NAME}{" "}
+            change. All payments are processed through Paystack.{" "}
+            <ExternalLink to={ENV.APP_URL} content={ENV.APP_NAME} />
             is not responsible for payment disputes between buyers and sellers.
             Listing fees must be paid before a listing is published.
           </p>
@@ -154,11 +160,12 @@ const TermsPage = () => {
             8. Verification Services
           </h2>
           <p className="text-muted-foreground leading-relaxed">
-            {ENV.APP_NAME} offers optional physical verification services. A
-            verified badge indicates that our team has physically inspected the
-            motorbike. Verification does not guarantee the mechanical condition,
-            roadworthiness, or legal status of the motorbike. Buyers should
-            still conduct their own inspection.
+            <ExternalLink to={ENV.APP_URL} content={ENV.APP_NAME} /> offers
+            optional physical verification services. A verified badge indicates
+            that our team has physically inspected the motorbike. Verification
+            does not guarantee the mechanical condition, roadworthiness, or
+            legal status of the motorbike. Buyers should still conduct their own
+            inspection.
           </p>
         </section>
 
@@ -167,11 +174,12 @@ const TermsPage = () => {
             9. Limitation of Liability
           </h2>
           <p className="text-muted-foreground leading-relaxed">
-            {ENV.APP_NAME} is a marketplace platform only. We are not a party to
-            any transaction between buyers and sellers. We do not guarantee the
-            quality, safety, or legality of listed items. Users transact at
-            their own risk. {ENV.APP_NAME} shall not be liable for any damages
-            arising from the use of the Platform.
+            <ExternalLink to={ENV.APP_URL} content={ENV.APP_NAME} /> is a
+            marketplace platform only. We are not a party to any transaction
+            between buyers and sellers. We do not guarantee the quality, safety,
+            or legality of listed items. Users transact at their own risk.{" "}
+            <ExternalLink to={ENV.APP_URL} content={ENV.APP_NAME} /> shall not
+            be liable for any damages arising from the use of the Platform.
           </p>
         </section>
 
@@ -180,9 +188,10 @@ const TermsPage = () => {
             10. Termination
           </h2>
           <p className="text-muted-foreground leading-relaxed">
-            {ENV.APP_NAME} reserves the right to suspend or terminate any
-            account that violates these terms. Users may delete their accounts
-            at any time. Upon termination, all active listings will be removed.
+            <ExternalLink to={ENV.APP_URL} content={ENV.APP_NAME} /> reserves
+            the right to suspend or terminate any account that violates these
+            terms. Users may delete their accounts at any time. Upon
+            termination, all active listings will be removed.
           </p>
         </section>
 
