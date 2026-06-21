@@ -28,5 +28,66 @@
 
 ._waving {
   animation: animate 15s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
- 
+}
+
+/* Used in hero */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes floatDelayed {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes floatMoreDelayed {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatDelayed 5s ease-in-out infinite 1s;
+}
+
+.animate-float-more-delayed {
+  animation: floatMoreDelayed 4.5s ease-in-out infinite 2s;
+}
+
+/* Marque */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+._marquee {
+  animation: marquee linear infinite;
+  white-space: nowrap;
+}
+._marquee:hover {
+  animation-play-state: paused;
 }

@@ -6,8 +6,7 @@ export const ENV = {
     APP_NAME: e.VITE_APP_NAME,
     APP_URL: e.VITE_APP_URL,
     API_URL: e.VITE_API_URL,
-
-    
+    HERO_IMAGE: e.VITE_HERO_IMAGE,
 
     // Assets
     LOGO_URL: e.VITE_LOGO_URL,

@@ -1,7 +1,7 @@
 import { FaFilePdf, FaFileExcel, FaRegFilePowerpoint } from "react-icons/fa6";
 import { PiMicrosoftWordLogoFill } from "react-icons/pi";
 import { TbFileUnknown } from "react-icons/tb";
-import { Color } from "@/styles";
+import { Color } from "@/styles/_index";
 import { FileText, Image, Music, Video } from "lucide-react";
 
 const extensionMap: Record<string, TFileTypeName> = {

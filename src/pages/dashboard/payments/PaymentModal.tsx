@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import {
+  EPaymentType,
   useInitiatePaymentMutation,
   useVerifyPaymentQuery,
 } from "@/services/paymentsApi";
@@ -20,6 +21,8 @@ interface PaymentModalProps {
   listingTitle: string;
   amount: number;
   onSuccess?: () => void;
+  paymentType?: `${EPaymentType}`;
+  metadata?: Record<string, any>;
 }
 
 const defaultTestPhone = "0551234987";
@@ -37,6 +40,8 @@ const PaymentModal = ({
   listingTitle,
   amount,
   onSuccess,
+  paymentType = "listing_fee",
+  metadata,
 }: PaymentModalProps) => {
   const { user } = useAppSelector((state) => state.auth);
   const [step, setStep] = useState<
@@ -83,7 +88,8 @@ const PaymentModal = ({
         listingId,
         momoNumber,
         network: network as any,
-        paymentType: "listing_fee",
+        paymentType: paymentType,
+        metadata,
       }).unwrap();
 
       setPaymentRef(result.data?.reference || null);
@@ -112,9 +118,9 @@ const PaymentModal = ({
     <div className="fixed inset-0 -bottom-12 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="bg-surface-elevated rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between capitalize">
           <h2 className="text-lg font-bold text-surface-foreground">
-            {step === "form" && "Pay Listing Fee"}
+            {step === "form" && "Pay " + paymentType.replaceAll("_", " ")}
             {step === "processing" && "Processing Payment"}
             {step === "success" && "Payment Successful"}
             {step === "failed" && "Payment Failed"}

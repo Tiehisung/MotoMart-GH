@@ -1,0 +1,21 @@
+Featured Boosts
+
+WHY BOOSTS
+
+    Current: Seller pays GHS 25-45 once per listing
+    With Boosts: Same seller pays GHS 25-45 + GHS 15-35 = GHS 40-80
+    → 60-80% revenue increase per listing with minimal effort
+
+Solves a Real Problem
+ 
+    Seller: "My bike has been listed for 2 weeks, no calls"
+    Solution: Buy a 7-day boost → jumps to top → gets 5x more views
+    
+WHAT BOOSTS NEED
+
+    1. "Boost Listing" button on seller's listing card
+    2. Boost purchase modal (reuse PaymentModal)
+    3. Boost expiry tracking on listing model
+    4. Sort boosted listings to top in search
+    5. "Boosted" badge on listing card
+    6. Admin can see boosted listings

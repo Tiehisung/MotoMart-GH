@@ -7,8 +7,7 @@ import {
   HiOutlineStar,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
-import Footer from "../Footer";
-import { BikeCard } from "./BikeCard";
+import { MainListingCard } from "../browse-listing/ListingCards";
 import Hero from "./Hero";
 import { useScrollProgressBar } from "@/hooks/useScroll";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -37,7 +36,7 @@ const LandingPage = () => {
 
       <HomeNav />
 
-      <Hero />
+      <Hero type="secondary" />
 
       {/* ============ TRUST STRIP ============ */}
       <section className="relative bg-card border-y border-border">
@@ -209,7 +208,7 @@ const LandingPage = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {listingsData?.data?.slice(0, 6)?.map((listing) => (
-                  <BikeCard listing={listing} />
+                  <MainListingCard listing={listing} />
                 ))}
               </div>
             )}
@@ -306,12 +305,10 @@ const LandingPage = () => {
 
       {/* ============ CONTACT ============ */}
       <section className="relative py-24 bg-background border-t border-border">
-        <div className="max-w-350 mx-auto px-6 md:px-12 lg:px-24">
+        <div className="max-w-350 mx-auto px-6 md:px-12 lg:px-24" id="contact">
           <ContactSection />
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

@@ -39,6 +39,8 @@ import AdminContactsPage from "@/pages/admin/messages/AdminContactsPage";
 import MyLeadsPage from "@/pages/dashboard/leads/MyLeadsPage";
 import MyRequestsPage from "@/pages/dashboard/requests/MyRequestsPage";
 import AdminPricingPage from "@/pages/admin/pricing/AdminPricingPage";
+import PrivacyPage from "@/pages/security/PrivacyPage";
+import TermsPage from "@/pages/security/TermsPage";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -56,9 +58,7 @@ const DashboardLayoutWithScroll = () => (
 );
 
 const applicationRouter = createBrowserRouter([
-  // ============================================
   // PUBLIC ROUTES
-  // ============================================
   {
     path: "/",
     element: <MainLayout />,
@@ -77,15 +77,21 @@ const applicationRouter = createBrowserRouter([
         element: <NotAuthorizedPage />,
       },
       {
+        path: "terms",
+        element: <TermsPage />,
+      },
+      {
+        path: "privacy",
+        element: <PrivacyPage />,
+      },
+      {
         path: "*",
         element: <NotFound />,
       },
     ],
   },
 
-  // ============================================
   // AUTH ROUTES
-  // ============================================
   {
     path: "/auth",
     element: <AuthLayout />,
@@ -101,9 +107,7 @@ const applicationRouter = createBrowserRouter([
     ],
   },
 
-  // ============================================
   // DASHBOARD ROUTES (Seller & Buyer)
-  // ============================================
   {
     path: "/dashboard",
     element: (
@@ -163,9 +167,7 @@ const applicationRouter = createBrowserRouter([
     ],
   },
 
-  // ============================================
   // ADMIN ROUTES
-  // ============================================
   {
     path: "/admin",
     element: (

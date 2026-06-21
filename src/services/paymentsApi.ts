@@ -1,11 +1,19 @@
 import { api } from './_api';
 
+export enum EPaymentType {
+    LISTING_FEE = 'listing_fee',
+    PREMIUM_UPGRADE = 'premium_upgrade',    // ✅ Already exists — used for boosts
+    VERIFICATION_FEE = 'verification_fee',
+    ESCROW_DEPOSIT = 'escrow_deposit',
+    ESCROW_RELEASE = 'escrow_release',
+}
 
 export interface IInitiatePaymentRequest {
     listingId?: string;
     momoNumber?: string;
     network?: 'MTN' | 'AirtelTigo' | 'Vodafone';
-    paymentType?: 'listing_fee' | 'verification_fee';
+    paymentType?: `${EPaymentType}`
+    metadata?: Record<string, any>
 }
 
 export interface IPaymentResponse {
