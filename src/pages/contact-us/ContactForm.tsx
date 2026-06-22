@@ -78,7 +78,7 @@ export function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" id="contact">
       {/* Full Name */}
       <Input
         label="Full Name"

@@ -207,8 +207,8 @@ const LandingPage = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {listingsData?.data?.slice(0, 6)?.map((listing) => (
-                  <MainListingCard listing={listing} />
+                {listingsData?.data?.slice(0, 20)?.map((listing) => (
+                  <MainListingCard listing={listing} key={listing._id}/>
                 ))}
               </div>
             )}
@@ -305,7 +305,7 @@ const LandingPage = () => {
 
       {/* ============ CONTACT ============ */}
       <section className="relative py-24 bg-background border-t border-border">
-        <div className="max-w-350 mx-auto px-6 md:px-12 lg:px-24" id="contact">
+        <div className="max-w-350 mx-auto px-6 md:px-12 lg:px-24">
           <ContactPage />
         </div>
       </section>

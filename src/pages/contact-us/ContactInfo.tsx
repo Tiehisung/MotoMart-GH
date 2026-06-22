@@ -9,7 +9,6 @@ import {
 } from "react-icons/hi2";
 
 export function ContactInfo() {
-  console.log(encodeURI("?q=Central Market, Wa, Ghana"));
   const contactCardClasses = `
     bg-muted/50 rounded-2xl p-5
     border border-border/50
@@ -85,7 +84,7 @@ export function ContactInfo() {
 
       {/* WhatsApp */}
       <a
-        href={`https://wa.me/${ENV.CONTACT.PHONE || "233055952000x"}`}
+        href={`https://wa.me/${ENV.CONTACT.PHONE }`}
         target="_blank"
         rel="noopener noreferrer"
         className="text-sm font-medium text-foreground hover:text-success transition-colors "

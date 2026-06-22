@@ -99,7 +99,7 @@ const AdminPaymentsPage = () => {
                       <p className="text-sm font-semibold text-surface-foreground capitalize">
                         {payment.paymentType?.replace(/_/g, " ") || "Payment"}
                       </p>
-                      <div className="flex items-center gap-2 mt-0.5 text-xs text-muted-foreground">
+                      <div className="flex items-center flex-wrap gap-2 mt-0.5 text-xs text-muted-foreground">
                         {payment.payer && (
                           <span className="flex items-center gap-1">
                             <HiOutlineUser className="w-3 h-3" />

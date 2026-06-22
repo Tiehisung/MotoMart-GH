@@ -39,8 +39,13 @@ const authSlice = createSlice({
             // Clear sessionStorage (if used)
             sessionStorage.clear();
         },
+        updateVerificationStatus: (state, action: PayloadAction<{ isVerified: boolean }>) => {
+            if (state.user) {
+                state.user.isVerified = action.payload.isVerified;
+            }
+        },
     },
 });
 
-export const { setCredentials, setUser, logout } = authSlice.actions;
+export const { setCredentials, setUser, logout, updateVerificationStatus } = authSlice.actions;
 export default authSlice.reducer;
