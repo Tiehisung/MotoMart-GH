@@ -15,7 +15,7 @@ import { FaMotorcycle } from "react-icons/fa6";
 import { ListingSellerCard } from "./SellerCard";
 import { useAppSelector } from "@/store/hooks/store";
 import { MODAL } from "@/components/modals/Modal";
-import ListingViewers from "@/pages/dashboard/my-listings/ViewersModal";
+import ListingViewers from "@/pages/dashboard/my-listings/ListingViewers";
 
 const ListingDetailPage = () => {
   const { user } = useAppSelector((s) => s.auth);
@@ -33,7 +33,7 @@ const ListingDetailPage = () => {
     typeof listing.seller === "object" &&
     listing.seller._id === user._id;
 
-    console.log(user)
+  console.log(user);
 
   // LOADING STATE
   if (isLoading) {
@@ -258,9 +258,7 @@ const ListingDetailPage = () => {
                   trigger={
                     <>
                       <HiOutlineEye className="w-3.5 h-3.5" />
-                      <span className="inline">
-                        See Viewers
-                      </span>
+                      <span className="inline">See Viewers</span>
                     </>
                   }
                   triggerSize={"sm"}

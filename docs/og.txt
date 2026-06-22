@@ -1,0 +1,21 @@
+REWRITE ORDER (How It Works)
+
+Request: GET /listing/abc123
+
+1. Does it match /api/(.*)?
+   → No, path is /listing/abc123
+   → Continue
+
+2. Does it match /listing/:id AND is it a bot?
+   → Yes → Route to /api/og/abc123 ✅
+   → Edge Function generates OG HTML
+   → Bot gets rich preview
+
+3. If not a bot:
+   → Matches /listing/:id (second rule)
+   → Route to /index.html
+   → React SPA loads normally ✅
+
+4. Any other route:
+   → Matches /(.*)
+   → Route to /index.html
