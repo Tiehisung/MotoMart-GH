@@ -35,6 +35,8 @@ const ProfilePage = () => {
     useUpdateProfileMutation();
   const profile = myProfile?.user;
 
+  console.log(profile)
+
   const isLoading = loadingProfile || updatingProfile;
 
   const {

@@ -102,11 +102,8 @@ export function ShareButton({
     try {
       await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
-      toast.success("Link copied! Share it anywhere for a beautiful preview.");
       setTimeout(() => setCopied(false), 3000);
-    } catch (error) {
-      toast.error("Failed to copy link. Please try again.");
-    }
+    } catch {}
   };
 
   return (

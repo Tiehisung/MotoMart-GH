@@ -8,6 +8,17 @@ export interface IAuthResponse {
   token: string;
   user: IUser;
 }
+interface VerificationResponse {
+  success: boolean;
+  message?: string;
+  user?: {
+    _id: string;
+    isVerified: boolean;
+    ghanaCardImage?: string;
+    ghanaCardSelfie?: string;
+    ghanaCardNumber?: string;
+  };
+}
 
 export const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,6 +35,14 @@ export const authApi = api.injectEndpoints({
     updateProfile: builder.mutation<{ success: boolean; user: IUser }, Partial<IUser>>({
       query: (body) => ({ url: '/auth/profile', method: 'PUT', body }),
       invalidatesTags: ['User'],
+    }), 
+    submitVerification: builder.mutation<VerificationResponse, FormData>({
+      query: (formData) => ({
+        url: '/auth/verify-identity',
+        method: 'POST',
+        body: formData,
+      }),
+      invalidatesTags: ['User'],
     }),
   }),
 });
@@ -33,4 +52,5 @@ export const {
   useLoginMutation,
   useGetMyProfileQuery,
   useUpdateProfileMutation,
+   useSubmitVerificationMutation
 } = authApi;
