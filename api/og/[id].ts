@@ -8,6 +8,11 @@ export default async function handler(req: Request) {
         const segments = url.pathname.split('/');
         const id = segments[segments.length - 1];
 
+        console.log('🔍 OG Function called');
+        console.log('   Full URL:', req.url);
+        console.log('   Pathname:', url.pathname);
+        console.log('   Extracted ID:', id);
+
         if (!id || id === 'og') {
             return new Response('Missing listing ID', { status: 400 });
         }
@@ -41,7 +46,7 @@ export default async function handler(req: Request) {
         const description = parts.join(' | ');
 
         // Build OG image
-        const image = listing.images?.[0] || 'https://motomartgh.vercel.app/og-default.jpg';
+        const image = listing.images?.[0]
 
         // Canonical URL
         const canonicalUrl = `https://motomartgh.vercel.app/listing/${id}`;
