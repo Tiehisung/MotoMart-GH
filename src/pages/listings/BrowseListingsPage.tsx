@@ -18,6 +18,7 @@ import { useGetLocationsQuery } from "@/services/locationApi";
 import { CONDITIONS } from "@/data/motor";
 import { IListing } from "@/types/listing";
 import { ListingCardSkeleton } from "@/components/Skeletons/listing";
+import { PageSEO } from "@/utils/PageSEO";
 
 const SORT_OPTIONS = [
   { value: "-createdAt", label: "Newest First" },
@@ -210,6 +211,8 @@ const BrowseListingsPage = () => {
   // RENDER
   return (
     <div className="space-y-6 pb-12 _page">
+      <PageSEO page="browse" />
+      
       {/* HEADER */}
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>

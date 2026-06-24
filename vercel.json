@@ -4,7 +4,6 @@
       "source": "/api/(.*)",
       "destination": "https://motomartgh-api.vercel.app/api/$1"
     },
-
     {
       "source": "/listing/:id",
       "has": [
@@ -14,17 +13,26 @@
           "value": "(facebookexternalhit|Facebot|Twitterbot|WhatsApp|Slackbot|Discordbot|TelegramBot|LinkedInBot|Googlebot|bingbot|Pinterest|redditbot|Applebot)"
         }
       ],
-      "destination": "/api/og/:id"
+      "destination": "https://motomartgh-api.vercel.app/og/listing/:id"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": "(facebookexternalhit|Facebot|Twitterbot|WhatsApp|Slackbot|Discordbot|TelegramBot|LinkedInBot|Googlebot|bingbot|Pinterest|redditbot|Applebot)"
+        }
+      ],
+      "destination": "https://motomartgh-api.vercel.app/og/home"
     },
     {
       "source": "/listing/:id",
       "destination": "/index.html"
     },
-
     {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
 }
-

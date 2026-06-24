@@ -5,6 +5,7 @@ import { scrollToElement } from "@/lib/dom";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { ExternalLink } from "@/components/Link";
+import { PageSEO } from "@/utils/PageSEO";
 
 const TermsPage = () => {
   return (
@@ -260,6 +261,8 @@ const TermsPage = () => {
           </ul>
         </section>
       </div>
+
+      <PageSEO page="terms" />
     </div>
   );
 };
