@@ -16,6 +16,8 @@ import { ListingSellerCard } from "./SellerCard";
 import { useAppSelector } from "@/store/hooks/store";
 import { MODAL } from "@/components/modals/Modal";
 import ListingViewers from "@/pages/dashboard/my-listings/ListingViewers";
+import { PageSEO } from "@/utils/PageSEO";
+import { ENV } from "@/lib/env";
 
 const ListingDetailPage = () => {
   const { user } = useAppSelector((s) => s.auth);
@@ -32,8 +34,6 @@ const ListingDetailPage = () => {
     listing?.seller &&
     typeof listing.seller === "object" &&
     listing.seller._id === user._id;
-
-  console.log(user);
 
   // LOADING STATE
   if (isLoading) {
@@ -281,7 +281,21 @@ const ListingDetailPage = () => {
         <ListingSellerCard listing={listing} />
       </div>
 
-      {/* Safety Modal */}
+      <PageSEO
+        page="listing"
+        listingData={{
+          brand: listing?.brand,
+          model: listing?.model,
+          year: listing?.year,
+          price: listing?.price,
+          condition: listing?.condition,
+          location: listing?.location,
+          images: listing?.images,
+          mileage: listing?.mileage,
+          engineCapacity: listing?.engineCapacity,
+        }}
+        url={`${ENV.APP_URL}/listing/${listingId}`}
+      />
     </div>
   );
 };

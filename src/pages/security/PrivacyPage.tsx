@@ -5,6 +5,7 @@ import { scrollToElement } from "@/lib/dom";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { ExternalLink } from "@/components/Link";
+import { PageSEO } from "@/utils/PageSEO";
 
 const PrivacyPage = () => {
   const styles = {
@@ -285,6 +286,8 @@ const PrivacyPage = () => {
           </div>
         </div>
       </div>
+
+      <PageSEO page="privacy" />
     </div>
   );
 };

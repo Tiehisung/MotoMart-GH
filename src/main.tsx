@@ -9,18 +9,21 @@ import { persistor, store } from "./store/index.ts";
 
 import { ThemeProvider } from "./contexts/ThemContext.tsx";
 import AppLoader from "./components/loaders/AppLoader.tsx";
+import { HelmetProvider } from "react-helmet-async";
 
 const App = React.lazy(() => import("./App"));
 createRoot(document.getElementById("root")!).render(
   <React.Suspense fallback={<AppLoader />}>
     <StrictMode>
-      <ThemeProvider>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <App />
-          </PersistGate>
-        </Provider>
-      </ThemeProvider>
+      <HelmetProvider>
+        <ThemeProvider>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <App />
+            </PersistGate>
+          </Provider>
+        </ThemeProvider>
+      </HelmetProvider>
     </StrictMode>
   </React.Suspense>,
 );

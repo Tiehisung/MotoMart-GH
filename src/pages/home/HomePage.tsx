@@ -13,6 +13,7 @@ import { useScrollProgressBar } from "@/hooks/useScroll";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import HomeNav from "./HomeNav";
 import ContactPage from "../contact-us/Page";
+import { PageSEO } from "@/utils/PageSEO";
 
 const LandingPage = () => {
   useScrollReveal({});
@@ -208,7 +209,7 @@ const LandingPage = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {listingsData?.data?.slice(0, 20)?.map((listing) => (
-                  <MainListingCard listing={listing} key={listing._id}/>
+                  <MainListingCard listing={listing} key={listing._id} />
                 ))}
               </div>
             )}
@@ -309,6 +310,7 @@ const LandingPage = () => {
           <ContactPage />
         </div>
       </section>
+      <PageSEO page="home" />
     </div>
   );
 };
