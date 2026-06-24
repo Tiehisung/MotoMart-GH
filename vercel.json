@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/og-test",
+      "destination": "https://motomartgh-api.vercel.app/og/home"
+    },
+    {
       "source": "/listing/:id",
       "has": [
         {
