@@ -1,49 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/og-test",
-      "destination": "https://motomartgh-api.vercel.app/og/home"
-    },
-    {
-      "source": "/ua-test",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": ".*"
-        }
-      ],
-      "destination": "https://motomartgh-api.vercel.app/og/home"
-    },
-    {
-      "source": "/listing/:id",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": "(facebookexternalhit|Facebot|Twitterbot|WhatsApp|Slackbot|Discordbot|TelegramBot|LinkedInBot|Googlebot|bingbot|Pinterest|redditbot|Applebot)"
-        }
-      ],
+      "source": "/share/:id",
       "destination": "https://motomartgh-api.vercel.app/og/listing/:id"
-    },
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": "(facebookexternalhit|Facebot|Twitterbot|WhatsApp|Slackbot|Discordbot|TelegramBot|LinkedInBot|Googlebot|bingbot|Pinterest|redditbot|Applebot)"
-        }
-      ],
-      "destination": "https://motomartgh-api.vercel.app/og/home"
     },
     {
       "source": "/api/(.*)",
       "destination": "https://motomartgh-api.vercel.app/api/$1"
-    },
-    {
-      "source": "/listing/:id",
-      "destination": "/index.html"
     },
     {
       "source": "/(.*)",
