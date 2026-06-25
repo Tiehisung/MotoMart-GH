@@ -5,6 +5,17 @@
       "destination": "https://motomartgh-api.vercel.app/og/home"
     },
     {
+      "source": "/ua-test",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*"
+        }
+      ],
+      "destination": "https://motomartgh-api.vercel.app/og/home"
+    },
+    {
       "source": "/listing/:id",
       "has": [
         {
