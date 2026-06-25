@@ -183,11 +183,12 @@ export const ListingSellerCard = ({ listing }: Props) => {
           {/* Share */}
           <ShareButton
             title={`${listing?.brand} ${listing?.model} - GHS ${listing?.price?.toLocaleString()}`}
-            files={[...(listing?.images?.slice(0, 2) || [])]}
             className="grow w-full rounded-xl mt-3"
             size="lg"
             variant="secondary"
             label="Share this listing"
+            shareUrl={`${window.location.origin}/share/${listing._id}`}
+            
           />
 
           {/* Safety tip */}
