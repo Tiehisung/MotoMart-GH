@@ -22,6 +22,7 @@ import {
   useDeleteUserMutation,
 } from "@/services/userApi";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import Loader from "@/components/loaders/Loader";
 
 const ROLES = ["all", "seller", "buyer", "admin"];
 const STATUS_FILTERS = ["all", "active", "inactive", "verified", "unverified"];
@@ -88,9 +89,9 @@ const AdminUsersPage = () => {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-surface-foreground">Users</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">
-          {stats?.total || 0} total users
-        </p>
+         <div className="flex items-center text-sm text-muted-foreground mt-0.5">
+            {isLoading?<Loader size="xs"/>: stats?.total || 0} total users
+        </div>
       </div>
 
       {/* Stats Cards */}

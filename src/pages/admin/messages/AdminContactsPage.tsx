@@ -12,7 +12,7 @@ import {
   HiOutlineChevronRight,
 } from "react-icons/hi2";
 import { MessageCard } from "./MessageCard";
-
+import Loader from "@/components/loaders/Loader";
 
 const STATUS_TABS = [
   { value: "all", label: "All" },
@@ -51,9 +51,8 @@ const AdminContactsPage = () => {
   const contacts = data?.data || [];
   const pagination = data?.pagination;
 
-  // ============================================
   // HANDLERS
-  // ============================================
+
   const handleStatusChange = async (id: string, status: string) => {
     try {
       await updateStatus({ id, status }).unwrap();
@@ -79,9 +78,8 @@ const AdminContactsPage = () => {
     setExpandedId(expandedId === id ? null : id);
   };
 
-  // ============================================
   // RENDER
-  // ============================================
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -90,9 +88,10 @@ const AdminContactsPage = () => {
           <h1 className="text-2xl font-bold text-foreground">
             Contact Messages
           </h1>
-          <p className="text-sm text-muted-foreground mt-0.5">
-            {pagination?.total || 0} total messages
-          </p>
+          <div className="flex items-center text-sm text-muted-foreground mt-0.5">
+            {isLoading ? <Loader size="xs" /> : pagination?.total || 0} total
+            messages
+          </div>
         </div>
       </div>
 
@@ -198,8 +197,6 @@ const AdminContactsPage = () => {
 };
 
 export default AdminContactsPage;
-
-
 
 // const MessageCard = ({
 //   contact,

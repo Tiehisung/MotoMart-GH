@@ -14,6 +14,7 @@ import {
  
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
+import Loader from "@/components/loaders/Loader";
 
 const AdminListingsPage = () => {
   const [rejectId, setRejectId] = useState<string | null>(null);
@@ -62,9 +63,9 @@ const AdminListingsPage = () => {
           <h1 className="text-2xl font-bold text-surface-foreground">
             Pending Listings
           </h1>
-          <p className="text-sm text-muted-foreground mt-0.5">
-            {listings.length} listings awaiting approval
-          </p>
+          <div className="flex items-center text-sm text-muted-foreground mt-0.5">
+            {isLoading?<Loader size="xs"/>: listings.length} listings awaiting approval
+          </div>
         </div>
       </div>
 

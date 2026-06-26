@@ -24,7 +24,7 @@ import BrowseListingsPage from "@/pages/listings/BrowseListingsPage";
 import AdminInspectionsPage from "@/pages/admin/inspection/AdminInspectionsPage";
 import AdminListingsPage from "@/pages/admin/listing/AdminListingsPage";
 import AdminOverviewPage from "@/pages/admin/AdminOverviewPage";
-import AdminPaymentsPage from "@/pages/admin/AdminPaymentsPage";
+import AdminPaymentsPage from "@/pages/admin/payments/AdminPaymentsPage";
 import AdminListingDetailPage from "@/pages/admin/listing/AdminListingDetailPage";
 import AdminUserDetailPage from "@/pages/admin/users/AdminUserDetailPage";
 import AdminInspectionDetailPage from "@/pages/admin/inspection/AdminInspectionDetailPage";
