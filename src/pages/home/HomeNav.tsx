@@ -1,8 +1,8 @@
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useAppSelector } from "@/store/hooks/store";
-import { FaMotorcycle } from "react-icons/fa";
 import { HiOutlineArrowRight } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import { AppName } from "../Navbar";
 
 const HomeNav = () => {
   const { user } = useAppSelector((s) => s.auth);
@@ -10,15 +10,7 @@ const HomeNav = () => {
     <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 md:px-6 w-full pointer-events-none">
       <nav className="pointer-events-auto w-full max-w-7xl border border-border bg-card/80 backdrop-blur-2xl rounded-full transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
         <div className="flex w-full px-6 md:px-12 py-4 items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 group">
-            <FaMotorcycle className="w-8 h-8 text-primary" />
-            <span className="font-bold text-xl text-foreground">
-              Moto<span className="text-primary">Mart</span>
-              <span className="text-xs text-muted-foreground font-normal ml-1">
-                GH
-              </span>
-            </span>
-          </Link>
+           <AppName/>
 
           <div className="hidden md:flex items-center gap-8">
             {["Browse", "How It Works", 'Contact'].map((item) => (

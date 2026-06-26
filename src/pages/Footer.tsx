@@ -1,8 +1,8 @@
 import ThemeSwitch from "@/components/ThemeSwitch";
 import { useAppSelector } from "@/store/hooks/store";
-import { FaMotorcycle } from "react-icons/fa";
 import { HiOutlineMapPin, HiOutlineEnvelope } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import { AppName } from "./Navbar";
 
 const Footer = () => {
   const { user } = useAppSelector((s) => s.auth);
@@ -21,15 +21,7 @@ const Footer = () => {
       <div className="max-w-350 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16 mb-16">
           <div className="md:col-span-2">
-            <Link to="/" className="inline-flex items-center gap-2 mb-6 group">
-              <FaMotorcycle className="w-8 h-8 text-primary" />
-              <span className="font-bold text-xl text-foreground">
-                Moto<span className="text-primary">Mart</span>
-                <span className="text-xs text-muted-foreground font-normal ml-1">
-                  GH
-                </span>
-              </span>
-            </Link>
+            <AppName/>
             <p className="text-muted-foreground font-light text-sm max-w-sm mb-8 leading-relaxed">
               Ghana's trusted motorbike marketplace. Buy and sell with
               confidence across Upper West and beyond.

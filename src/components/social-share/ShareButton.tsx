@@ -3,6 +3,7 @@ import { Button } from "../buttons/Button";
 import { TButtonSize, TButtonVariant } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { SharePage } from "./SocialShare";
+import { HiOutlineShare } from "react-icons/hi2";
 
 interface IShareBtnProps {
   shareUrl?: string;
@@ -64,7 +65,7 @@ export function ShareButton({
         className={cn("transition", className)}
       >
         
-        {copied ? "Copied!" : label}
+           <HiOutlineShare size={18} />{copied ? "Copied!" : label}
       </Button>
 
       {isSuccess && <SharePage label="Share on:" wrapperStyles="mt-4" />}
