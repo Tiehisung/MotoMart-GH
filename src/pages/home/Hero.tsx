@@ -15,9 +15,7 @@ const Hero = ({ type = "primary" }: { type?: "primary" | "secondary" }) => {
   const { data } = useGetPopularLocationsQuery();
 
   const locations = data?.data;
-
-  console.log(data);
-
+ 
   if (type == "primary")
     return (
       <section className="relative w-full min-h-svh flex items-center overflow-hidden bg-background">

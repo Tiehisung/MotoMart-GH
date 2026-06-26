@@ -4,7 +4,7 @@ import { useAppSelector } from "@/store/hooks/store";
 import { UserMenu } from "../components/auth/UserMenu";
 import HomeNav from "./home/HomeNav";
 import { cn } from "@/lib/utils";
-import { FaMotorcycle } from "react-icons/fa";
+import { FaMotorcycle } from "react-icons/fa6";
 // import { GlobalSearch } from "@/components/searcher/Global";
 
 const Navbar = () => {
@@ -58,9 +58,9 @@ export const AppName = ({ className }: { className?: string }) => {
   return (
     <div>
       <Link to={"/"} className="flex items-center gap-2 group">
-        <FaMotorcycle className="w-8 h-8 text-primary" />
+        <FaMotorcycle className="w-8 h-8 text-muted-foreground" />
         <span className={cn("font-bold text-xl text-foreground", className)}>
-          Moto<span className="text-primary">Mart</span>
+          Bike<span className="text-primary">Link</span>
           <span className="text-xs text-muted-foreground font-normal ml-1">
             GH
           </span>
