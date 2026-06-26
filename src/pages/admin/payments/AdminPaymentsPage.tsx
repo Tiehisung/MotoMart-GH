@@ -1,3 +1,4 @@
+import Loader from "@/components/loaders/Loader";
 import { formatDate } from "@/lib/timeAndDate";
 import { useGetAllPaymentsQuery } from "@/services/adminApi";
 import { FaMotorcycle } from "react-icons/fa6";
@@ -41,9 +42,9 @@ const AdminPaymentsPage = () => {
           <h1 className="text-2xl font-bold text-surface-foreground">
             Payments
           </h1>
-          <p className="text-sm text-muted-foreground mt-0.5">
-            {payments.length} total transactions
-          </p>
+           <div className="flex items-center text-sm text-muted-foreground mt-0.5">
+            {isLoading?<Loader size="xs"/>: payments.length} total transactions
+          </div>
         </div>
         <div className="text-right">
           <p className="text-xs text-muted-foreground">Total Revenue</p>

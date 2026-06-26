@@ -19,6 +19,7 @@ import { MODAL } from "@/components/modals/Modal";
 import { Plus } from "lucide-react";
 import { PricingForm } from "./PricingForm";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import Loader from "@/components/loaders/Loader";
 
 // MAIN PAGE
 const AdminPricingPage = () => {
@@ -70,9 +71,10 @@ const AdminPricingPage = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Pricing</h1>
-          <p className="text-sm text-muted-foreground mt-0.5">
-            {totalItems} options • {activeItems} active
-          </p>
+          <div className="flex items-center text-sm text-muted-foreground mt-0.5">
+            {isLoading ? <Loader size="xs" /> : totalItems} options •{" "}
+            {isLoading ? <Loader size="xs" /> : activeItems} active
+          </div>
         </div>
 
         <MODAL

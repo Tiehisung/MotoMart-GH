@@ -17,6 +17,7 @@ import { BrandForm } from "./BrandForm";
 import { fireEscape } from "@/hooks/Esc";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { Plus } from "lucide-react";
+import Loader from "@/components/loaders/Loader";
 
 // ============================================
 // MAIN PAGE
@@ -28,6 +29,7 @@ const AdminBrandsPage = () => {
   const [deleteBrand] = useDeleteBrandMutation();
 
   const brands = data?.data || [];
+  const activeItems = brands.filter((b) => b.isActive).length;
 
   const handleToggle = async (id: string) => {
     try {
@@ -53,10 +55,10 @@ const AdminBrandsPage = () => {
       <header className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-surface-foreground">Brands</h1>
-          <p className="text-sm text-muted-foreground mt-0.5">
-            {brands.length} brands · {brands.filter((b) => b.isActive).length}{" "}
-            active
-          </p>
+          <div className="flex items-center text-sm text-muted-foreground mt-0.5">
+            {isLoading ? <Loader size="xs" /> : brands.length} brands ·{" "}
+            {isLoading ? <Loader size="xs" /> : activeItems} active
+          </div>
         </div>
 
         <MODAL

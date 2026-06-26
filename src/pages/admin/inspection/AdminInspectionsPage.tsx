@@ -13,6 +13,7 @@ import {
   HiOutlineMapPin,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
+import Loader from "@/components/loaders/Loader";
 
 const AdminInspectionsPage = () => {
   const { data, isLoading, refetch } = useGetPendingInspectionsQuery();
@@ -81,9 +82,9 @@ const AdminInspectionsPage = () => {
         <h1 className="text-2xl font-bold text-surface-foreground">
           Inspections
         </h1>
-        <p className="text-sm text-muted-foreground mt-0.5">
-          {inspections.length} inspections pending
-        </p>
+         <div className="flex items-center text-sm text-muted-foreground mt-0.5">
+            {isLoading?<Loader size="xs"/>: inspections.length} inspections pending
+        </div>
       </div>
 
       {isLoading ? (
