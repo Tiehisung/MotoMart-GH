@@ -42,6 +42,7 @@ import AdminPricingPage from "@/pages/admin/pricing/AdminPricingPage";
 import PrivacyPage from "@/pages/security/PrivacyPage";
 import TermsPage from "@/pages/security/TermsPage";
 import AdminSmsPage from "@/pages/admin/sms/Page";
+import AdminSmsLogsPage from "@/pages/admin/sms/SmsLogsPage";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -215,7 +216,13 @@ const applicationRouter = createBrowserRouter([
         path: "contacts",
         element: <AdminContactsPage />,
       },
-      { path: "sms", element: <AdminSmsPage /> },
+      {
+        path: "sms",
+        children: [
+          { index: true, element: <AdminSmsPage /> },
+          { path: "logs", element: <AdminSmsLogsPage /> },
+        ],
+      },
     ],
   },
 ]);

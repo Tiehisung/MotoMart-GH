@@ -12,12 +12,12 @@ import {
   HiOutlineEnvelope,
   HiOutlineDevicePhoneMobile,
 } from "react-icons/hi2";
-import { FaMotorcycle } from "react-icons/fa6";
 import { LogoutBtn } from "../auth/LogoutButton";
 import { Dot, MapPin, Settings, Users } from "lucide-react";
 import { useAppSelector } from "@/store/hooks/store";
 import { AppName } from "../Navbar";
 import { Button } from "@/components/buttons/Button";
+import { PiMotorcycle } from "react-icons/pi";
 
 type AdminLink = {
   href: string;
@@ -29,7 +29,7 @@ type AdminLink = {
 export const adminQuickLinks: AdminLink[] = [
   {
     href: `/admin/listings`,
-    icon: <FaMotorcycle className="w-5 h-5" />,
+    icon: <PiMotorcycle className="w-5 h-5" />,
     label: "Listings",
   },
   {
