@@ -17,8 +17,32 @@ export const api = createApi({
         },
     }),
     tagTypes: [
-        'User', 'Users', 'Listings', 'MyListings', 'Payments',
-        'Inspections', 'Uploads', 'Brands', 'Locations', 'AdminContacts', 'MyLeads', 'Leads','Pricing'
+        // Public
+        'User',           // Current user (me)
+        'Listings',       // Public browse/search
+        'MyListings',     // Seller's listings
+        'Brands',         // Public brands
+        'Locations',      // Public locations
+        'Pricing',        // Public pricing
+
+        // Admin (separate)
+        'AdminListings',
+        'AdminUsers',
+        'AdminStats',
+        'AdminInspections',
+        'AdminPayments',
+        'AdminContacts',
+        'AdminPricing',
+        'AdminBrands',
+        'AdminLocations',
+        'AdminSMS',
+
+        // Shared tags (used by both admin + user)
+        'Payments',       // User sees their payments, admin sees all
+        'Inspections',    // Seller sees their inspections, admin sees all
+        'Uploads',
+        'Me',
+        'MyLeads',
     ],
     refetchOnMountOrArgChange: true,  // Refetch when component mounts OR params change
     keepUnusedDataFor: 0,            // Don't keep unused data (prevents stale cache across users)

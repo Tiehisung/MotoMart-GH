@@ -22,10 +22,10 @@ import MyInspectionsPage from "@/pages/dashboard/MyInspectionsPage";
 import PaymentHistoryPage from "@/pages/dashboard/payments/PaymentHistoryPage";
 import BrowseListingsPage from "@/pages/listings/BrowseListingsPage";
 import AdminInspectionsPage from "@/pages/admin/inspection/AdminInspectionsPage";
-import AdminListingsPage from "@/pages/admin/listing/AdminListingsPage";
+import AdminListingsPage from "@/pages/admin/listing/ListingsPage";
 import AdminOverviewPage from "@/pages/admin/AdminOverviewPage";
 import AdminPaymentsPage from "@/pages/admin/payments/AdminPaymentsPage";
-import AdminListingDetailPage from "@/pages/admin/listing/AdminListingDetailPage";
+import AdminListingDetailPage from "@/pages/admin/listing/ListingDetailPage";
 import AdminUserDetailPage from "@/pages/admin/users/AdminUserDetailPage";
 import AdminInspectionDetailPage from "@/pages/admin/inspection/AdminInspectionDetailPage";
 import DashboardLayout from "@/pages/dashboard/Layout";
@@ -41,6 +41,7 @@ import MyRequestsPage from "@/pages/dashboard/requests/MyRequestsPage";
 import AdminPricingPage from "@/pages/admin/pricing/AdminPricingPage";
 import PrivacyPage from "@/pages/security/PrivacyPage";
 import TermsPage from "@/pages/security/TermsPage";
+import AdminSmsPage from "@/pages/admin/sms/Page";
 
 // Wrapper for Admin with ScrollToTop
 const AdminLayoutWithScroll = () => (
@@ -214,6 +215,7 @@ const applicationRouter = createBrowserRouter([
         path: "contacts",
         element: <AdminContactsPage />,
       },
+      { path: "sms", element: <AdminSmsPage /> },
     ],
   },
 ]);
