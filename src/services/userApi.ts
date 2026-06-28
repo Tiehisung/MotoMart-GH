@@ -58,37 +58,37 @@ export const adminUserApi = api.injectEndpoints({
         // Get all users with filters
         getAdminUsers: builder.query<IUsersResponse, Record<string, any>>({
             query: (params) => ({ url: '/users', params }),
-            providesTags: ['Users'],
+            providesTags: ['AdminUsers'],
         }),
 
         // Get single user
         getAdminUser: builder.query<IQueryResponse<IAdminUserProfileResponse>, string>({
             query: (id) => `/users/${id}`,
-            providesTags: (_r, _e, id) => [{ type: 'Users', id }],
+            providesTags: (_r, _e, id) => [{ type: 'AdminUsers', id }],
         }),
 
         // Update user
         updateUser: builder.mutation<any, { id: string; data: Partial<IAdminUser> }>({
             query: ({ id, data }) => ({ url: `/users/${id}`, method: 'PUT', body: data }),
-            invalidatesTags: ['Users'],
+            invalidatesTags: ['AdminUsers'],
         }),
 
         // Toggle active (ban/unban)
         toggleUserActive: builder.mutation<any, string>({
             query: (id) => ({ url: `/users/${id}/toggle-active`, method: 'PATCH' }),
-            invalidatesTags: ['Users'],
+            invalidatesTags: ['AdminUsers'],
         }),
 
         // Verify user
         verifyUser: builder.mutation<any, string>({
             query: (id) => ({ url: `/users/${id}/verify`, method: 'PATCH' }),
-            invalidatesTags: ['Users'],
+            invalidatesTags: ['AdminUsers'],
         }),
 
         // Delete user
         deleteUser: builder.mutation<any, string>({
             query: (id) => ({ url: `/users/${id}`, method: 'DELETE' }),
-            invalidatesTags: ['Users'],
+            invalidatesTags: ['AdminUsers'],
         }),
     }),
 });
