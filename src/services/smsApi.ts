@@ -14,14 +14,11 @@ interface SmsBalanceResponse {
 
 interface TestSmsResponse {
     success: boolean;
-    data?: {
-        smsSent: boolean;
-        messageId?: string;
-        recipients?: number;
-        details?: any;
-        isSandbox: boolean;
-    };
-    message?: string;
+    smsSent: boolean;
+    messageId?: string;
+    recipients?: number;
+    details?: any;
+    isSandbox: boolean;
 }
 
 export const adminSmsApi = api.injectEndpoints({
@@ -37,6 +34,11 @@ export const adminSmsApi = api.injectEndpoints({
                 body,
             }),
             invalidatesTags: ['AdminSMS'],
+        }), 
+        
+        getSmsLogs: builder.query<any, Record<string, any>>({
+            query: (params) => ({ url: '/admin/sms/logs', params }),
+            providesTags: ['AdminSmsLogs'],
         }),
     }),
 });
@@ -44,4 +46,5 @@ export const adminSmsApi = api.injectEndpoints({
 export const {
     useGetSmsBalanceQuery,
     useSendTestSmsMutation,
+    useGetSmsLogsQuery
 } = adminSmsApi;

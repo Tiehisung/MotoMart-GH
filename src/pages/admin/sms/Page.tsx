@@ -24,6 +24,7 @@ const AdminSmsPage = () => {
   } = useGetSmsBalanceQuery();
   const [sendTestSms, { isLoading: isSending }] = useSendTestSmsMutation();
 
+  console.log({ balanceData });
   const [testPhone, setTestPhone] = useState("");
   const [testMessage, setTestMessage] = useState("");
   const [testResult, setTestResult] = useState<any>(null);
@@ -43,8 +44,8 @@ const AdminSmsPage = () => {
         message: testMessage || undefined,
       }).unwrap();
 
-      setTestResult(result.data);
-      toast.success(result.data?.smsSent ? "SMS sent!" : "SMS failed to send");
+      setTestResult(result);
+      toast.success(result?.smsSent ? "SMS sent!" : result.messageId);
     } catch (err: any) {
       toast.error("Failed to send test SMS");
     }
@@ -220,6 +221,15 @@ const AdminSmsPage = () => {
           <li>Redeploy your backend</li>
         </ol>
       </div>
+
+      {/* Logs  */}
+
+      <Button
+        onClick={() => (window.location.href = "/admin/sms/logs")}
+        className="grow w-full p-2 my-9"
+      >
+        View SMS Logs
+      </Button>
     </div>
   );
 };

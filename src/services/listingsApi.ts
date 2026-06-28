@@ -9,6 +9,12 @@ interface IListingsResponse {
     data: IListing[];
     pagination?: IPagination;
 }
+interface ILeadsResponse {
+    success: boolean;
+    count: number;
+    data: ILead[];
+    pagination?: IPagination;
+}
 
 interface ISingleListingResponse {
     success: boolean;
@@ -87,7 +93,7 @@ export const listingsApi = api.injectEndpoints({
         }),
 
         // Buyer
-        getMyRequests: builder.query<IListingsResponse, Record<string, any>>({
+        getMyRequests: builder.query<ILeadsResponse, Record<string, any>>({
             query: (params) => ({
                 url: '/listings/requests/mine', params
             }),
