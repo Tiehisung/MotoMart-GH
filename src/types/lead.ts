@@ -3,7 +3,7 @@ import { IUser } from "./user";
 
 export interface ILead {
     _id: string
-    listing: string|IListing;
+    listing:  IListing;
     buyer: IUser;
     seller: IUser;
     buyerPhone: string;
@@ -13,8 +13,8 @@ export interface ILead {
     smsError?: string;
     status: `${ELeadStatus}`;
     notifications: INotificationResult[]
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export enum ELeadStatus {

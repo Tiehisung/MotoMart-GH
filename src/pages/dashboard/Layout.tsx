@@ -37,6 +37,12 @@ export const dashboardSidebarLinks: IDashboardLink[] = [
     role: [EUserRole.SELLER],
   },
   {
+    href: "/dashboard/requests",
+    icon: <HiOutlinePhone className="w-5 h-5" />,
+    label: "My Requests",
+    role: [EUserRole.BUYER],
+  },
+  {
     href: "/dashboard/payments",
     icon: <HiOutlineCreditCard className="w-5 h-5" />,
     label: "Payments",
@@ -64,13 +70,6 @@ export const dashboardSidebarLinks: IDashboardLink[] = [
     href: "/dashboard/profile",
     icon: <HiOutlineUser className="w-5 h-5" />,
     label: "Profile",
-  },
-
-  {
-    href: "/dashboard/requests",
-    icon: <HiOutlinePhone className="w-5 h-5" />,
-    label: "My Requests",
-    role: [EUserRole.BUYER],
   },
 ];
 

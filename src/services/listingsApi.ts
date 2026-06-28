@@ -6,7 +6,7 @@ import { ILead } from '@/types/lead';
 interface IListingsResponse {
     success: boolean;
     count: number;
-    data: IListing[];
+    data: ILead[];
     pagination?: IPagination;
 }
 

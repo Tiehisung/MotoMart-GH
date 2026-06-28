@@ -36,6 +36,7 @@ export const api = createApi({
         'AdminBrands',
         'AdminLocations',
         'AdminSMS',
+        'AdminSmsLogs',
 
         // Shared tags (used by both admin + user)
         'Payments',       // User sees their payments, admin sees all

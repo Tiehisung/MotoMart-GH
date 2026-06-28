@@ -4,12 +4,12 @@ import {
   HiOutlinePhone,
   HiOutlineClock,
   HiOutlineCheck,
-  
   HiOutlineUser,
   HiOutlineEye,
   HiOutlineArrowRight,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa";
+import { Badge } from "@/components/ui/badge";
 
 const MyRequestsPage = () => {
   const { data, isLoading } = useGetMyRequestsQuery({});
@@ -60,7 +60,7 @@ const MyRequestsPage = () => {
         </div>
       ) : (
         <div className="space-y-3">
-          {requests.map((request: any) => (
+          {requests.map((request) => (
             <div
               key={request._id}
               className="bg-card border border-border rounded-2xl p-5 space-y-4 hover:shadow-sm transition-all"
@@ -117,23 +117,19 @@ const MyRequestsPage = () => {
 
                 {/* Status badge */}
                 <div className="shrink-0">
-                  {request.status === "notified" ||
-                  request.status === "sent" ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-success/10 text-success text-xs font-medium rounded-full">
-                      <HiOutlineCheck className="w-3 h-3" />
-                      Sent
-                    </span>
-                  ) : request.status === "contacted" ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-info/10 text-info text-xs font-medium rounded-full">
+                  <Badge
+                    variant={
+                      request.status == "contacted" ? "success" : "warning"
+                    }
+                    className="capitalize"
+                  >
+                    {request.status == "contacted" ? (
                       <HiOutlinePhone className="w-3 h-3" />
-                      Contacted
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-warning/10 text-warning text-xs font-medium rounded-full">
+                    ) : (
                       <HiOutlineClock className="w-3 h-3" />
-                      Pending
-                    </span>
-                  )}
+                    )}
+                    {request.status}
+                  </Badge>
                 </div>
               </div>
 
@@ -157,7 +153,7 @@ const MyRequestsPage = () => {
                   View Bike
                 </Link>
                 <Link
-                  to="/browse"
+                  to={`/browse?brand=${request?.listing?.brand}`}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary hover:bg-primary/5 rounded-lg transition-colors"
                 >
                   Browse Similar
