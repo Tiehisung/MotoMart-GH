@@ -91,13 +91,13 @@ export const listingsApi = api.injectEndpoints({
             query: (params) => ({
                 url: '/listings/requests/mine', params
             }),
-            providesTags: ['Listings', 'Leads'],
+            providesTags: ['Listings', 'MyLeads'],
         }),
         checkRequestStatus: builder.query<IQueryResponse<ILead>, string>({
             query: (listingId) => ({
                 url: `/listings/${listingId}/requests/check-status`
             }),
-            providesTags: ['Listings', 'Leads', 'MyLeads'],
+            providesTags: ['Listings',   'MyLeads'],
         }),
         requestSellerCall: builder.mutation<any, { listingId: string; buyerPhone: string }>({
             query: ({ listingId, buyerPhone }) => ({

@@ -33,17 +33,6 @@ export const createListingSchema = z.object({
     // Images
     images: z.array(z.string().url()).min(1, 'At least one image is required').max(10, 'Maximum 10 images'),
 
-    // images: z.array(z.instanceof(File))
-    //     .min(1, "At least one image is required")
-    //     .max(10, "Maximum 10 images allowed")
-    //     .refine(
-    //         (files) => files.every(f => f.size <= 5 * 1024 * 1024),
-    //         "Each image must be less than 5MB"
-    //     )
-    //     .refine(
-    //         (files) => files.every(f => ["image/jpeg", "image/png", "image/webp"].includes(f.type)),
-    //         "Only JPEG, PNG, or WebP images are allowed"
-    //     ),
     listingType: z.nativeEnum(EListingType, { error: 'Select listing type' }).default(EListingType.Standard),
 });
 

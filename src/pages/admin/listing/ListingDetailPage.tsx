@@ -17,6 +17,9 @@ import {
   HiOutlineExclamationTriangle,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
+import { REJECTION_REASONS } from "@/data/motor";
+import { shortText } from "@/lib";
+import { Button } from "@/components/buttons/Button";
 
 const AdminListingDetailPage = () => {
   const { listingId } = useParams<{ listingId: string }>();
@@ -425,6 +428,19 @@ const AdminListingDetailPage = () => {
             <p className="text-sm text-muted-foreground text-center">
               This reason will be shown to the seller.
             </p>
+            <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto py-5">
+              {REJECTION_REASONS.slice(0, 10).map((reason) => (
+                <Button
+                  key={reason}
+                  variant={rejectReason === reason ? "destructive" : "outline"}
+                  onClick={() => setRejectReason(reason)}
+                  size={"xs"}
+                  className="text-[11px] font-normal line-clamp-1 grow text-left"
+                >
+                  {shortText(reason, 150)}
+                </Button>
+              ))}
+            </div>
             <textarea
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}

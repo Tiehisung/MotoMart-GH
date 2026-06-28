@@ -25,9 +25,7 @@ import PaymentModal from "../payments/PaymentModal";
 import { enumToOptions } from "@/lib/select";
 import { usePricing } from "@/hooks/usePricing";
 
-// ============================================
 // CONSTANTS
-// ============================================
 const TOTAL_STEPS = 5;
 
 const DOCUMENT_TYPES = [
@@ -43,9 +41,7 @@ const STEP_FIELDS: Record<number, (keyof ICreateListingFormData)[]> = {
   5: ["listingType"],
 };
 
-// ============================================
 // TYPES
-// ============================================
 interface ListingFormProps {
   existingListing?: IListing;
 }
@@ -57,9 +53,9 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
   const { data: brandsData } = useGetBrandsQuery();
   const { data: locationsData } = useGetLocationsQuery();
 
-  // ============================================
+
   // PAYMENT MODAL STATE
-  // ============================================
+
   const [paymentModal, setPaymentModal] = useState({
     isOpen: false,
     listingId: "",
@@ -145,9 +141,9 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
   const hasDocuments = watch("hasDocuments");
   const watchedImages = watch("images") || [];
 
-  // ============================================
+
   // HANDLERS
-  // ============================================
+
   const handleImagesChange = useCallback(
     (urls: string[]) => {
       setValue("images", urls, { shouldValidate: true, shouldDirty: true });
@@ -257,9 +253,9 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
     return new Date(lastSaved).toLocaleTimeString();
   };
 
-  // ============================================
+
   // RENDER HELPERS
-  // ============================================
+
   const renderStep = (step: number, content: React.ReactNode) => {
     if (existingListing || currentStep === step) {
       return content;
@@ -267,9 +263,9 @@ const ListingForm = ({ existingListing }: ListingFormProps) => {
     return null;
   };
 
-  // ============================================
+
   // RENDER
-  // ============================================
+
   return (
     <div className="max-w-2xl mx-auto space-y-6 pb-20">
       {/* Header */}

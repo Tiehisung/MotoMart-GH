@@ -2,17 +2,24 @@ import { api } from './_api';
 
 export const adminApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        // Dashboard
+        // ============================================
+        // DASHBOARD
+        // ============================================
         getDashboardStats: builder.query<any, void>({
             query: () => '/admin/stats',
+            providesTags: ['AdminStats'],
         }),
 
-        // Listings
+        // ============================================
+        // LISTINGS
+        // ============================================
         getPendingListings: builder.query<any, Record<string, any>>({
             query: (params) => ({ url: '/admin/listings/pending', params }),
+            providesTags: ['AdminListings'],
         }),
         approveListing: builder.mutation<any, string>({
             query: (id) => ({ url: `/admin/listings/${id}/approve`, method: 'PUT' }),
+            invalidatesTags: ['AdminListings', 'AdminStats', 'Listings'],
         }),
         rejectListing: builder.mutation<any, { id: string; reason: string }>({
             query: ({ id, reason }) => ({
@@ -20,20 +27,27 @@ export const adminApi = api.injectEndpoints({
                 method: 'PUT',
                 body: { reason },
             }),
+            invalidatesTags: ['AdminListings', 'AdminStats', 'Listings'],
         }),
 
-        // Users
+        // ============================================
+        // USERS
+        // ============================================
         getPendingUsers: builder.query<any, void>({
             query: () => '/admin/users/pending',
+            providesTags: ['AdminUsers'],
         }),
         verifyUser: builder.mutation<any, string>({
             query: (id) => ({ url: `/admin/users/${id}/verify`, method: 'PUT' }),
-            invalidatesTags:['Users']
+            invalidatesTags: ['AdminUsers', 'AdminStats'],
         }),
 
-        // Inspections
+        // ============================================
+        // INSPECTIONS
+        // ============================================
         getPendingInspections: builder.query<any, void>({
             query: () => '/admin/inspections/pending',
+            providesTags: ['AdminInspections'],
         }),
         completeInspection: builder.mutation<any, { id: string } & Record<string, any>>({
             query: ({ id, ...body }) => ({
@@ -41,11 +55,15 @@ export const adminApi = api.injectEndpoints({
                 method: 'PUT',
                 body,
             }),
+            invalidatesTags: ['AdminInspections', 'AdminStats'],
         }),
 
-        // Payments
+        // ============================================
+        // PAYMENTS
+        // ============================================
         getAllPayments: builder.query<any, Record<string, any>>({
             query: (params) => ({ url: '/admin/payments', params }),
+            providesTags: ['AdminPayments'],
         }),
     }),
 });

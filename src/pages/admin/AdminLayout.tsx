@@ -10,11 +10,14 @@ import {
   HiOutlineArrowRight,
   HiOutlineTag,
   HiOutlineEnvelope,
+  HiOutlineDevicePhoneMobile,
 } from "react-icons/hi2";
 import { FaMotorcycle } from "react-icons/fa6";
 import { LogoutBtn } from "../auth/LogoutButton";
 import { Dot, MapPin, Settings, Users } from "lucide-react";
 import { useAppSelector } from "@/store/hooks/store";
+import { AppName } from "../Navbar";
+import { Button } from "@/components/buttons/Button";
 
 type AdminLink = {
   href: string;
@@ -76,6 +79,11 @@ const adminLinks: AdminLink[] = [
     label: "Pricing",
     icon: <HiOutlineBanknotes className="w-5 h-5" />,
   },
+  {
+    href: "/admin/sms",
+    label: "SMS",
+    icon: <HiOutlineDevicePhoneMobile className="w-5 h-5" />,
+  },
 ];
 const AdminLayout = () => {
   const { user } = useAppSelector((s) => s.auth);
@@ -109,14 +117,12 @@ const AdminLayout = () => {
 
   return (
     <div className="h-screen flex overflow-hidden">
-      {/* ============ DESKTOP SIDEBAR ============ */}
+      {/*  DESKTOP SIDEBAR  */}
       <aside className="hidden lg:flex lg:flex-col lg:w-64 bg-surface-900  ">
         <div className="p-6 pb-4">
-          <Link to="/" className="font-display font-bold text-xl">
-            Moto<span className="text-brand">Trust</span>
-          </Link>
-          <span className="flex items-center text-xs text-surface-400 font-normal mt-1">
-            Admin Panel <Dot size={12}/> {user?.phoneNumber?.substring(6)}
+          <AppName className="text-lg" />
+          <span className="flex items-center text-xs text-surface-400 font-normal mt-1 italic">
+            Admin <Dot size={12} /> {user?.phoneNumber?.substring(6)}
           </span>
         </div>
         <div className="flex-1 overflow-y-auto px-4 pb-6">
@@ -133,24 +139,24 @@ const AdminLayout = () => {
         </div>
       </aside>
 
-      {/* ============ MOBILE HEADER ============ */}
+      {/*  MOBILE HEADER  */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-surface-elevated _glasss text-brand h-14 flex items-center justify-between px-4">
-        <Link to="/" className="font-display font-bold text-lg">
-          Moto<span className="text-brand">Trust</span>
-        </Link>
-        <button
+        <AppName className="text-lg" />
+        <Button
+          variant={"ghost"}
+          size={"icon-lg"}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="p-2 hover:bg-surface-800 rounded-xl transition-colors"
+          className="rounded-full "
         >
           {mobileMenuOpen ? (
-            <HiOutlineXMark className="w-5 h-5" />
+            <HiOutlineXMark className="w-6 h-6" />
           ) : (
-            <HiOutlineBars3 className="w-5 h-5" />
+            <HiOutlineBars3 className="w-6 h-6" />
           )}
-        </button>
+        </Button>
       </div>
 
-      {/* ============ MOBILE SLIDE-OVER ============ */}
+      {/*  MOBILE SLIDE-OVER  */}
       {mobileMenuOpen && (
         <>
           <div
@@ -165,7 +171,7 @@ const AdminLayout = () => {
         </>
       )}
 
-      {/* ============ MAIN CONTENT - ONLY THIS SCROLLS ============ */}
+      {/*  MAIN CONTENT - ONLY THIS SCROLLS  */}
       <main className="flex-1 overflow-y-auto bg-surface">
         <div className="p-4 lg:p-8 pt-20 lg:pt-8 pb-24 lg:pb-8 max-w-6xl mx-auto">
           <Outlet />
